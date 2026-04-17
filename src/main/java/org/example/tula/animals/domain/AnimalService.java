@@ -10,6 +10,8 @@ import org.example.tula.animals.db.AnimalEntity;
 import org.example.tula.animals.db.AnimalRepository;
 import org.example.tula.animals.db.StatusAnimal;
 import org.example.tula.animals.domain.mapper.AnimalMapper;
+import org.example.tula.likes.api.dto.response.TakeResponse;
+import org.example.tula.users.domain.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public class AnimalService {
 
     private final AnimalRepository animalRepository;
     private final AnimalMapper animalMapper;
+    private final UserService userService;
 
     public Animal findAnimalById(Long id) {
         return animalMapper.convertEntityToDTO(
@@ -55,19 +58,23 @@ public class AnimalService {
     }
 
     @Transactional
-    public String takenAnimal(Long id) {
+    public TakeResponse takenAnimal(Long id) {
         try {
             AnimalEntity animal = animalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Животное не найдено"));
 
-            if (!animal.getStatus().name().equals("DONT_TAKE")) {
-                throw new IllegalArgumentException("Данный питомец было зарезервированно или взято");
+            if (animal.getStatus().name().equals("TAKE")) {
+                throw new IllegalArgumentException("Данный питомец был взят");
             }
 
-            animal.setPersonTakeId(1L);//TODO поменять
+            animal.setPersonTakeId(userService.getCurrentUser().getId());
             animal.setStatus(StatusAnimal.RESERVATION);
             animalRepository.save(animal);
 
-            return "Вы успешно зарезервировали животное";
+            return new TakeResponse(
+                    "Вы успешно зарезервировали питомца",
+                    "s5090@inbox.ru",//TODO поменять
+                    animal.getName()
+            );
         }catch (Exception e) {
             log.error("Не удалось взять питомца,ex={}", e.getMessage());
             throw new RuntimeException(e);
@@ -101,6 +108,11 @@ public class AnimalService {
             if (animal.getPersonTakeId() == null) {
                 throw new IllegalArgumentException("Нельзя одобрить заявку так как нету получателя");
             }
+
+            if (animal.getStatus().name().equals("TAKE")) {
+                throw new IllegalArgumentException("Данный питомец был взят");
+            }
+
             //TODO ДОБАВИТЬ ПРОВЕРКУ НА ВЛАДЕЛЬЦА ЖИВОТНОГО
 
             animal.setStatus(StatusAnimal.TAKE);

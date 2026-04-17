@@ -12,18 +12,20 @@ public class EmailTemplateService {
 
     public String getSubject(NotifyType type, Map<String, String> params) {
         if (type == null || params == null) {
-            return "Уведомление от Hackaton";
+            return "Уведомление от Tula Hackaton";
         }
 
         return switch (type) {
-            case REGISTER -> String.format("Hackaton: Ваш код для входа [%s]",
+            case REGISTER -> String.format("Tula Hackaton: Ваш код для входа [%s]",
                     params.getOrDefault("code", ""));
-            case PASSWORD_RESET -> String.format("Hackaton: Сброс пароля [%s]",
+            case PASSWORD_RESET -> String.format("Tula Hackaton: Сброс пароля [%s]",
                     params.getOrDefault("code", ""));
             case REPLAY_CODE -> String.format("Hackaton: Повторный код [%s]",
                     params.getOrDefault("code", ""));
-            case LOGIN -> "Hackaton: Вход в аккаунт";
-            default -> "Уведомление от Hackaton";
+            case LOGIN -> "Tula Hackaton: Вход в аккаунт";
+            case LIKE -> "Вашего питомца хотят взять";
+
+            default -> "Уведомление от Tula Hackaton";
         };
     }
 
@@ -34,7 +36,7 @@ public class EmailTemplateService {
 
         return switch (type) {
             case REGISTER -> String.format("""
-                Добро пожаловать в Hackaton!
+                Добро пожаловать в Tula Hackaton!
                 
                 Ваш код для входа: %s
                 
@@ -43,7 +45,7 @@ public class EmailTemplateService {
                 Если вы не запрашивали вход, пожалуйста, проигнорируйте это письмо.
                 
                 С уважением,
-                Команда Hackaton
+                Команда Tula Hackaton
                 """, params.getOrDefault("code", ""));
 
             case PASSWORD_RESET -> String.format("""
@@ -56,7 +58,7 @@ public class EmailTemplateService {
                 Если вы не запрашивали сброс пароля, проигнорируйте это письмо.
                 
                 С уважением,
-                Команда Hackaton
+                Команда Tula Hackaton
                 """, params.getOrDefault("code", ""));
 
             case REPLAY_CODE -> String.format("""
@@ -65,7 +67,7 @@ public class EmailTemplateService {
                 Ваш повторный код: %s
                 
                 С уважением,
-                Команда Hackaton
+                Команда Tula Hackaton
                 """, params.getOrDefault("code", ""));
 
             case LOGIN -> String.format("""
@@ -76,8 +78,19 @@ public class EmailTemplateService {
                 Если это были не вы, пожалуйста, свяжитесь со службой поддержки.
                 
                 С уважением,
-                Команда Hackaton
+                Команда Tula Hackaton
                 """, params.getOrDefault("userName", ""));
+
+            case LIKE -> String.format("""
+                Пользователь %s заинтересовался вашим питомцем %s.
+                
+                Зайдите в личный кабинет, чтобы ответить.
+                
+                С уважением,
+                Команда Tula Hackaton
+                """,
+                    params.getOrDefault("userName", "Пользователь"),
+                    params.getOrDefault("animalName", "питомцем"));
 
             default -> "";
         };

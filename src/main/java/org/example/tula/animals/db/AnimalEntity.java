@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "animals")
-public class AnimalEntity {
+public class AnimalEntity {//TODO ДОБАВИТЬ ВРЕМЯ
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

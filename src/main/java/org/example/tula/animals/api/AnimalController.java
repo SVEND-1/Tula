@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/animal")
+@RequestMapping("/api/animals")
 @RequiredArgsConstructor
 public class AnimalController {
 
@@ -29,11 +29,6 @@ public class AnimalController {
     @PostMapping
     public ResponseEntity<Animal> createAnimal(@RequestBody CreatedAnimalRequest request) {
         return ResponseEntity.ok(animalService.save(request));
-    }
-
-    @PutMapping("/take/{id}")
-    public ResponseEntity<String> takenAnimal(@PathVariable Long id) {
-        return ResponseEntity.ok(animalService.takenAnimal(id));
     }
 
     @PutMapping("/rejection/{id}")

@@ -4,6 +4,7 @@ public enum NotifyType {
     LOGIN,
     REGISTER,
     PASSWORD_RESET,
-    REPLAY_CODE
+    REPLAY_CODE,
+    LIKE
 }
 
