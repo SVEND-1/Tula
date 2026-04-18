@@ -32,6 +32,12 @@ build/
 ### VS Code ###
 .vscode/
 
+.env
+.env.local
+.env.development
+.env.production
+
+
 src/test
 logs
 .env
