@@ -123,38 +123,25 @@ export default function AnimalDetails() {
                             <span className="gender-icon">{getGenderIcon(animal.gender)}</span>
                         </h1>
 
-                        <div className="info-grid">
-                            <div className="info-item">
-                                <span className="info-label">🐾 Порода</span>
-                                <span className="info-value">{animal.breed}</span>
-                            </div>
-                            <div className="info-item">
-                                <span className="info-label">📅 Возраст</span>
-                                <span className="info-value">{getAgeText(animal.age)}</span>
-                            </div>
-                            <div className="info-item">
-                                <span className="info-label">⚥ Пол</span>
-                                <span className="info-value">{getGenderText(animal.gender)}</span>
-                            </div>
-                            <div className="info-item">
-                                <span className="info-label">🐶 Тип</span>
-                                <span className="info-value">{getTypeText(animal.animalType)}</span>
-                            </div>
+                        <div className="info-row">
+                            <span className="info-tag">{animal.breed}</span>
+                            <span className="info-tag">{getAgeText(animal.age)}</span>
+                            <span className="info-tag">{getGenderText(animal.gender)}</span>
+                            <span className="info-tag">{getTypeText(animal.animalType)}</span>
                         </div>
 
                         <div className="description-section">
-                            <h3>📝 Описание</h3>
                             <p>{animal.description || 'Нет описания'}</p>
                         </div>
 
-                        <div className="extra-info">
-                            <div className="extra-item">
-                                <span>👤 Хозяин</span>
-                                <span>{animal.ownerName || 'Не указан'}</span>
+                        <div className="owner-info">
+                            <div className="owner-item">
+                                <span className="owner-label">👤 Хозяин</span>
+                                <span className="owner-value">{animal.ownerName || 'Не указан'}</span>
                             </div>
-                            <div className="extra-item">
-                                <span>📅 Добавлен</span>
-                                <span>{formatDate(animal.createAt)}</span>
+                            <div className="owner-item">
+                                <span className="owner-label">📅 Добавлен</span>
+                                <span className="owner-value">{formatDate(animal.createAt)}</span>
                             </div>
                         </div>
 
@@ -162,7 +149,7 @@ export default function AnimalDetails() {
                             onClick={() => animal.ownerId && navigate(`/owner/${animal.ownerId}`)}
                             className="contact-btn"
                         >
-                            📞 Связаться с владельцем
+                            Перейти к владельцу
                         </button>
                     </div>
                 </div>

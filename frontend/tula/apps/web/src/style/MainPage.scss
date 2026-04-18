@@ -17,6 +17,7 @@ html, body {
   .logo {
     font-size: 36px;
     font-weight: 600;
+    font-family: "Playpen Sans", cursive;
   }
 
   .profile {
@@ -26,6 +27,7 @@ html, body {
     border-radius: 12px;
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-family: "Playpen Sans", cursive;
   }
 }
 
@@ -144,24 +146,47 @@ html, body {
   height: 35%;
   padding: 20px;
   background: #ffdbc5;
-  overflow-y: auto;
 
   h2 {
     margin: 0 0 10px 0;
     font-size: 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Playpen Sans", cursive;
+
+    .gender-icon {
+      font-size: 20px;
+    }
   }
 
   span {
     color: #666;
     font-size: 18px;
+    font-family: "Playpen Sans", cursive;
   }
 
   p {
     margin-top: 10px;
     font-size: 18px;
+    font-family: "Playpen Sans", cursive;
   }
 
-  button {
+  .breed {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .description {
+    margin-top: 8px;
+    font-size: 16px;
+    color: #666;
+    line-height: 1.4;
+  }
+
+  .details-btn {
     margin-top: 12px;
     width: 120px;
     height: 40px;
@@ -170,6 +195,11 @@ html, body {
     font-size: 14px;
     background: linear-gradient(135deg, #ffffff, #ffe2cf);
     cursor: pointer;
+    font-family: "Playpen Sans", cursive;
+
+    &:hover {
+      transform: scale(1.02);
+    }
   }
 }
 
@@ -185,12 +215,12 @@ html, body {
     border-radius: 50%;
     border: none;
     background: white;
-    font-size: 22px;
     cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: 0.2s ease;
 
     &:hover {
       transform: scale(1.08);
@@ -200,6 +230,29 @@ html, body {
       opacity: 0.5;
       cursor: not-allowed;
       transform: none;
+    }
+  }
+
+  .icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .btn-dislike {
+    color: #000000;
+
+    &:hover {
+      transform: scale(1.08);
+      background: #ffe5e5;
+    }
+  }
+
+  .btn-like {
+    color: #ff4d7d;
+
+    &:hover {
+      transform: scale(1.08);
+      background: #ffe3ec;
     }
   }
 }
@@ -213,68 +266,16 @@ html, body {
   padding: 10px 20px;
   border-radius: 10px;
   font-weight: 600;
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  z-index: 1000;
+  white-space: nowrap;
+  font-family: "Playpen Sans", cursive;
 
   &.show {
-    display: block;
-  }
-}
-
-.hint {
-  position: absolute;
-  top: 300px;
-  left: 200px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  z-index: 1;
-
-  @media (max-width: 1200px) {
-    display: none;
-  }
-}
-
-.hint-text {
-  font-size: 32px;
-  font-weight: 600;
-  color: #333;
-  max-width: 240px;
-  line-height: 1.1;
-}
-
-.arrow {
-  width: 240px;
-  height: 150px;
-}
-
-.arrow-path {
-  fill: none;
-  stroke: #333;
-  stroke-width: 4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.icon {
-  width: 28px;
-  height: 28px;
-}
-
-.btn-dislike {
-  color: #000;
-
-  &:hover {
-    transform: scale(1.08);
-    background: #ececec;
-  }
-}
-
-.btn-like {
-  color: #ff4d7d;
-
-  &:hover {
-    transform: scale(1.08);
-    background: #ffe3ec;
+    opacity: 1;
+    visibility: visible;
   }
 }
 
@@ -343,4 +344,44 @@ html, body {
       }
     }
   }
+}
+
+.hint {
+  position: absolute;
+  top: 50%;
+  left: 80px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 1;
+
+  @media (max-width: 1200px) {
+    display: none;
+  }
+}
+
+.hint-text {
+  font-size: 36px;
+  font-weight: 600;
+  color: #333;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  font-family: "Playpen Sans", cursive;
+}
+
+.arrow {
+  width: 180px;
+  height: 140px;
+  margin-top: 5px;
+}
+
+.arrow-path {
+  fill: none;
+  stroke: #ff8c42;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }

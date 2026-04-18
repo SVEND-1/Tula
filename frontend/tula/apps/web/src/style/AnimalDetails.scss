@@ -11,17 +11,19 @@
   z-index: 100;
 
   .logo {
-    font-size: 28px;
+    font-size: 36px;
     font-weight: 600;
+    font-family: "Playpen Sans", cursive;
   }
 
   .profile {
-    font-size: 16px;
+    font-size: 18px;
     padding: 8px 16px;
     background: linear-gradient(135deg, #ffffff, #ffd2b3);
     border-radius: 12px;
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-family: "Playpen Sans", cursive;
   }
 
   .back-btn {
@@ -49,22 +51,22 @@
 }
 
 .animal-card-details {
-  max-width: 1000px;
+  max-width: 900px;
   margin: 0 auto;
   background: white;
-  border-radius: 28px;
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
 
   @media (min-width: 768px) {
-    flex-direction: row;
+    flex-direction: column;
   }
 }
 
 .animal-image-section {
-  flex: 1;
+  width: 100%;
   background: linear-gradient(135deg, #ffcdb0, #ffdbc5);
   min-height: 400px;
   display: flex;
@@ -73,13 +75,13 @@
 
   .main-image {
     width: 100%;
-    height: 100%;
+    height: 400px;
     object-fit: cover;
   }
 
   .image-placeholder {
     width: 100%;
-    height: 100%;
+    height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -91,64 +93,51 @@
 }
 
 .animal-info-section {
-  flex: 1;
-  padding: 30px;
+  padding: 25px;
 
   h1 {
-    font-size: 32px;
-    margin: 0 0 20px 0;
+    font-size: 28px;
+    margin: 0 0 15px 0;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    font-family: "Playpen Sans", cursive;
 
     .gender-icon {
-      font-size: 24px;
+      font-size: 22px;
     }
   }
 
-  .info-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-bottom: 25px;
+  .info-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
 
-    .info-item {
+    .info-tag {
       background: #fff3eb;
-      padding: 12px;
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-
-      .info-label {
-        font-size: 12px;
-        color: #888;
-      }
-
-      .info-value {
-        font-size: 16px;
-        font-weight: 500;
-        color: #333;
-      }
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: #555;
+      font-family: "Playpen Sans", cursive;
     }
   }
 
   .description-section {
-    margin-bottom: 25px;
-
-    h3 {
-      font-size: 18px;
-      margin: 0 0 10px 0;
-    }
+    margin-bottom: 20px;
 
     p {
       font-size: 14px;
       line-height: 1.5;
       color: #555;
+      font-family: "Playpen Sans", cursive;
     }
   }
 
-  .extra-info {
+  .owner-info {
     display: flex;
     justify-content: space-between;
     padding: 15px 0;
@@ -156,31 +145,33 @@
     border-bottom: 1px solid #eee;
     margin-bottom: 20px;
 
-    .extra-item {
+    .owner-item {
       display: flex;
       flex-direction: column;
       gap: 5px;
 
-      span:first-child {
+      .owner-label {
         font-size: 12px;
-        color: #888;
+        color: #999;
+        font-family: "Playpen Sans", cursive;
       }
 
-      span:last-child {
+      .owner-value {
         font-size: 14px;
         font-weight: 500;
         color: #333;
+        font-family: "Playpen Sans", cursive;
       }
     }
   }
 
   .contact-btn {
     width: 100%;
-    padding: 14px;
+    padding: 12px;
     background: linear-gradient(135deg, #ffcdb0, #ffb88c);
     border: none;
-    border-radius: 14px;
-    font-size: 16px;
+    border-radius: 12px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     font-family: "Playpen Sans", cursive;
@@ -220,16 +211,20 @@
     padding: 80px 15px 15px 15px;
   }
 
+  .animal-image-section {
+    min-height: 300px;
+
+    .main-image, .image-placeholder {
+      height: 300px;
+    }
+  }
+
   .animal-info-section {
     padding: 20px;
   }
 
-  .info-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .extra-info {
+  .owner-info {
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
   }
 }

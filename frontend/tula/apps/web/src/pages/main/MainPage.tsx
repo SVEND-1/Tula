@@ -72,7 +72,8 @@ export default function MainPage() {
 
         try {
             if (direction === 'right') {
-                await sendLike(currentAnimal.id);
+                const response = await sendLike(currentAnimal.id);
+                console.log('Ответ сервера:', response.data); // Теперь это строка
 
                 const storedLikes = localStorage.getItem('likedAnimals');
                 const likes = storedLikes ? JSON.parse(storedLikes) : [];
@@ -91,6 +92,7 @@ export default function MainPage() {
                         likedAt: new Date().toISOString()
                     });
                     localStorage.setItem('likedAnimals', JSON.stringify(likes));
+                    console.log('✅ Лайк сохранён в localStorage');
                 }
 
                 setToastMessage(`🐾 Вам понравился ${currentAnimal.name}!`);
@@ -171,56 +173,38 @@ export default function MainPage() {
                 <div className="profile" onClick={() => navigate('/liked')}>Профиль</div>
             </header>
 
-            <div id="toast" className={`toast ${showToast ? 'show' : ''}`}>
+            <div className={`toast ${showToast ? 'show' : ''}`}>
                 {toastMessage}
             </div>
 
             <main className="home">
-                {showHint && (
-                    <div className="hint">
-                        <div className="hint-text">Выбери своего питомца</div>
-                        <svg className="arrow" viewBox="0 0 300 200">
-                            <defs>
-                                <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
-                                    <path d="M0,0 L10,5 L0,10 Z" fill="#333"/>
-                                </marker>
-                            </defs>
-                            <path className="arrow-path"
-                                  d="M 20 120 C 60 20, 160 20, 160 90 C 160 160, 220 160, 260 110"
-                                  markerEnd="url(#arrowHead)"/>
-                        </svg>
-                    </div>
-                )}
-
                 <div className="card-wrapper">
                     <div className="card-stack">
-                        <div id="next-card" className="card next">
-                            {nextAnimal && (
-                                <>
-                                    <div className="card-image">
-                                        {(() => {
-                                            const nextImage = getAnimalImage(nextAnimal);
-                                            return nextImage ? (
-                                                <img src={nextImage} alt={nextAnimal.name} />
-                                            ) : (
-                                                <div className="image-placeholder">
-                                                    <span className="animal-emoji">
-                                                        {nextAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
-                                                    </span>
-                                                </div>
-                                            );
-                                        })()}
-                                    </div>
-                                    <div className="card-info">
-                                        <h2>{nextAnimal.name}</h2>
-                                        <span>{nextAnimal.breed} • {getAgeText(nextAnimal.age)}</span>
-                                        <p>{truncateText(nextAnimal.description)}</p>
-                                    </div>
-                                </>
-                            )}
-                        </div>
+                        {nextAnimal && (
+                            <div className="card next">
+                                <div className="card-image">
+                                    {(() => {
+                                        const nextImage = getAnimalImage(nextAnimal);
+                                        return nextImage ? (
+                                            <img src={nextImage} alt={nextAnimal.name} />
+                                        ) : (
+                                            <div className="image-placeholder">
+                                                <span className="animal-emoji">
+                                                    {nextAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
+                                                </span>
+                                            </div>
+                                        );
+                                    })()}
+                                </div>
+                                <div className="card-info">
+                                    <h2>{nextAnimal.name}</h2>
+                                    <span>{nextAnimal.breed} • {getAgeText(nextAnimal.age)}</span>
+                                    <p>{truncateText(nextAnimal.description)}</p>
+                                </div>
+                            </div>
+                        )}
 
-                        <div id="current-card" className={`card current ${swipeClass}`}>
+                        <div className={`card current ${swipeClass}`}>
                             <div className="card-image">
                                 {(() => {
                                     const currentImage = getAnimalImage(currentAnimal);
@@ -246,8 +230,11 @@ export default function MainPage() {
                                     <span className="gender-icon">{getGenderIcon(currentAnimal.gender)}</span>
                                 </h2>
                                 <span>{currentAnimal.breed} • {getAgeText(currentAnimal.age)}</span>
-                                <p>{currentAnimal.description}</p>
-                                <button onClick={() => navigate(`/animal/${currentAnimal.id}`)}>
+                                <p className="description">{truncateText(currentAnimal.description)}</p>
+                                <button
+                                    onClick={() => navigate(`/animal/${currentAnimal.id}`)}
+                                    className="details-btn"
+                                >
                                     Подробнее
                                 </button>
                             </div>
@@ -255,14 +242,27 @@ export default function MainPage() {
                     </div>
 
                     <div className="buttons">
-                        <button id="dislike" onClick={() => handleSwipe('left')} className="btn-dislike" disabled={isProcessing}>
+                        <button
+                            onClick={() => handleSwipe('left')}
+                            className="btn-dislike"
+                            disabled={isProcessing}
+                        >
                             <svg viewBox="0 0 24 24" className="icon">
-                                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+                                <path d="M18 6L6 18M6 6l12 12"
+                                      stroke="currentColor"
+                                      strokeWidth="2.5"
+                                      strokeLinecap="round"/>
                             </svg>
                         </button>
-                        <button id="like" onClick={() => handleSwipe('right')} className="btn-like" disabled={isProcessing}>
+
+                        <button
+                            onClick={() => handleSwipe('right')}
+                            className="btn-like"
+                            disabled={isProcessing}
+                        >
                             <svg viewBox="0 0 24 24" className="icon">
-                                <path d="M12 21s-7-4.6-9.5-9C.5 8.2 3 5 6.5 5c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3C20 5 22.5 8.2 21.5 12 19 16.4 12 21 12 21z" fill="currentColor"/>
+                                <path d="M12 21s-7-4.6-9.5-9C.5 8.2 3 5 6.5 5c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3C20 5 22.5 8.2 21.5 12 19 16.4 12 21 12 21z"
+                                      fill="currentColor"/>
                             </svg>
                         </button>
                     </div>
