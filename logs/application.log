@@ -4376,3 +4376,260 @@ Caused by: org.postgresql.util.PSQLException: �����: ������
 2026-04-18T17:09:30.815+03:00  INFO 10164 --- [Tula] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2026-04-18T17:09:30.816+03:00  INFO 10164 --- [Tula] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
 2026-04-18T17:09:30.818+03:00  INFO 10164 --- [Tula] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.
+2026-04-18T17:09:34.472+03:00  INFO 16552 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : Starting TulaApplication using Java 21.0.10 with PID 16552 (D:\hackathon animals\target\classes started by napal in D:\hackathon animals)
+2026-04-18T17:09:34.474+03:00  INFO 16552 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-04-18T17:09:34.542+03:00  INFO 16552 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-18T17:09:34.542+03:00  INFO 16552 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-18T17:09:36.667+03:00  INFO 16552 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-18T17:09:36.942+03:00  INFO 16552 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 267 ms. Found 3 JPA repository interfaces.
+2026-04-18T17:09:38.568+03:00  INFO 16552 --- [Tula] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-18T17:09:38.590+03:00  INFO 16552 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-18T17:09:38.591+03:00  INFO 16552 --- [Tula] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-18T17:09:38.682+03:00  INFO 16552 --- [Tula] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-18T17:09:38.684+03:00  INFO 16552 --- [Tula] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4141 ms
+2026-04-18T17:09:38.930+03:00  INFO 16552 --- [Tula] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-18T17:09:39.049+03:00  INFO 16552 --- [Tula] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-18T17:09:39.091+03:00  INFO 16552 --- [Tula] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-18T17:09:39.424+03:00  INFO 16552 --- [Tula] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-18T17:09:39.532+03:00  INFO 16552 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-18T17:09:40.230+03:00  INFO 16552 --- [Tula] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6df0b45a
+2026-04-18T17:09:40.234+03:00  INFO 16552 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-18T17:09:40.295+03:00  WARN 16552 --- [Tula] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-18T17:09:42.125+03:00  INFO 16552 --- [Tula] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-18T17:09:42.288+03:00  INFO 16552 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-18T17:09:42.991+03:00  INFO 16552 --- [Tula] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-18T17:09:44.295+03:00  WARN 16552 --- [Tula] [restartedMain] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.OncePerRequestFilter.doFilter(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,jakarta.servlet.FilterChain) throws jakarta.servlet.ServletException,java.io.IOException] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-04-18T17:09:44.296+03:00  WARN 16552 --- [Tula] [restartedMain] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.GenericFilterBean.init(jakarta.servlet.FilterConfig) throws jakarta.servlet.ServletException] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-04-18T17:09:46.055+03:00  INFO 16552 --- [Tula] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4a5fbc19, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6bd7f090, org.springframework.security.web.context.SecurityContextHolderFilter@34e753aa, org.springframework.security.web.header.HeaderWriterFilter@393b393b, org.springframework.web.filter.CorsFilter@474bebf3, org.springframework.security.web.authentication.logout.LogoutFilter@ff815f3, org.example.tula.config.JwtFilter@4b40af8b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@604ab55c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@25ca17b2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7b6e7432, org.springframework.security.web.session.SessionManagementFilter@5ecebcf8, org.springframework.security.web.access.ExceptionTranslationFilter@367e1186, org.springframework.security.web.access.intercept.AuthorizationFilter@2c5ceaf]
+2026-04-18T17:09:46.659+03:00  INFO 16552 --- [Tula] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-04-18T17:09:46.761+03:00  INFO 16552 --- [Tula] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-04-18T17:09:46.803+03:00  INFO 16552 --- [Tula] [restartedMain] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-notify-group-1
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = notify-group
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2026-04-18T17:09:46.905+03:00  INFO 16552 --- [Tula] [restartedMain] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.6.1
+2026-04-18T17:09:46.905+03:00  INFO 16552 --- [Tula] [restartedMain] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 5e3c2b738d253ff5
+2026-04-18T17:09:46.905+03:00  INFO 16552 --- [Tula] [restartedMain] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1776521386904
+2026-04-18T17:09:46.909+03:00  INFO 16552 --- [Tula] [restartedMain] fkaConsumerFactory$ExtendedKafkaConsumer : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Subscribed to topic(s): notifyUser
+2026-04-18T17:09:46.934+03:00  INFO 16552 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : Started TulaApplication in 13.215 seconds (process running for 15.241)
+2026-04-18T17:09:47.419+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.Metadata        : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cluster ID: MkU3OEVBNTcwNTJENDM2Qg
+2026-04-18T17:09:47.435+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Discovered group coordinator localhost:9092 (id: 2147483646 rack: null)
+2026-04-18T17:09:47.439+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] (Re-)joining group
+2026-04-18T17:09:47.532+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Request joining group due to: need to re-join with the given member-id: consumer-notify-group-1-45a0b16f-c4ad-4c33-ba56-6bf0f56c4e5d
+2026-04-18T17:09:47.533+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Request joining group due to: rebalance failed due to 'The group member needs to have a valid member id before actually entering a consumer group.' (MemberIdRequiredException)
+2026-04-18T17:09:47.534+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] (Re-)joining group
+2026-04-18T17:09:47.736+03:00  INFO 16552 --- [Tula] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-18T17:09:47.737+03:00  INFO 16552 --- [Tula] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-18T17:09:47.738+03:00  INFO 16552 --- [Tula] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-04-18T17:09:47.883+03:00  INFO 16552 --- [Tula] [http-nio-8080-exec-1] o.example.tula.users.domain.AuthService  : Попытка входа для email=napalkov-danil@list.ru
+2026-04-18T17:09:48.194+03:00 ERROR 16552 --- [Tula] [http-nio-8080-exec-1] o.example.tula.users.domain.AuthService  : Ошибка входа для napalkov-danil@list.ru: Неверные учетные данные пользователя
+2026-04-18T17:09:50.591+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Successfully joined group with generation Generation{generationId=9, memberId='consumer-notify-group-1-45a0b16f-c4ad-4c33-ba56-6bf0f56c4e5d', protocol='range'}
+2026-04-18T17:09:50.601+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Finished assignment for group at generation 9: {consumer-notify-group-1-45a0b16f-c4ad-4c33-ba56-6bf0f56c4e5d=Assignment(partitions=[notifyUser-0])}
+2026-04-18T17:09:50.686+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Successfully synced group in generation Generation{generationId=9, memberId='consumer-notify-group-1-45a0b16f-c4ad-4c33-ba56-6bf0f56c4e5d', protocol='range'}
+2026-04-18T17:09:50.688+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Notifying assignor about the new Assignment(partitions=[notifyUser-0])
+2026-04-18T17:09:50.692+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Adding newly assigned partitions: notifyUser-0
+2026-04-18T17:09:50.735+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Setting offset for partition notifyUser-0 to the committed offset FetchPosition{offset=60, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9092 (id: 1 rack: null)], epoch=0}}
+2026-04-18T17:09:50.736+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notify-group: partitions assigned: [notifyUser-0]
+2026-04-18T17:09:53.834+03:00  INFO 16552 --- [Tula] [http-nio-8080-exec-3] o.example.tula.users.domain.AuthService  : Попытка входа для email=napalkov-danil@list.ru
+2026-04-18T17:09:53.953+03:00  INFO 16552 --- [Tula] [http-nio-8080-exec-3] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values: 
+	acks = -1
+	auto.include.jmx.reporter = true
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = producer-1
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.adaptive.partitioning.enable = true
+	partitioner.availability.timeout.ms = 0
+	partitioner.class = null
+	partitioner.ignore.keys = false
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.springframework.kafka.support.serializer.JsonSerializer
+
+2026-04-18T17:09:53.961+03:00  INFO 16552 --- [Tula] [http-nio-8080-exec-3] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=producer-1] Instantiated an idempotent producer.
+2026-04-18T17:09:53.975+03:00  INFO 16552 --- [Tula] [http-nio-8080-exec-3] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.6.1
+2026-04-18T17:09:53.975+03:00  INFO 16552 --- [Tula] [http-nio-8080-exec-3] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 5e3c2b738d253ff5
+2026-04-18T17:09:53.975+03:00  INFO 16552 --- [Tula] [http-nio-8080-exec-3] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1776521393975
+2026-04-18T17:09:53.989+03:00  INFO 16552 --- [Tula] [kafka-producer-network-thread | producer-1] org.apache.kafka.clients.Metadata        : [Producer clientId=producer-1] Cluster ID: MkU3OEVBNTcwNTJENDM2Qg
+2026-04-18T17:09:54.000+03:00  INFO 16552 --- [Tula] [kafka-producer-network-thread | producer-1] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=producer-1] ProducerId set to 3 with epoch 0
+2026-04-18T17:09:54.001+03:00  INFO 16552 --- [Tula] [http-nio-8080-exec-3] o.example.tula.users.domain.AuthService  : Пользователь вошел: napalkov-danil@list.ru, ID=2
+2026-04-18T17:09:57.026+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T17:09:59.679+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T17:10:24.884+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T17:13:30.800+03:00  INFO 16552 --- [Tula] [http-nio-8080-exec-7] o.example.tula.users.domain.AuthService  : Попытка входа для email=napalkov-danil@list.ru
+2026-04-18T17:13:31.064+03:00  INFO 16552 --- [Tula] [http-nio-8080-exec-7] o.example.tula.users.domain.AuthService  : Пользователь вошел: napalkov-danil@list.ru, ID=2
+2026-04-18T17:13:33.656+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T17:13:37.775+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T17:13:39.905+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T17:13:41.884+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T17:13:43.848+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T17:13:46.196+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T17:13:48.597+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T17:13:50.955+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T17:13:52.950+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T17:13:55.150+03:00  INFO 16552 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
