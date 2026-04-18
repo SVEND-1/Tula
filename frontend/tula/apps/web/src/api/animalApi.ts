@@ -28,6 +28,9 @@ export const getAllAnimals = () =>
 export const getAnimalById = (id: number) =>
     ANIMAL_API.get<Animal>(`/${id}`);
 
+export const getAnimalProfile = (id: number) =>
+    ANIMAL_API.get(`/profile/${id}`);
+
 export const rejectTakenAnimal = (id: number) =>
     ANIMAL_API.put<string>(`/rejection/${id}`);
 

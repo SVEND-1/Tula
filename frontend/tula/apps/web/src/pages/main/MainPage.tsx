@@ -255,6 +255,12 @@ export default function MainPage() {
                                 </h2>
                                 <span>{currentAnimal.breed} • {getAgeText(currentAnimal.age)}</span>
                                 <p className="description">{truncateText(currentAnimal.description)}</p>
+                                <button
+                                    onClick={() => navigate(`/animal/${currentAnimal.id}`)}
+                                    className="details-btn"
+                                >
+                                    Подробнее
+                                </button>
                             </div>
                         </div>
                     </div>

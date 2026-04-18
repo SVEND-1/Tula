@@ -374,3 +374,18 @@ html, body {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+.details-btn {
+  margin-top: 12px;
+  width: 120px;
+  height: 40px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  background: linear-gradient(135deg, #ffffff, #ffe2cf);
+  cursor: pointer;
+  font-family: "Playpen Sans", cursive;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
