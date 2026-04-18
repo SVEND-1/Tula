@@ -14,7 +14,6 @@ import org.example.tula.chats.domain.mappers.ChatMapper;
 import org.example.tula.users.db.UserEntity;
 import org.example.tula.users.db.UserRepository;
 import org.example.tula.users.domain.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,6 +38,7 @@ public class ChatService {
         UserEntity sellerUser = animalEntity.getOwner().getOwner();
 
         checkAnimalIsNotCurrentUser(currentUser, sellerUser);
+        checkChatIsNotAlreadyExist(currentUser, animalEntity);
 
         ChatEntity chatEntity = ChatEntity.builder()
                 .seller(sellerUser)
@@ -54,8 +54,16 @@ public class ChatService {
     //====================================SERVICE METHODS=======================================================
     private void checkAnimalIsNotCurrentUser(UserEntity currentUser, UserEntity sellerUser) {
         if (currentUser.getId().equals(sellerUser.getId())) {
-            log.info("there");
             throw new ChatException("You cannot create a new chat for yourself");
+        }
+    }
+
+    private void checkChatIsNotAlreadyExist(
+            UserEntity currentUser,
+            AnimalEntity animalEntity
+    ) {
+        if (chatRepository.existsChat(currentUser, animalEntity)) {
+            throw new ChatException("You already have chat by this animal");
         }
     }
 }
