@@ -7,7 +7,7 @@ import AuthTitle from "../../../components/auth/global/AuthTitle";
 import AuthSubtitle from "../../../components/auth/global/AuthSubtitle";
 import RegisterForm from "../../../components/auth/register/RegisterForm";
 import * as React from "react";
-import "../../../style/AuthForm.css";
+import "../../../style/AuthForm.scss";
 
 export default function Register() {
     const navigate = useNavigate();
@@ -46,7 +46,7 @@ export default function Register() {
         <AuthContainer>
             <div className="auth-form-wrapper">
                 <div className="auth-form">
-                    <AuthTitle>AI chats</AuthTitle>
+                    <AuthTitle>Adoptly</AuthTitle>
                     <AuthSubtitle>Register</AuthSubtitle>
                     <RegisterForm {...registerFormProps} />
                 </div>

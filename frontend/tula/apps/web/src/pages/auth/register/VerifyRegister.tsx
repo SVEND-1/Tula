@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { verifyRegister } from "../../../api/authApi";
-import "../../../style/AuthForm.css";
+import "../../../style/AuthForm.scss";
 
 export default function VerifyRegister() {
     const [code, setCode] = useState<string>("");
@@ -48,7 +48,7 @@ export default function VerifyRegister() {
         <div className="auth-container">
             <div className="auth-form-wrapper">
                 <div className="auth-form">
-                    <h2 className="auth-title">AI chats</h2>
+                    <h2 className="auth-title">Adoptly</h2>
                     <h3 className="auth-title3">Verification</h3>
 
                     <form onSubmit={handleSubmit}>

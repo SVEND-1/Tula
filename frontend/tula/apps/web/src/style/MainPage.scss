@@ -195,29 +195,44 @@ html, body {
     border-radius: 50%;
     border: none;
     background: white;
-    font-size: 22px;
     cursor: pointer;
     transition: transform 0.2s;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
-      transform: scale(1.05);
-    }
-
-    &.dislike-btn:hover {
-      background: #ffebee;
-      color: #f44336;
-    }
-
-    &.like-btn:hover {
-      background: #e8f5e9;
-      color: #4caf50;
+      transform: scale(1.08);
     }
 
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
       transform: none;
+    }
+  }
+
+  .icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .btn-dislike {
+    color: #000000;
+
+    &:hover {
+      transform: scale(1.08);
+      background: #ffe5e5;
+    }
+  }
+
+  .btn-like {
+    color: #ff4d7d;
+
+    &:hover {
+      transform: scale(1.08);
+      background: #ffe3ec;
     }
   }
 }
