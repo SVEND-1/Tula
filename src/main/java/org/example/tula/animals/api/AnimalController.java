@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.api.dto.request.AnimalFeedFilter;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
+import org.example.tula.animals.api.dto.response.AnimalProfileResponse;
 import org.example.tula.animals.domain.AnimalService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,13 @@ public class AnimalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Animal> profile(@PathVariable Long id) {
+    public ResponseEntity<Animal> getAnimal(@PathVariable Long id) {
         return ResponseEntity.ok(animalService.findAnimalById(id));
+    }
+
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<AnimalProfileResponse> profile(@PathVariable Long id) {
+        return ResponseEntity.ok(animalService.profile(id));
     }
 
     @PostMapping

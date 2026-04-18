@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.api.dto.request.AnimalFeedFilter;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
+import org.example.tula.animals.api.dto.response.AnimalProfileResponse;
 import org.example.tula.animals.db.*;
 import org.example.tula.animals.domain.mapper.AnimalMapper;
 import org.example.tula.likes.api.dto.Like;
@@ -60,6 +61,20 @@ public class AnimalService {
     }
     public AnimalEntity findAnimalEntityById(Long id) {
         return animalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Питомец не найден"));
+    }
+
+    public AnimalProfileResponse profile(Long id){
+        AnimalEntity animal = findAnimalEntityById(id);
+        return new AnimalProfileResponse(//TODO перенести маппер
+                animal.getName(),
+                animal.getAge(),
+                animal.getDescription(),
+                animal.getBreed(),
+                animal.getGender(),
+                animal.getAnimalType(),
+                animal.getOwner().getName(),
+                animal.getCreateAt()
+        );
     }
 
     public Animal save(CreatedAnimalRequest request) {

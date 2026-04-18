@@ -36,6 +36,10 @@ public class OwnerService {
     private final AnimalMapper animalMapper;
 
 
+    public OwnerEntity findByIdEntity(Long id){
+        return ownerRepository.findByOwnerId(id);
+    }
+
     public String createOwner(String name){
         try {
             ownerRepository.save(OwnerEntity.builder()
