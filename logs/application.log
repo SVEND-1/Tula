@@ -3457,3 +3457,137 @@ org.apache.kafka.common.errors.DisconnectException: null
 2026-04-18T16:21:59.405+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-3, groupId=notify-group] Adding newly assigned partitions: notifyUser-0
 2026-04-18T16:21:59.432+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-3, groupId=notify-group] Setting offset for partition notifyUser-0 to the committed offset FetchPosition{offset=30, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9092 (id: 1 rack: null)], epoch=0}}
 2026-04-18T16:21:59.433+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notify-group: partitions assigned: [notifyUser-0]
+2026-04-18T16:23:46.245+03:00  INFO 10164 --- [Tula] [http-nio-8080-exec-5] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values: 
+	acks = -1
+	auto.include.jmx.reporter = true
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = producer-2
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.adaptive.partitioning.enable = true
+	partitioner.availability.timeout.ms = 0
+	partitioner.class = null
+	partitioner.ignore.keys = false
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.springframework.kafka.support.serializer.JsonSerializer
+
+2026-04-18T16:23:46.262+03:00  INFO 10164 --- [Tula] [http-nio-8080-exec-5] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=producer-2] Instantiated an idempotent producer.
+2026-04-18T16:23:46.286+03:00  INFO 10164 --- [Tula] [http-nio-8080-exec-5] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.6.1
+2026-04-18T16:23:46.287+03:00  INFO 10164 --- [Tula] [http-nio-8080-exec-5] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 5e3c2b738d253ff5
+2026-04-18T16:23:46.288+03:00  INFO 10164 --- [Tula] [http-nio-8080-exec-5] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1776518626286
+2026-04-18T16:23:46.358+03:00  INFO 10164 --- [Tula] [kafka-producer-network-thread | producer-2] org.apache.kafka.clients.Metadata        : [Producer clientId=producer-2] Cluster ID: MkU3OEVBNTcwNTJENDM2Qg
+2026-04-18T16:23:46.376+03:00  INFO 10164 --- [Tula] [kafka-producer-network-thread | producer-2] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=producer-2] ProducerId set to 2 with epoch 0
+2026-04-18T16:23:48.989+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:23:51.144+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:24:08.516+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:26:27.358+03:00  WARN 10164 --- [Tula] [http-nio-8080-exec-1] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 22001
+2026-04-18T16:26:27.361+03:00 ERROR 10164 --- [Tula] [http-nio-8080-exec-1] o.h.engine.jdbc.spi.SqlExceptionHelper   : ОШИБКА: значение не умещается в тип character varying(255)
+2026-04-18T16:26:27.441+03:00 ERROR 10164 --- [Tula] [http-nio-8080-exec-1] o.e.tula.animals.domain.AnimalService    : Не удалось создать питомеца,ex=could not execute statement [ОШИБКА: значение не умещается в тип character varying(255)] [insert into animals (age,animal_type,breed,create_at,description,gender,name,owner_id,person_take_id,status) values (?,?,?,?,?,?,?,?,?,?)]; SQL [insert into animals (age,animal_type,breed,create_at,description,gender,name,owner_id,person_take_id,status) values (?,?,?,?,?,?,?,?,?,?)]
+2026-04-18T16:26:27.468+03:00  WARN 10164 --- [Tula] [http-nio-8080-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.RuntimeException: org.springframework.dao.DataIntegrityViolationException: could not execute statement [ОШИБКА: значение не умещается в тип character varying(255)] [insert into animals (age,animal_type,breed,create_at,description,gender,name,owner_id,person_take_id,status) values (?,?,?,?,?,?,?,?,?,?)]; SQL [insert into animals (age,animal_type,breed,create_at,description,gender,name,owner_id,person_take_id,status) values (?,?,?,?,?,?,?,?,?,?)]]
+2026-04-18T16:27:38.588+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:27:40.670+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:27:43.029+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:27:45.010+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:27:47.079+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:27:49.046+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:27:51.509+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:27:53.645+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:27:55.626+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:27:57.632+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:27:59.575+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:28:01.654+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:28:03.618+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:28:05.509+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:28:07.495+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:30:56.656+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-3, groupId=notify-group] Node -1 disconnected.
+2026-04-18T16:32:46.414+03:00  INFO 10164 --- [Tula] [kafka-producer-network-thread | producer-2] org.apache.kafka.clients.NetworkClient   : [Producer clientId=producer-2] Node -1 disconnected.
+2026-04-18T16:32:55.725+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:33:10.174+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:33:12.444+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:33:15.004+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:33:17.204+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:33:19.739+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:33:22.245+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:33:24.653+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:33:27.936+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:33:30.429+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:53:13.802+03:00  INFO 10164 --- [Tula] [http-nio-8080-exec-7] o.example.tula.users.domain.AuthService  : Попытка входа для email=danil.napalkov.07@inbox.ru
+2026-04-18T16:53:14.116+03:00 ERROR 10164 --- [Tula] [http-nio-8080-exec-7] o.example.tula.users.domain.AuthService  : Ошибка входа для danil.napalkov.07@inbox.ru: Неверные учетные данные пользователя
+2026-04-18T16:59:08.856+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-18T16:59:11.272+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
