@@ -37,10 +37,20 @@ public class ChatMessageController {
     }
 
     @Operation(summary = "Получить все сообщения чата")
-    @GetMapping
+    @GetMapping("/{chat_id}")
     public ResponseEntity<List<ChatMessageResponse>> getAllMessagesFromChat(
-            @RequestBody @Valid GetAllChatMessagesRequest request
+            @Parameter(description = "Id чата для сообщений")
+            @PathVariable("chat_id") Long chatId,
+            @RequestParam(name = "pageSize", required = false) Integer pageSize,
+            @RequestParam(name = "pageNum", required = false) Integer pageNum
     ) {
+
+        GetAllChatMessagesRequest request = new GetAllChatMessagesRequest(
+                chatId,
+                pageSize,
+                pageNum
+        );
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(chatMessageService.getAllMessagesFromChat(request));
@@ -58,20 +68,40 @@ public class ChatMessageController {
     }
 
     @Operation(summary = "Получить все сообщения продавца из чата")
-    @GetMapping("/seller")
+    @GetMapping("/seller/{chat_id}")
     public ResponseEntity<List<ChatMessageResponse>> getAllSellerMessagesFromChat(
-            @RequestParam @Valid GetAllChatMessagesRequest request
+            @Parameter(description = "Id чата для сообщений")
+            @PathVariable("chat_id") Long chatId,
+            @RequestParam(name = "pageSize", required = false) Integer pageSize,
+            @RequestParam(name = "pageNum", required = false) Integer pageNum
     ) {
+
+        GetAllChatMessagesRequest request = new GetAllChatMessagesRequest(
+                chatId,
+                pageSize,
+                pageNum
+        );
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(chatMessageService.getAllSellerMessagesFromChat(request));
     }
 
     @Operation(summary = "Получить все сообщения покупателя из чата")
-    @GetMapping("/buyer")
+    @GetMapping("/buyer/{chat_id}")
     public ResponseEntity<List<ChatMessageResponse>> getAllBuyerMessagesFromChat(
-            @RequestParam @Valid GetAllChatMessagesRequest request
+            @Parameter(description = "Id чата для сообщений")
+            @PathVariable("chat_id") Long chatId,
+            @RequestParam(name = "pageSize", required = false) Integer pageSize,
+            @RequestParam(name = "pageNum", required = false) Integer pageNum
     ) {
+
+        GetAllChatMessagesRequest request = new GetAllChatMessagesRequest(
+                chatId,
+                pageSize,
+                pageNum
+        );
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(chatMessageService.getAllBuyerMessagesFromChat(request));

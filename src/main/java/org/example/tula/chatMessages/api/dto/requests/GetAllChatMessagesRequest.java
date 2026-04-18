@@ -1,9 +1,9 @@
 package org.example.tula.chatMessages.api.dto.requests;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record GetAllChatMessagesRequest(
-        @NotBlank
+        @NotNull
         Long chatId,
         Integer pageSize,
         Integer pageNum

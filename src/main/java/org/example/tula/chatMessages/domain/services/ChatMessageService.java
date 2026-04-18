@@ -10,7 +10,6 @@ import org.example.tula.chatMessages.db.enums.SenderType;
 import org.example.tula.chatMessages.db.repositories.ChatMessageRepository;
 import org.example.tula.chatMessages.domain.mappers.ChatMessageMapper;
 import org.example.tula.chats.db.entities.ChatEntity;
-import org.example.tula.chats.db.repositories.ChatRepository;
 import org.example.tula.chats.domain.services.ChatService;
 import org.example.tula.users.db.UserEntity;
 import org.example.tula.users.domain.UserService;
@@ -99,6 +98,8 @@ public class ChatMessageService {
                 chatService.getChatByIdWithCheckUser(request.chatId(), currentUser);
         Pageable pageable = assemblePageable(request.pageSize(), request.pageNum());
 
+        log.info("gok");
+
         List<ChatMessageEntity> buyerMessages =
                 chatMessageRepository.findAllByChatAndSenderType(chatEntity, SenderType.BUYER, pageable);
         log.debug("Found {} buyers messages from chat", buyerMessages.size());
@@ -118,7 +119,7 @@ public class ChatMessageService {
     }
 
     private Pageable assemblePageable(Integer pageSize, Integer pageNum) {
-        int pageSizeForPageable = pageSize == null ? 5 : pageSize;
+        int pageSizeForPageable = pageSize == null || pageSize == 0 ? 5 : pageSize;
         int pageNumForPageable = pageNum == null ? 0 : pageNum;
         return Pageable
                 .ofSize(pageSizeForPageable)
