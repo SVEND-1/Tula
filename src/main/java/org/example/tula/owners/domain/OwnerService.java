@@ -1,4 +1,4 @@
-package org.example.tula.users.domain;
+package org.example.tula.owners.domain;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -7,14 +7,17 @@ import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.db.AnimalEntity;
 import org.example.tula.animals.db.StatusAnimal;
 import org.example.tula.animals.domain.AnimalService;
+import org.example.tula.animals.domain.mapper.AnimalMapper;
 import org.example.tula.likes.api.dto.Like;
 import org.example.tula.likes.db.StatusAnswer;
 import org.example.tula.likes.domain.LikeService;
 import org.example.tula.notify.event.NotifyEvent;
 import org.example.tula.notify.event.NotifyType;
 import org.example.tula.notify.kafka.NotifyKafkaProducer;
-import org.example.tula.users.api.dto.owner.request.UpdatedAnimalRequest;
+import org.example.tula.owners.db.OwnerEntity;
+import org.example.tula.owners.db.OwnerRepository;
 import org.example.tula.users.db.UserEntity;
+import org.example.tula.users.domain.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,32 +32,47 @@ public class OwnerService {
     private final AnimalService animalService;
     private final LikeService likeService;
     private final NotifyKafkaProducer notifyKafkaProducer;
+    private final OwnerRepository ownerRepository;
+    private final AnimalMapper animalMapper;
 
+
+    public OwnerEntity findByIdEntity(Long id){
+        return ownerRepository.findByOwnerId(id);
+    }
+
+    public String createOwner(String name){
+        try {
+            ownerRepository.save(OwnerEntity.builder()
+                            .name(name)
+                            .owner(userService.getCurrentUser())
+                    .build());
+            return "Успешно";
+        }catch (Exception e) {
+            log.error("Не удалось создать приют ,ex={}" ,e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Transactional
     public List<Animal> findAllAnimalByOwner(){
         try {
-            return animalService.findAllAnimalByOwner();
+            return animalMapper.convertEntityListToDTO(
+                    ownerRepository.findByOwnerId(userService.getCurrentUser().getId()).getAnimals()
+            );
         }catch (Exception e){
             log.error("Не удалось найти животных у данного пользователя",e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
-    public Animal updateAnimal(Long animalId, UpdatedAnimalRequest request) {
-        try {
-            return null;
-        }catch (Exception e){
-            log.error("Не удалось обновить питомца,ex={}", e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
 
     @Transactional//TODO возможно перенести в другой класс
-    public String rejectionTakenAnimal(Long id) {//TODO ДОБАВИТЬ ОТКАЗ И УВЕДОМЛЕНИЕ
+    public String rejectionTakenAnimal(Long id) {
         try {
             Like like = likeService.findById(id);
             AnimalEntity animal = animalService.findAnimalEntityById(like.animalId());
 
-            if(!isValidReject(animal)) {
+            if(!isValidReject(like.userId(),animal)) {
                 return "Что то пошло не так";
             }
 
@@ -96,9 +114,9 @@ public class OwnerService {
         }
     }
 
-    private boolean isValidReject(AnimalEntity animal){
+    private boolean isValidReject(Long userId,AnimalEntity animal){
         //TODO ДОБАВИТЬ ПРОВЕРКУ НА ВЛАДЕЛЬЦА ЖИВОТНОГО
-        if (animal.getPersonTakeId() == null) {
+        if (userId == null) {
             log.warn("Нельзя отклонить заявку так как нету получателя");
             throw new IllegalArgumentException("Нельзя отклонить заявку так как нету получателя");
         }

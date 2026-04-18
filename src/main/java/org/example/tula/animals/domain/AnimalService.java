@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.api.dto.request.AnimalFeedFilter;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
+import org.example.tula.animals.api.dto.response.AnimalProfileResponse;
 import org.example.tula.animals.db.*;
 import org.example.tula.animals.domain.mapper.AnimalMapper;
 import org.example.tula.likes.api.dto.Like;
@@ -53,12 +54,6 @@ public class AnimalService {
         );
     }
 
-    public List<Animal> findAllAnimalByOwner(){
-        return animalMapper.convertEntityListToDTO(
-                animalRepository.findAllByOwnerId(userService.getCurrentUser().getId())
-        );
-    }
-
     public Animal findAnimalById(Long id) {
         return animalMapper.convertEntityToDTO(
                 findAnimalEntityById(id)
@@ -68,8 +63,23 @@ public class AnimalService {
         return animalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Питомец не найден"));
     }
 
+    public AnimalProfileResponse profile(Long id){
+        AnimalEntity animal = findAnimalEntityById(id);
+        return new AnimalProfileResponse(//TODO перенести маппер
+                animal.getName(),
+                animal.getAge(),
+                animal.getDescription(),
+                animal.getBreed(),
+                animal.getGender(),
+                animal.getAnimalType(),
+                animal.getOwner().getName(),
+                animal.getCreateAt()
+        );
+    }
+
     public Animal save(CreatedAnimalRequest request) {
         try {
+            //TODO if проверка на создание приюта
             AnimalEntity animalEntity = animalRepository.save(//TODO добавть  владельца
                     AnimalEntity.builder()
                             .name(request.name())
@@ -79,7 +89,7 @@ public class AnimalService {
                             .gender(request.gender())
                             .animalType(request.animalType())
                             .status(StatusAnimal.DONT_TAKE)
-                            .owner(userService.getCurrentUser())
+                            .owner(userService.getCurrentUser().getOwner())
                             .createAt(LocalDateTime.now())
                             .build()
             );

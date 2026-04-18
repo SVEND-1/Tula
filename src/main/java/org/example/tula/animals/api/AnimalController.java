@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.api.dto.request.AnimalFeedFilter;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
+import org.example.tula.animals.api.dto.response.AnimalProfileResponse;
 import org.example.tula.animals.domain.AnimalService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,18 +28,14 @@ public class AnimalController {
         return ResponseEntity.ok(animalService.findAnimalById(id));
     }
 
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<AnimalProfileResponse> profile(@PathVariable Long id) {
+        return ResponseEntity.ok(animalService.profile(id));
+    }
+
     @PostMapping
     public ResponseEntity<Animal> createAnimal(@RequestBody CreatedAnimalRequest request) {
         return ResponseEntity.ok(animalService.save(request));
     }
 
-    @PutMapping("/rejection/{likeId}")
-    public ResponseEntity<String> rejectionTakenAnimal(@PathVariable Long likeId) {//TODO В OWNER ПЕРЕНЕСТИ
-        return ResponseEntity.ok(animalService.rejectionTakenAnimal(likeId));
-    }
-
-    @PutMapping("/confirm/{likeId}")
-    public ResponseEntity<String> confirmTakenAnimal(@PathVariable Long likeId) {
-        return ResponseEntity.ok(animalService.confirmTakenAnimal(likeId));
-    }
 }
