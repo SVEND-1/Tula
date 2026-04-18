@@ -1,6 +1,7 @@
 package org.example.tula.chats.domain.services;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.tula.animals.db.AnimalEntity;
@@ -28,13 +29,14 @@ public class ChatService {
 
     //====================================CONTROLLER METHODS=======================================================
 
+    @Transactional
     public ChatResponse createNewChat(Long animalId) {
         log.info("Creating a new chat for animal profile with id {}", animalId);
         UserEntity currentUser = userService.getCurrentUser();
 
         AnimalEntity animalEntity = animalRepository.findById(animalId)
                 .orElseThrow(() -> new EntityNotFoundException("Animal with id " + animalId + " not found"));
-        UserEntity sellerUser = animalEntity.getOwner();
+        UserEntity sellerUser = animalEntity.getOwner().getOwner();
 
         checkAnimalIsNotCurrentUser(currentUser, sellerUser);
 
@@ -52,7 +54,8 @@ public class ChatService {
     //====================================SERVICE METHODS=======================================================
     private void checkAnimalIsNotCurrentUser(UserEntity currentUser, UserEntity sellerUser) {
         if (currentUser.getId().equals(sellerUser.getId())) {
-            throw new ChatException(HttpStatus.BAD_REQUEST, "You cannot create a new chat for yourself");
+            log.info("there");
+            throw new ChatException("You cannot create a new chat for yourself");
         }
     }
 }
