@@ -16,4 +16,8 @@ export const sendDislike = (animalId: number) => {
     return LIKE_API.post(`/dislike/${animalId}`);
 };
 
+export const getUserLikes = () => {
+    return LIKE_API.get('/user/likes');
+};
+
 export default LIKE_API;

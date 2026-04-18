@@ -7,7 +7,7 @@ import ForgotPassword from "./pages/auth/forgot-password/ForgotPassword";
 import ResetPassword from "./pages/auth/reset-password/ResetPassword";
 import MainPage from "./pages/main/MainPage";
 import AdminAnimals from "./pages/admin/AdminAnimals";
-import Chat from "./pages/chat/Chat";
+import LikedAnimals from "./pages/liked/LikedAnimals";
 
 function App() {
     return (
@@ -21,7 +21,7 @@ function App() {
                 <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/main" element={<MainPage />} />
                 <Route path="/admin" element={<AdminAnimals />} />
-                <Route path="/chat" element={<Chat />} />
+                <Route path="/liked" element={<LikedAnimals />} />
             </Routes>
         </BrowserRouter>
     );
