@@ -5,6 +5,6 @@ import java.time.LocalDateTime;
 public record Review(
         Long id,
         String content,
-        LocalDateTime createAt
+        LocalDateTime createdAt
 ) {
 }

@@ -7,6 +7,8 @@ import org.example.tula.reviews.domain.ReviewService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/reviews")
 @RequiredArgsConstructor
@@ -16,6 +18,11 @@ public class ReviewController {
     @GetMapping("/{id}")
     public ResponseEntity<Review> getReview(@PathVariable("id") Long id) {
         return ResponseEntity.ok(reviewService.findById(id));
+    }
+
+    @GetMapping("/owner/{id}")
+    public ResponseEntity<List<Review>> getReviewsByOwnerId(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(reviewService.findAllByReviewBy(id));
     }
 
     @PostMapping

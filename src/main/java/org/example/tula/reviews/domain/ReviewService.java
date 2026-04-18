@@ -13,6 +13,7 @@ import org.example.tula.users.domain.UserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -32,6 +33,12 @@ public class ReviewService {
     public ReviewEntity findByIdEntity(Long id) {
         return reviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
 
+    }
+
+    public List<Review> findAllByReviewBy(Long id) {
+        return reviewMapper.convertEntityListToDTO(
+                reviewRepository.findAllByReviewedById(id)
+        );
     }
 
     public Review createReview(CreateReviewRequest request) {
