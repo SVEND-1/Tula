@@ -35,6 +35,7 @@
 - MinIO (S3-совместимое хранилище)
 - Maven
 - Docker / Docker Compose
+- ЮКАССА
 
 ### Frontend
 - React
