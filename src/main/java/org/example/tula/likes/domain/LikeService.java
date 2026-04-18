@@ -4,10 +4,9 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.db.AnimalEntity;
 import org.example.tula.animals.domain.AnimalService;
-import org.example.tula.animals.domain.mapper.AnimalMapper;
+import org.example.tula.chats.domain.services.ChatService;
 import org.example.tula.likes.api.dto.Like;
 import org.example.tula.likes.api.dto.response.TakeResponse;
 import org.example.tula.likes.db.LikeEntity;
@@ -18,14 +17,11 @@ import org.example.tula.likes.domain.mapper.LikeMapper;
 import org.example.tula.notify.event.NotifyEvent;
 import org.example.tula.notify.event.NotifyType;
 import org.example.tula.notify.kafka.NotifyKafkaProducer;
-import org.example.tula.users.db.UserEntity;
 import org.example.tula.users.domain.UserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -36,7 +32,7 @@ public class LikeService {
     private final AnimalService animalService;
     private final UserService userService;
     private final NotifyKafkaProducer notifyKafkaProducer;
-    private final AnimalMapper animalMapper;
+    private final ChatService chatService;
 
     public Like findById(Long id) {
         return likeMapper.convertEntityToDTO(
@@ -44,15 +40,15 @@ public class LikeService {
         );
     }
 
-
     @Transactional
-    public Like like(Long animalId) {//TODO ДОБАВИТЬ СОЗДАНИЕ ЧАТА
+    public Like like(Long animalId) {
         try {
             TakeResponse takeResponse = animalService.takenAnimal(animalId);
-
             AnimalEntity animal = animalService.findAnimalEntityById(animalId);
 
             notify(takeResponse);
+
+            chatService.createNewChat(animalId);
 
             return likeMapper.convertEntityToDTO(likeRepository.save(
                     LikeEntity.builder()

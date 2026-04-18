@@ -99,8 +99,6 @@ public class OwnerService {
         try {
             isValidCreatedOwner();
 
-            log.info("AAAAAAAAAAAAA {}",id);
-
             Like like = likeService.findById(id);
             AnimalEntity animal = animalService.findAnimalEntityById(like.animal().id());
 

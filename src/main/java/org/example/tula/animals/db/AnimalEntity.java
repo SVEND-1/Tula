@@ -14,7 +14,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "animals")
+@Table(name = "animals",indexes = {
+        @Index(name = "idx_animals_owner_id", columnList = "owner_id"),
+        @Index(name = "idx_animals_status", columnList = "status")
+})
 public class AnimalEntity {
 
     @Id

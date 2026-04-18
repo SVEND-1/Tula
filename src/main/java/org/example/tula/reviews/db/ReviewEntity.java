@@ -13,7 +13,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "reviews")
+@Table(name = "reviews", indexes = {
+        @Index(name = "idx_reviews_reviewed_by_id", columnList = "reviewed_by_id")
+})
 public class ReviewEntity {
 
     @Id
