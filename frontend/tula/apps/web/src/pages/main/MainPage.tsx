@@ -1,10 +1,12 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAllAnimals } from '../../api/animalApi';
 import { sendLike, sendDislike } from '../../api/likeApi';
 import type { Animal } from '../../types/animal/animal.types.ts';
 import '../../style/MainPage.scss';
-import { useEffect, useState } from "react";
 
 export default function MainPage() {
+    const navigate = useNavigate();
     const [animals, setAnimals] = useState<Animal[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -70,9 +72,9 @@ export default function MainPage() {
 
         try {
             if (direction === 'right') {
-                await sendLike(currentAnimal.id);
+                const response = await sendLike(currentAnimal.id);
+                console.log('Ответ сервера:', response.data); // Теперь это строка
 
-                // Сохраняем лайк в localStorage
                 const storedLikes = localStorage.getItem('likedAnimals');
                 const likes = storedLikes ? JSON.parse(storedLikes) : [];
                 const alreadyLiked = likes.some((a: any) => a.id === currentAnimal.id);

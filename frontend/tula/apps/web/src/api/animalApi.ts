@@ -9,6 +9,15 @@ const ANIMAL_API = axios.create({
     }
 });
 
+// Добавляем токен
+ANIMAL_API.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
 export const createAnimal = (data: CreateAnimalRequest) => {
     const cleanData = {
         name: data.name.trim(),
@@ -18,12 +27,13 @@ export const createAnimal = (data: CreateAnimalRequest) => {
         gender: data.gender,
         animalType: data.animalType
     };
-
     return ANIMAL_API.post<Animal>('', cleanData);
 };
 
-export const getAllAnimals = () =>
-    ANIMAL_API.get<Animal[]>('');
+export const getAllAnimals = () => {
+    // Используем эндпоинт /api/animals (без /feed)
+    return ANIMAL_API.get<Animal[]>('');
+};
 
 export const getAnimalById = (id: number) =>
     ANIMAL_API.get<Animal>(`/${id}`);
