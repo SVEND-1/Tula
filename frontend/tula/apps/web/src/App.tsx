@@ -10,6 +10,7 @@ import AdminAnimals from "./pages/admin/AdminAnimals";
 import LikedAnimals from "./pages/liked/LikedAnimals";
 import Chat from "./pages/chat/Chat.tsx";
 import AnimalDetails from "./pages/animal/AnimalDetails";
+import OwnerProfile from "./pages/owner/OwnerProfile";
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/liked" element={<LikedAnimals />} />
                 <Route path="/animal/:id" element={<AnimalDetails />} />
+                <Route path="/owner/:id" element={<OwnerProfile />} />
             </Routes>
         </BrowserRouter>
     );

@@ -158,7 +158,10 @@ export default function AnimalDetails() {
                             </div>
                         </div>
 
-                        <button className="contact-btn">
+                        <button
+                            onClick={() => animal.ownerId && navigate(`/owner/${animal.ownerId}`)}
+                            className="contact-btn"
+                        >
                             📞 Связаться с владельцем
                         </button>
                     </div>
