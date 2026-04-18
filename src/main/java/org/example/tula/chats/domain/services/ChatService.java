@@ -1,7 +1,6 @@
 package org.example.tula.chats.domain.services;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.tula.animals.db.AnimalEntity;
@@ -67,6 +66,16 @@ public class ChatService {
         return chatMapper.convertEntityListToResponseList(chatEntities);
     }
 
+    public ChatResponse getChatById(Long id) {
+        log.info("Getting chat with id {}", id);
+        UserEntity currentUser = userService.getCurrentUser();
+
+        ChatEntity chatEntity = getChatByIdWithCheckUser(id, currentUser);
+        log.debug("Found chat with id {}", chatEntity.getId());
+
+        return chatMapper.convertEntityToResponse(chatEntity);
+    }
+
     //====================================SERVICE METHODS=======================================================
     private void checkAnimalIsNotCurrentUser(UserEntity currentUser, UserEntity sellerUser) {
         if (currentUser.getId().equals(sellerUser.getId())) {
@@ -89,5 +98,28 @@ public class ChatService {
         return Pageable
                 .ofSize(pageSizeForPageable)
                 .withPage(pageNumForPageable);
+    }
+
+    private void checkForCurrentUser(
+            ChatEntity chatEntity,
+            UserEntity currentUser
+    ) {
+        log.debug("Checking for current user");
+        if (!chatEntity.getSeller().getId().equals(currentUser.getId()) &&
+                (!chatEntity.getBuyer().getId().equals(currentUser.getId()))) {
+            throw new ChatException("It's not your chat");
+        }
+    }
+
+    //====================================METHODS FOR OTHER SERVICES=======================================================
+
+    public ChatEntity getChatByIdWithCheckUser(Long id, UserEntity currentUser) {
+        log.debug("Getting chat with id {}", id);
+        ChatEntity chatEntity = chatRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Chat with id " + id + " not found"));
+
+        checkForCurrentUser(chatEntity, currentUser);
+
+        return chatEntity;
     }
 }

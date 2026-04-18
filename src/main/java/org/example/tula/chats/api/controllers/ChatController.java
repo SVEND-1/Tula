@@ -42,4 +42,15 @@ public class ChatController {
                 .status(HttpStatus.OK)
                 .body(chatService.getAllChatsByUser(pageSize, pageNum));
     }
+
+    @Operation(summary = "Получить чат по id (ТОЛЬКО ПРИНАДЛЕЖАЩИЕ ТЕКУЩЕМУ ПОЛЬЗОВАТЕЛЮ!)")
+    @GetMapping("/{id}")
+    public ResponseEntity<ChatResponse> getChatById(
+            @Parameter(description = "Id чата")
+            @PathVariable("id") Long id
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(chatService.getChatById(id));
+    }
 }
