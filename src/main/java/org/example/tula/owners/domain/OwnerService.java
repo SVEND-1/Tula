@@ -44,21 +44,27 @@ public class OwnerService {
     @Transactional
     public List<Animal> findAllAnimalByOwner(){
         try {
+            isValidCreatedOwner();
+
             return animalMapper.convertEntityListToDTO(
                     ownerRepository.findByOwnerId(userService.getCurrentUser().getId()).getAnimals()
             );
         }catch (Exception e){
-            log.error("Не удалось найти животных у данного пользователя",e.getMessage());
+            log.error("Не удалось найти животных у данного пользователя,ex={}",e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
+    @Transactional
     public String createOwner(String name){
         try {
+            UserEntity user = userService.getCurrentUser();
+
             ownerRepository.save(OwnerEntity.builder()
                     .name(name)
-                    .owner(userService.getCurrentUser())
+                    .owner(user)
                     .build());
+
             return "Успешно";
         }catch (Exception e) {
             log.error("Не удалось создать приют ,ex={}" ,e.getMessage());
@@ -70,6 +76,8 @@ public class OwnerService {
     @Transactional
     public String rejectionTakenAnimal(Long id) {
         try {
+            isValidCreatedOwner();
+
             Like like = likeService.findById(id);
             AnimalEntity animal = animalService.findAnimalEntityById(like.animalId());
 
@@ -93,6 +101,8 @@ public class OwnerService {
 
     public String confirmTakenAnimal(Long likeId) {
         try {
+            isValidCreatedOwner();
+
             Like like = likeService.findById(likeId);
             AnimalEntity animal = animalService.findAnimalEntityById(like.animalId());
 
@@ -138,6 +148,14 @@ public class OwnerService {
     private boolean isValidOwner(AnimalEntity animal){
         if(animal.getOwner().getOwner().getId() != userService.getCurrentUser().getId()){
             throw new IllegalArgumentException("Вы не являетессь хозяеном питомца");
+        }
+        return true;
+    }
+
+    private boolean isValidCreatedOwner(){
+        if(userService.getCurrentUser().getOwner() == null) {
+            log.warn("Для начало создайте питомник");
+            throw new RuntimeException("Для начало создайте питомник");
         }
         return true;
     }

@@ -3,9 +3,13 @@ package org.example.tula.users.domain;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.tula.animals.domain.mapper.AnimalMapper;
 import org.example.tula.config.JwtTokenProvider;
+import org.example.tula.likes.domain.LikeService;
 import org.example.tula.users.api.dto.users.request.UserCreateRequest;
+import org.example.tula.users.api.dto.users.response.UserProfileResponse;
 import org.example.tula.users.api.dto.users.response.UserRegistrationResponse;
+import org.example.tula.users.db.Role;
 import org.example.tula.users.db.UserEntity;
 import org.example.tula.users.db.UserRepository;
 import org.example.tula.users.domain.mapper.UserMapper;
@@ -43,6 +47,21 @@ public class UserService {
         UserEntity user = userRepository.findByEmailEqualsIgnoreCase(email);
         return userMapper.convertEntityToDto(user);
     }
+
+//    public UserProfileResponse profile(){
+//        try {
+//            UserEntity user = getCurrentUser();
+//            return new UserProfileResponse(
+//                    user.getName(),
+//                    user.getEmail(),
+//                    ,
+//                    user.getOwner() != null ? animalMapper.convertEntityListToDTO(user.getOwner().getAnimals()) : null
+//            );
+//        }catch (Exception e) {
+//            log.error("Не удалось загрузить профиль,ex={}",e.getMessage());
+//            throw new RuntimeException(e.getMessage());
+//        }
+//    }
 
     public UserRegistrationResponse save(UserCreateRequest request) {
         try {
@@ -82,7 +101,6 @@ public class UserService {
             throw new RuntimeException("Ошибка обновление пользователя", e);
         }
     }
-
 
     @Transactional
     public UserRegistrationResponse changePassword(Long id, String newPassword) {

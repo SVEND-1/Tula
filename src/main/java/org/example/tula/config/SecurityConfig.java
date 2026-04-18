@@ -74,6 +74,10 @@ public class SecurityConfig {
                                     "/api/questions","/tests/jwt"
                             ).authenticated()
 
+                            .requestMatchers(
+                                    "/api/owners/**"
+                            ).hasRole("OWNER")
+
                             .anyRequest().permitAll()
                 )
 

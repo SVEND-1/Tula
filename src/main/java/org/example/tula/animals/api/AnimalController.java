@@ -18,7 +18,7 @@ public class AnimalController {
 
     private final AnimalService animalService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<Animal>> getAllAnimalsFiltered(@ModelAttribute AnimalFeedFilter filter) {
         return ResponseEntity.ok(animalService.petFeed(filter));
     }
@@ -32,10 +32,4 @@ public class AnimalController {
     public ResponseEntity<AnimalProfileResponse> profile(@PathVariable Long id) {
         return ResponseEntity.ok(animalService.profile(id));
     }
-
-    @PostMapping
-    public ResponseEntity<Animal> createAnimal(@RequestBody CreatedAnimalRequest request) {
-        return ResponseEntity.ok(animalService.save(request));
-    }
-
 }

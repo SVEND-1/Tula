@@ -39,7 +39,7 @@ public class AnimalService {
         this.userService = userService;
     }
 
-    public List<Animal> petFeed(AnimalFeedFilter filter){
+    public List<Animal> petFeed(AnimalFeedFilter filter){//TODO ТОлько активные
         return animalMapper.convertEntityListToDTO(
                 animalRepository.findAllByFilter(
                         filter.age(),filter.breed(),
@@ -67,14 +67,18 @@ public class AnimalService {
                 animal.getGender(),
                 animal.getAnimalType(),
                 animal.getOwner().getName(),
+                animal.getOwner().getId(),
                 animal.getCreateAt()
         );
     }
 
     public Animal save(CreatedAnimalRequest request) {
         try {
+            if(userService.getCurrentUser().getOwner() == null) {
+                log.warn("Для начало создайте питомник");
+                throw new RuntimeException("Для начало создайте питомник");
+            }
 
-            //TODO if проверка на создание приюта
             AnimalEntity animalEntity = animalRepository.save(
                     AnimalEntity.builder()
                             .name(request.name())

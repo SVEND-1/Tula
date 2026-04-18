@@ -4,7 +4,10 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.tula.animals.api.dto.Animal;
+import org.example.tula.animals.db.AnimalEntity;
 import org.example.tula.animals.domain.AnimalService;
+import org.example.tula.animals.domain.mapper.AnimalMapper;
 import org.example.tula.likes.api.dto.Like;
 import org.example.tula.likes.api.dto.response.TakeResponse;
 import org.example.tula.likes.db.LikeEntity;
@@ -20,7 +23,9 @@ import org.example.tula.users.domain.UserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -31,6 +36,7 @@ public class LikeService {
     private final AnimalService animalService;
     private final UserService userService;
     private final NotifyKafkaProducer notifyKafkaProducer;
+    private final AnimalMapper animalMapper;
 
     public Like findById(Long id) {
         return likeMapper.convertEntityToDTO(
@@ -38,18 +44,21 @@ public class LikeService {
         );
     }
 
+
     @Transactional
     public Like like(Long animalId) {//TODO ДОБАВИТЬ СОЗДАНИЕ ЧАТА
         try {
             TakeResponse takeResponse = animalService.takenAnimal(animalId);
+
+            AnimalEntity animal = animalService.findAnimalEntityById(animalId);
 
             notify(takeResponse);
 
             return likeMapper.convertEntityToDTO(likeRepository.save(
                     LikeEntity.builder()
                             .status(StatusLike.LIKE)
-                            .userId(userService.getCurrentUser().getId())
-                            .animalId(animalId)
+                            .user(userService.getCurrentUser())
+                            .animal(animal)
                             .createdAt(LocalDateTime.now())
                             .build()
             ));
@@ -60,12 +69,14 @@ public class LikeService {
     }
 
     public Like dislike(Long animalId) {
+        AnimalEntity animal = animalService.findAnimalEntityById(animalId);
+
         return likeMapper.convertEntityToDTO(
                 likeRepository.save(
                         LikeEntity.builder()
                                 .status(StatusLike.DISLIKE)
-                                .userId(userService.getCurrentUser().getId())
-                                .animalId(animalId)
+                                .user(userService.getCurrentUser())
+                                .animal(animal)
                                 .createdAt(LocalDateTime.now())
                                 .build()
                 )
@@ -78,7 +89,7 @@ public class LikeService {
             LikeEntity like = likeRepository.findById(likeId).orElseThrow(() -> new EntityNotFoundException("Реакция не найдена"));
 
             if(like.getStatus().equals(StatusLike.DISLIKE) &&
-                    !like.getUserId().equals(userService.getCurrentUser().getId())) {
+                    !like.getUser().getId().equals(userService.getCurrentUser().getId())) {
                 log.error("Нельзя сменить у DISLIKE");
                 throw new IllegalArgumentException("Нельзя сменить у DISLIKE");
             }

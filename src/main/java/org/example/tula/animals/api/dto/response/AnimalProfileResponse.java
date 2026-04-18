@@ -13,6 +13,7 @@ public record AnimalProfileResponse(
         Gender gender,
         AnimalType animalType,
         String ownerName,
+        Long ownerId,
         LocalDateTime createAt
 
 ) {

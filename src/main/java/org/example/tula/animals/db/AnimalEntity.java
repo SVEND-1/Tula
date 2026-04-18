@@ -2,10 +2,11 @@ package org.example.tula.animals.db;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.tula.likes.db.LikeEntity;
 import org.example.tula.owners.db.OwnerEntity;
-import org.example.tula.users.db.UserEntity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -46,6 +47,9 @@ public class AnimalEntity {
 
     @Column(name = "person_take_id")
     private Long personTakeId;//TODO поменять
+
+    @OneToMany(mappedBy = "animal",cascade = CascadeType.ALL)
+    private List<LikeEntity> likes;
 
     @ManyToOne
     private OwnerEntity owner;

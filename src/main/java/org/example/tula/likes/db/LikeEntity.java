@@ -2,6 +2,8 @@ package org.example.tula.likes.db;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.tula.animals.db.AnimalEntity;
+import org.example.tula.users.db.UserEntity;
 
 import java.time.LocalDateTime;
 
@@ -12,8 +14,8 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "likes")
-public class LikeEntity {//TODO подумать над ответом
-    //Добавит Статус ответа от Owner
+public class LikeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,15 +24,15 @@ public class LikeEntity {//TODO подумать над ответом
     @Enumerated(EnumType.STRING)
     private StatusLike status;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne()
+    private UserEntity user;
 
     @Column(name = "status_answer")
     @Enumerated(EnumType.STRING)
     private StatusAnswer statusAnswer;
 
-    @Column(name = "animal_id")
-    private Long animalId;
+    @ManyToOne()
+    private AnimalEntity animal;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

@@ -2,6 +2,8 @@ package org.example.tula.owners.api;
 
 import lombok.RequiredArgsConstructor;
 import org.example.tula.animals.api.dto.Animal;
+import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
+import org.example.tula.animals.domain.AnimalService;
 import org.example.tula.owners.api.dto.Owner;
 import org.example.tula.owners.domain.OwnerService;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +16,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OwnerController {
     private final OwnerService ownerService;
+    private final AnimalService animalService;
 
-    @GetMapping
+    @GetMapping("/animal")
     public ResponseEntity<List<Animal>> findAnimalByOwner() {
         return ResponseEntity.ok(ownerService.findAllAnimalByOwner());
     }
 
-    @PostMapping
+    @PostMapping("/animal")
+    public ResponseEntity<Animal> createAnimal(@RequestBody CreatedAnimalRequest request) {
+        return ResponseEntity.ok(animalService.save(request));
+    }
+
+    @PostMapping()
     public ResponseEntity<String> createAnimal(@RequestParam String name) {
         return ResponseEntity.ok(ownerService.createOwner(name));
     }
@@ -34,4 +42,6 @@ public class OwnerController {
     public ResponseEntity<String> confirmTakenAnimal(@PathVariable Long likeId) {
         return ResponseEntity.ok(ownerService.confirmTakenAnimal(likeId));
     }
+
+
 }
