@@ -30,6 +30,10 @@ public class UserService {
         return user;
     }
 
+    public UserEntity findUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
+    }
+
     public UserRegistrationResponse findUserByEmail(String email) {
         if (email == null) {
             log.debug("Пустой email,поиск пользователя не возможен");
