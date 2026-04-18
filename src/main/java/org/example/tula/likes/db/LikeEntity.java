@@ -13,7 +13,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "likes")
+@Table(name = "likes", indexes = {
+        @Index(name = "idx_likes_animal_id", columnList = "animal_id"),
+        @Index(name = "idx_likes_user_id", columnList = "user_id")
+})
 public class LikeEntity {
 
     @Id

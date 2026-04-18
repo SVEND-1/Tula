@@ -39,7 +39,7 @@ public class AnimalService {
         this.userService = userService;
     }
 
-    public List<Animal> petFeed(AnimalFeedFilter filter){//TODO ТОлько активные
+    public List<Animal> petFeed(AnimalFeedFilter filter){
         return animalMapper.convertEntityListToDTO(
                 animalRepository.findAllByFilter(
                         filter.age(),filter.breed(),
@@ -58,17 +58,8 @@ public class AnimalService {
     }
 
     public AnimalProfileResponse profile(Long id){
-        AnimalEntity animal = findAnimalEntityById(id);
-        return new AnimalProfileResponse(//TODO перенести маппер
-                animal.getName(),
-                animal.getAge(),
-                animal.getDescription(),
-                animal.getBreed(),
-                animal.getGender(),
-                animal.getAnimalType(),
-                animal.getOwner().getName(),
-                animal.getOwner().getId(),
-                animal.getCreateAt()
+        return animalMapper.convertEntityToProfile(
+                findAnimalEntityById(id)
         );
     }
 
