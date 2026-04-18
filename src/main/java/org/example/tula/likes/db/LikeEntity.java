@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "likes")
 public class LikeEntity {//TODO подумать над ответом
-
+    //Добавит Статус ответа от Owner
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +24,10 @@ public class LikeEntity {//TODO подумать над ответом
 
     @Column(name = "user_id")
     private Long userId;
+
+    @Column(name = "status_answer")
+    @Enumerated(EnumType.STRING)
+    private StatusAnswer statusAnswer;
 
     @Column(name = "animal_id")
     private Long animalId;
