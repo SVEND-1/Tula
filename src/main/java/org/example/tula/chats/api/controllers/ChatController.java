@@ -23,10 +23,10 @@ public class ChatController {
     ChatService chatService;
 
     @Operation(summary = "Создать новый чат")
-    @PostMapping
+    @PostMapping("/{animal_id}")
     public ResponseEntity<ChatResponse> createNewChat(
             @Parameter(description = "Id анкеты животного")
-            @PathVariable("/{animal_id}") Long animalId
+            @PathVariable("animal_id") Long animalId
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)

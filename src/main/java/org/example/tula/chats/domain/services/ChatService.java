@@ -10,7 +10,6 @@ import org.example.tula.chats.db.entities.ChatEntity;
 import org.example.tula.chats.db.repositories.ChatRepository;
 import org.example.tula.chats.domain.exceptions.ChatException;
 import org.example.tula.chats.domain.mappers.ChatMapper;
-import org.example.tula.users.db.Role;
 import org.example.tula.users.db.UserEntity;
 import org.example.tula.users.db.UserRepository;
 import org.example.tula.users.domain.UserService;
@@ -32,11 +31,12 @@ public class ChatService {
     public ChatResponse createNewChat(Long animalId) {
         log.info("Creating a new chat for animal profile with id {}", animalId);
         UserEntity currentUser = userService.getCurrentUser();
-        checkUserRoleIsUser(currentUser);
 
         AnimalEntity animalEntity = animalRepository.findById(animalId)
                 .orElseThrow(() -> new EntityNotFoundException("Animal with id " + animalId + " not found"));
         UserEntity sellerUser = animalEntity.getOwner();
+
+        checkAnimalIsNotCurrentUser(currentUser, sellerUser);
 
         ChatEntity chatEntity = ChatEntity.builder()
                 .seller(sellerUser)
@@ -50,9 +50,9 @@ public class ChatService {
     }
 
     //====================================SERVICE METHODS=======================================================
-    private void checkUserRoleIsUser(UserEntity currentUser) {
-        if (!currentUser.getRole().equals(Role.USER)) {
-            throw new ChatException(HttpStatus.BAD_REQUEST, "Only users can create new chat");
+    private void checkAnimalIsNotCurrentUser(UserEntity currentUser, UserEntity sellerUser) {
+        if (currentUser.getId().equals(sellerUser.getId())) {
+            throw new ChatException(HttpStatus.BAD_REQUEST, "You cannot create a new chat for yourself");
         }
     }
 }
