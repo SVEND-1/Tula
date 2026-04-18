@@ -5,7 +5,7 @@ import AuthContainer from "../../../components/auth/global/AuthContainer";
 import AuthTitle from "../../../components/auth/global/AuthTitle";
 import AuthSubtitle from "../../../components/auth/global/AuthSubtitle";
 import ResetPasswordForm from "../../../components/auth/reset-password/ResetPasswordForm";
-import "../../style/AuthForm.css";
+import "../../../style/AuthForm.css";
 
 export default function ResetPassword() {
     const [searchParams] = useSearchParams();

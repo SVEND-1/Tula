@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { verifyRegister } from "../../../api/authApi";
-import "../../style/AuthForm.css";
+import "../../../style/AuthForm.css";
 
 export default function VerifyRegister() {
     const [code, setCode] = useState<string>("");
