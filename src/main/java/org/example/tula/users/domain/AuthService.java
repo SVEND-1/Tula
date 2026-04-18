@@ -9,6 +9,7 @@ import org.example.tula.notify.EmailSenderService;
 import org.example.tula.notify.event.NotifyEvent;
 import org.example.tula.notify.event.NotifyType;
 import org.example.tula.notify.kafka.NotifyKafkaProducer;
+import org.example.tula.owners.domain.OwnerService;
 import org.example.tula.users.api.dto.auth.request.LoginRequest;
 import org.example.tula.users.api.dto.auth.request.RegisterCodeRequest;
 import org.example.tula.users.api.dto.auth.request.ResetPasswordRequest;
@@ -49,7 +50,7 @@ public class AuthService {
     private static final Map<String, RegistrationData> pendingRegistrations = new ConcurrentHashMap<>();
     private static final Map<String, ResetData> passwordResets = new ConcurrentHashMap<>();
     private final UserMapper userMapper;
-
+    private final OwnerService ownerService;
 
 
     //================================Controller Methods================================================
@@ -183,6 +184,8 @@ public class AuthService {
             UserEntity user = data.user;
             user.setRole(Role.USER);
             UserRegistrationResponse savedUser = userService.save(userMapper.convertDtoToCreateRequest(user));
+
+            ownerService.createOwner(user.getName());
 
 
             String token = jwtTokenProvider.createToken(savedUser.email(), savedUser.role().name());

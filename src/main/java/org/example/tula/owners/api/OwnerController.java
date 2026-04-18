@@ -19,11 +19,6 @@ public class OwnerController {
         return ResponseEntity.ok(ownerService.findAllAnimalByOwner());
     }
 
-    @PostMapping
-    public ResponseEntity<String> createOwner(@RequestParam String name) {
-        return ResponseEntity.ok(ownerService.createOwner(name));
-    }
-
     @PutMapping("/rejection/{likeId}")
     public ResponseEntity<String> rejectionTakenAnimal(@PathVariable Long likeId) {
         return ResponseEntity.ok(ownerService.rejectionTakenAnimal(likeId));
