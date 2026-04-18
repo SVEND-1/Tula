@@ -9,13 +9,9 @@ import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
 import org.example.tula.animals.api.dto.response.AnimalProfileResponse;
 import org.example.tula.animals.db.*;
 import org.example.tula.animals.domain.mapper.AnimalMapper;
-import org.example.tula.likes.api.dto.Like;
 import org.example.tula.likes.api.dto.response.TakeResponse;
-import org.example.tula.likes.db.StatusAnswer;
-import org.example.tula.likes.domain.LikeService;
-import org.example.tula.notify.event.NotifyEvent;
-import org.example.tula.notify.event.NotifyType;
-import org.example.tula.notify.kafka.NotifyKafkaProducer;
+import org.example.tula.subscriptions.db.Status;
+import org.example.tula.subscriptions.domain.SubscriptionService;
 import org.example.tula.users.db.UserEntity;
 import org.example.tula.users.domain.UserService;
 import org.springframework.context.annotation.Lazy;
@@ -23,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -32,11 +28,14 @@ public class AnimalService {
     private final AnimalRepository animalRepository;
     private final AnimalMapper animalMapper;
     private final UserService userService;
+    private final SubscriptionService subscriptionService;
+
     public AnimalService(AnimalRepository animalRepository, AnimalMapper animalMapper,
-                         @Lazy UserService userService) {
+                         @Lazy UserService userService, SubscriptionService subscriptionService) {
         this.animalRepository = animalRepository;
         this.animalMapper = animalMapper;
         this.userService = userService;
+        this.subscriptionService = subscriptionService;
     }
 
     public List<Animal> petFeed(AnimalFeedFilter filter){
@@ -63,12 +62,16 @@ public class AnimalService {
         );
     }
 
+    @Transactional
     public Animal save(CreatedAnimalRequest request) {
         try {
-            if(userService.getCurrentUser().getOwner() == null) {
+            UserEntity user = userService.getCurrentUser();
+            if(user.getOwner() == null) {
                 log.warn("Для начало создайте питомник");
                 throw new RuntimeException("Для начало создайте питомник");
             }
+
+            isValid(user);
 
             AnimalEntity animalEntity = animalRepository.save(
                     AnimalEntity.builder()
@@ -138,5 +141,18 @@ public class AnimalService {
         }
     }
 
+
+    private void isValid(UserEntity user) {
+        List<AnimalEntity> animalEntities = user.getOwner().getAnimals()
+                .stream()
+                .filter(el -> el.getStatus() == StatusAnimal.DONT_TAKE ||
+                        el.getStatus() == StatusAnimal.RESERVATION)
+                .toList();
+        if(subscriptionService.findByUserEmail(user.getEmail()).getActive() == Status.BLOCKED &&
+                animalEntities.size() >= 3) {
+            log.warn("Нельзя создать больше 3 активных питомцев");
+            throw new RuntimeException("Нельзя создать больше 3 активных питомцев");
+        }
+    }
 
 }

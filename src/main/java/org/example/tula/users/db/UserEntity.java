@@ -6,8 +6,11 @@ import lombok.*;
 import org.example.tula.animals.db.AnimalEntity;
 import org.example.tula.likes.db.LikeEntity;
 import org.example.tula.owners.db.OwnerEntity;
+import org.example.tula.payments.db.PaymentEntity;
 import org.example.tula.reviews.db.ReviewEntity;
+import org.example.tula.subscriptions.db.SubscriptionEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,4 +49,11 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user")
     private List<LikeEntity> likes;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<PaymentEntity> payments = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user")
+    private SubscriptionEntity subscription;
+
 }

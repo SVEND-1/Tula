@@ -34,15 +34,15 @@ public class OwnerController {
         return ResponseEntity.ok(ownerService.profile(id));
     }
 
-    @Operation(summary = "Создание приюта")
+    @Operation(summary = "Создание питомца в приют")
     @PostMapping("/animal")
     public ResponseEntity<Animal> createAnimal(@RequestBody CreatedAnimalRequest request) {
         return ResponseEntity.ok(animalService.save(request));
     }
 
-    @Operation(summary = "Создание питомца в приют")
+    @Operation(summary = "Создание приюта")
     @PostMapping()
-    public ResponseEntity<String> createAnimal(@RequestParam String name) {
+    public ResponseEntity<String> createOwner(@RequestParam String name) {
         return ResponseEntity.ok(ownerService.createOwner(name));
     }
 
