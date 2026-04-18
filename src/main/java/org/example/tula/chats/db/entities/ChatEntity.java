@@ -27,7 +27,7 @@ public class ChatEntity {
     @JoinColumn(name = "buyer_id")
     private UserEntity buyer;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "animal_id")
     private AnimalEntity animal;
 
