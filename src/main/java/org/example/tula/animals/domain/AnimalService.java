@@ -5,10 +5,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.tula.animals.api.dto.Animal;
+import org.example.tula.animals.api.dto.request.AnimalFeedFilter;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
-import org.example.tula.animals.db.AnimalEntity;
-import org.example.tula.animals.db.AnimalRepository;
-import org.example.tula.animals.db.StatusAnimal;
+import org.example.tula.animals.db.*;
 import org.example.tula.animals.domain.mapper.AnimalMapper;
 import org.example.tula.likes.api.dto.Like;
 import org.example.tula.likes.api.dto.response.TakeResponse;
@@ -23,6 +22,7 @@ import org.example.tula.users.domain.UserService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +44,15 @@ public class AnimalService {
         this.userService = userService;
         this.likeService = likeService;
         this.notifyKafkaProducer = notifyKafkaProducer;
+    }
+
+    public List<Animal> petFeed(AnimalFeedFilter filter){
+        return animalMapper.convertEntityListToDTO(
+                animalRepository.findAllByFilter(
+                        filter.age(),filter.breed(),
+                        filter.gender(),filter.animalType()
+                )
+        );
     }
 
     public Animal findAnimalById(Long id) {
@@ -69,6 +78,7 @@ public class AnimalService {
                             .gender(request.gender())
                             .animalType(request.animalType())
                             .status(StatusAnimal.DONT_TAKE)
+                            .createAt(LocalDateTime.now())
                             .build()
             );
             return animalMapper.convertEntityToDTO(animalEntity);

@@ -3,6 +3,8 @@ package org.example.tula.animals.db;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Builder
@@ -10,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "animals")
-public class AnimalEntity {//TODO ДОБАВИТЬ ВРЕМЯ
+public class AnimalEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +22,7 @@ public class AnimalEntity {//TODO ДОБАВИТЬ ВРЕМЯ
     private String name;
 
     @Column(name = "age")
-    private int age;
+    private Integer age;
 
     @Column(name = "description")
     private String description;
@@ -42,4 +44,7 @@ public class AnimalEntity {//TODO ДОБАВИТЬ ВРЕМЯ
 
     @Column(name = "person_take_id")
     private Long personTakeId;
+
+    @Column(name = "create_at")
+    private LocalDateTime createAt;
 }

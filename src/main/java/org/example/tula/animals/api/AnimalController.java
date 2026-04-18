@@ -2,6 +2,7 @@ package org.example.tula.animals.api;
 
 import lombok.RequiredArgsConstructor;
 import org.example.tula.animals.api.dto.Animal;
+import org.example.tula.animals.api.dto.request.AnimalFeedFilter;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
 import org.example.tula.animals.domain.AnimalService;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,9 @@ public class AnimalController {
 
     private final AnimalService animalService;
 
-    @GetMapping
-    public ResponseEntity<List<Animal>> getAllAnimals() {
-        return ResponseEntity.ok(animalService.findAllAnimals());
+    @GetMapping()
+    public ResponseEntity<List<Animal>> getAllAnimalsFiltered(@ModelAttribute AnimalFeedFilter filter) {
+        return ResponseEntity.ok(animalService.petFeed(filter));
     }
 
     @GetMapping("/{id}")
