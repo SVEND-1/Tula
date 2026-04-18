@@ -1,149 +1,241 @@
-
 import { getAllAnimals } from '../../api/animalApi';
+import { sendLike, sendDislike } from '../../api/likeApi';
 import type { Animal } from '../../types/animal/animal.types.ts';
-import '../../style/MainPage.css';
-import {useEffect, useState} from "react";
+import '../../style/MainPage.scss';
+import { useEffect, useState } from "react";
 
 export default function MainPage() {
     const [animals, setAnimals] = useState<Animal[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [filter, setFilter] = useState<'ALL' | 'DOG' | 'CAT'>('ALL');
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [swipeClass, setSwipeClass] = useState('');
+    const [animalImages, setAnimalImages] = useState<Record<string, string>>({});
+    const [isProcessing, setIsProcessing] = useState(false);
 
     useEffect(() => {
         loadAnimals();
+        loadImagesFromStorage();
     }, []);
+
+    const loadImagesFromStorage = () => {
+        const storedImages = localStorage.getItem('animalImages');
+        if (storedImages) {
+            const parsed = JSON.parse(storedImages);
+            setAnimalImages(parsed);
+        }
+    };
 
     const loadAnimals = async () => {
         setIsLoading(true);
         try {
             const response = await getAllAnimals();
-            console.log(' Загружены животные:', response.data);
-            setAnimals(response.data);
+
+            if (response.data && response.data.length > 0) {
+                setAnimals(response.data);
+            } else {
+                setAnimals([]);
+            }
         } catch (error: any) {
-            console.error(' Ошибка загрузки:', error);
+            console.error('Ошибка загрузки:', error);
             alert('Ошибка загрузки списка животных');
+            setAnimals([]);
         } finally {
             setIsLoading(false);
         }
     };
 
-    const filteredAnimals = animals.filter(animal => {
-        if (filter === 'ALL') return true;
-        return animal.animalType === filter;
-    });
-
-    // Обновляем для MAN/WOMAN
     const getGenderIcon = (gender: string) => gender === 'MAN' ? '♂️' : '♀️';
-    const getGenderText = (gender: string) => gender === 'MAN' ? 'Мальчик' : 'Девочка';
 
-    const getStatusText = (status: string) => {
-        switch(status) {
-            case 'AVAILABLE': return 'Доступен';
-            case 'TAKEN': return 'Забран';
-            case 'VERIFICATION': return 'На проверке';
-            default: return status;
+    const currentAnimal = animals[currentIndex];
+    const nextAnimal = animals[currentIndex + 1];
+
+    const handleSwipe = async (direction: 'left' | 'right') => {
+        if (!currentAnimal || isProcessing) return;
+
+        setIsProcessing(true);
+        setSwipeClass(direction);
+
+        try {
+            if (direction === 'right') {
+                await sendLike(currentAnimal.id);
+                setToastMessage(`🐾 Вам понравился ${currentAnimal.name}! Ожидайте ответа от хозяина`);
+                setShowToast(true);
+                setTimeout(() => setShowToast(false), 2000);
+            } else {
+                await sendDislike(currentAnimal.id);
+                setToastMessage(`👎 Вы пропустили ${currentAnimal.name}`);
+                setShowToast(true);
+                setTimeout(() => setShowToast(false), 1500);
+            }
+
+            setTimeout(() => {
+                setCurrentIndex(prev => prev + 1);
+                setSwipeClass('');
+                setIsProcessing(false);
+            }, 900);
+        } catch (error: any) {
+            console.error('Ошибка при отправке реакции:', error);
+            const errorMessage = error.response?.data?.message || 'Ошибка при отправке';
+            setToastMessage(`❌ ${errorMessage}`);
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 2000);
+            setSwipeClass('');
+            setIsProcessing(false);
         }
     };
 
-    const getStatusClass = (status: string) => {
-        switch(status) {
-            case 'AVAILABLE': return 'status-available';
-            case 'TAKEN': return 'status-taken';
-            case 'VERIFICATION': return 'status-verification';
-            default: return '';
-        }
+    const getAgeText = (age: number) => {
+        if (age === 1) return `${age} год`;
+        if (age < 5) return `${age} года`;
+        return `${age} лет`;
     };
+
+    const getAnimalImage = (animal: Animal) => {
+        const uniqueKey = `${animal.name}_${animal.breed}_${animal.age}`;
+        const image = animalImages[uniqueKey];
+        return image || null;
+    };
+
+    if (isLoading) {
+        return (
+            <div className="loading-container">
+                <div className="spinner"></div>
+                <p>Загрузка животных...</p>
+            </div>
+        );
+    }
+
+    if (!currentAnimal) {
+        return (
+            <div className="empty-container">
+                <div className="empty-card">
+                    <span className="empty-emoji">🐾</span>
+                    <h2>Животные закончились</h2>
+                    <p>Всего животных в базе: {animals.length}</p>
+                    <button onClick={() => {
+                        loadAnimals();
+                        setCurrentIndex(0);
+                    }} className="reload-btn">
+                        Обновить список
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <div className="main-container">
-            <header className="main-header">
-                <h1>🐾 Приют для животных</h1>
-                <p>Подари дом братьям нашим меньшим</p>
+        <>
+            <header className="adopt-header">
+                <div className="logo">Adoptly</div>
+                <div className="profile">Профиль</div>
             </header>
 
-            <div className="filter-bar">
-                <button
-                    className={`filter-btn ${filter === 'ALL' ? 'active' : ''}`}
-                    onClick={() => setFilter('ALL')}
-                >
-                    🏠 Все ({animals.length})
-                </button>
-                <button
-                    className={`filter-btn ${filter === 'DOG' ? 'active' : ''}`}
-                    onClick={() => setFilter('DOG')}
-                >
-                    🐕 Собаки ({animals.filter(a => a.animalType === 'DOG').length})
-                </button>
-                <button
-                    className={`filter-btn ${filter === 'CAT' ? 'active' : ''}`}
-                    onClick={() => setFilter('CAT')}
-                >
-                    🐈 Кошки ({animals.filter(a => a.animalType === 'CAT').length})
-                </button>
+            <div className={`toast ${showToast ? 'show' : ''}`}>
+                {toastMessage}
             </div>
 
-            {isLoading ? (
-                <div className="loading">
-                    <div className="spinner"></div>
-                    <p>Загрузка животных...</p>
+            <main className="home">
+                <div className="hint">
+                    <div className="hint-text">Выбери своего питомца</div>
+                    <svg className="arrow" viewBox="0 0 300 200">
+                        <defs>
+                            <marker id="arrowHead"
+                                    markerWidth="10"
+                                    markerHeight="10"
+                                    refX="8"
+                                    refY="5"
+                                    orient="auto">
+                                <path d="M0,0 L10,5 L0,10 Z"
+                                      fill="#333"
+                                      stroke="#333"
+                                      strokeLinejoin="round"/>
+                            </marker>
+                        </defs>
+                        <path className="arrow-path"
+                              d="M 20 120
+                                 C 60 20, 160 20, 160 90
+                                 C 160 160, 220 160, 260 110"
+                              markerEnd="url(#arrowHead)"/>
+                    </svg>
                 </div>
-            ) : (
-                <div className="animals-grid">
-                    {filteredAnimals.map((animal) => (
-                        <div key={animal.id} className="animal-card">
-                            <div className="animal-image">
-                                <div className="image-placeholder">
-                                    <span className="animal-emoji">
-                                        {animal.animalType === 'DOG' ? '🐕' : '🐈'}
-                                    </span>
+
+                <div className="card-wrapper">
+                    <div className="card-stack">
+                        {nextAnimal && (
+                            <div className="card next">
+                                <div className="card-image">
+                                    {(() => {
+                                        const nextImage = getAnimalImage(nextAnimal);
+                                        return nextImage ? (
+                                            <img src={nextImage} alt={nextAnimal.name} />
+                                        ) : (
+                                            <div className="image-placeholder">
+                                                <span className="animal-emoji">
+                                                    {nextAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
+                                                </span>
+                                            </div>
+                                        );
+                                    })()}
                                 </div>
-                                <span className={`status-badge ${getStatusClass(animal.status)}`}>
-                                    {getStatusText(animal.status)}
+                                <div className="card-info">
+                                    <h2>{nextAnimal.name}</h2>
+                                    <span>{nextAnimal.breed} • {getAgeText(nextAnimal.age)}</span>
+                                    <p>{nextAnimal.description}</p>
+                                </div>
+                            </div>
+                        )}
+
+                        <div className={`card current ${swipeClass}`}>
+                            <div className="card-image">
+                                {(() => {
+                                    const currentImage = getAnimalImage(currentAnimal);
+                                    return currentImage ? (
+                                        <img src={currentImage} alt={currentAnimal.name} />
+                                    ) : (
+                                        <div className="image-placeholder">
+                                            <span className="animal-emoji large">
+                                                {currentAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
+                                            </span>
+                                        </div>
+                                    );
+                                })()}
+                                <span className={`status-badge ${currentAnimal.status?.toLowerCase() || 'available'}`}>
+                                    {currentAnimal.status === 'AVAILABLE' ? 'Доступен' :
+                                        currentAnimal.status === 'TAKEN' ? 'Забран' :
+                                            currentAnimal.status === 'VERIFICATION' ? 'На проверке' : 'Доступен'}
                                 </span>
                             </div>
-
-
-                            <div className="animal-content">
-                                <h3 className="animal-name">
-                                    {animal.name}
-                                    <span className="gender-icon">{getGenderIcon(animal.gender)}</span>
-                                </h3>
-
-                                <div className="animal-details">
-                                    <div className="detail-item">
-                                        <span className="detail-icon">🐾</span>
-                                        <span>{animal.breed}</span>
-                                    </div>
-                                    <div className="detail-item">
-                                        <span className="detail-icon">📅</span>
-                                        <span>{animal.age} {animal.age === 1 ? 'год' : animal.age < 5 ? 'года' : 'лет'}</span>
-                                    </div>
-                                    <div className="detail-item">
-                                        <span className="detail-icon">⚥</span>
-                                        <span>{getGenderText(animal.gender)}</span>
-                                    </div>
-                                </div>
-
-                                {animal.description && (
-                                    <p className="animal-description">{animal.description}</p>
-                                )}
-
-                                <button className="adopt-btn">
-                                    Хочу забрать
-                                </button>
+                            <div className="card-info">
+                                <h2>
+                                    {currentAnimal.name}
+                                    <span className="gender-icon">{getGenderIcon(currentAnimal.gender)}</span>
+                                </h2>
+                                <span>{currentAnimal.breed} • {getAgeText(currentAnimal.age)}</span>
+                                <p>{currentAnimal.description}</p>
                             </div>
                         </div>
-                    ))}
-                </div>
-            )}
+                    </div>
 
-            {!isLoading && filteredAnimals.length === 0 && (
-                <div className="empty-state">
-                    <span className="empty-emoji">😢</span>
-                    <h3>Животные не найдены</h3>
-                    <p>Попробуйте изменить фильтр или зайдите позже</p>
+                    <div className="buttons">
+                        <button
+                            onClick={() => handleSwipe('left')}
+                            className="dislike-btn"
+                            disabled={isProcessing}
+                        >
+                            ←
+                        </button>
+                        <button
+                            onClick={() => handleSwipe('right')}
+                            className="like-btn"
+                            disabled={isProcessing}
+                        >
+                            →
+                        </button>
+                    </div>
                 </div>
-            )}
-        </div>
+            </main>
+        </>
     );
 }

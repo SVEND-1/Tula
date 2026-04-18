@@ -29,7 +29,7 @@ export default function Login() {
                     localStorage.setItem("user", JSON.stringify(data.user));
                 }
 
-                navigate("/chat");
+                navigate("/main");
             } else {
                 alert(data.message || "Неверные данные");
             }

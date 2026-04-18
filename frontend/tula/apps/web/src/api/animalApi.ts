@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import type { Animal, CreateAnimalRequest } from "../types/animal/animal.types.ts";
 
@@ -16,12 +15,9 @@ export const createAnimal = (data: CreateAnimalRequest) => {
         age: Number(data.age),
         description: data.description || '',
         breed: data.breed.trim(),
-        gender: data.gender, //  'MAN' или 'WOMAN'
-        animalType: data.animalType // 'DOG' или 'CAT'
+        gender: data.gender,
+        animalType: data.animalType
     };
-
-    console.log(' Отправляем на бэкенд:', cleanData);
-    console.log(' Тип гендера:', cleanData.gender);
 
     return ANIMAL_API.post<Animal>('', cleanData);
 };

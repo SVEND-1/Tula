@@ -78,3 +78,28 @@
     opacity: 0.6;
     cursor: not-allowed;
 }
+.file-input {
+    padding: 10px;
+    border: 2px dashed #e0e0e0;
+    background: #f9f9f9;
+    cursor: pointer;
+}
+
+.file-input:hover {
+    border-color: #667eea;
+    background: #f0f0ff;
+}
+
+.image-preview {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.image-preview img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 3px solid #667eea;
+    padding: 3px;
+}

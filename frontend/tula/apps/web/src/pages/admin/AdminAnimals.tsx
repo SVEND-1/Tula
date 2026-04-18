@@ -1,31 +1,39 @@
-
 import { createAnimal } from '../../api/animalApi';
 import type { CreateAnimalRequest } from '../../types/animal/animal.types.ts';
 import CreateAnimalForm from '../../components/admin/CreateAnimalForm';
 import '../../style/AdminAnimals.css';
-import {useState} from "react";
+import { useState } from "react";
 
 export default function AdminAnimals() {
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleCreateAnimal = async (data: CreateAnimalRequest) => {
+    const handleCreateAnimal = async (data: CreateAnimalRequest, imageBase64?: string) => {
         setIsLoading(true);
         try {
-            console.log(' Отправляем данные:', data);
-
             const response = await createAnimal(data);
 
-            console.log(' Ответ сервера:', response.data);
-
             if (response.data) {
+                const uniqueKey = `${response.data.name}_${response.data.breed}_${response.data.age}`;
+
+                const existingAnimals = localStorage.getItem('animalImages');
+                const images = existingAnimals ? JSON.parse(existingAnimals) : {};
+                images[uniqueKey] = imageBase64 || '';
+                localStorage.setItem('animalImages', JSON.stringify(images));
+
+                const animalData = localStorage.getItem('animalData');
+                const animals = animalData ? JSON.parse(animalData) : {};
+                animals[uniqueKey] = response.data;
+                localStorage.setItem('animalData', JSON.stringify(animals));
+
+                console.log('Уникальный ключ:', uniqueKey);
+                console.log('Сохранённые фото:', images);
+
                 alert(` Животное "${response.data.name}" успешно создано!`);
             }
         } catch (error: any) {
-            console.error(' Ошибка:', error);
-            console.error(' Ответ сервера:', error.response?.data);
-
+            console.error('Ошибка:', error);
             const errorMessage = error.response?.data?.message || 'Ошибка создания анкеты';
-            alert(` ${errorMessage}`);
+            alert(`❌ ${errorMessage}`);
         } finally {
             setIsLoading(false);
         }

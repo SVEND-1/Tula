@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import type { Gender, AnimalType, CreateAnimalRequest } from '../../types/animal/animal.types.ts';
 
 interface CreateAnimalFormProps {
-    onSubmit: (data: CreateAnimalRequest) => Promise<void>;
+    onSubmit: (data: CreateAnimalRequest, imageBase64?: string) => Promise<void>;
     isLoading: boolean;
 }
 
@@ -16,14 +15,28 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
         gender: 'MAN',
         animalType: 'DOG',
     });
+    const [imagePreview, setImagePreview] = useState<string>('');
+    const [imageBase64, setImageBase64] = useState<string>('');
 
     const isFormValid = form.name.trim() && form.age > 0 && form.breed.trim();
 
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result as string;
+                setImagePreview(base64String);
+                setImageBase64(base64String);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        await onSubmit(form);
+        await onSubmit(form, imageBase64);
 
-        // Сброс формы
         setForm({
             name: '',
             age: 0,
@@ -32,11 +45,28 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
             gender: 'MAN',
             animalType: 'DOG',
         });
+        setImagePreview('');
+        setImageBase64('');
     };
 
     return (
         <form onSubmit={handleSubmit} className="create-animal-form">
             <h2>➕ Создать анкету животного</h2>
+
+            <div className="form-group">
+                <label>🖼️ Фото животного</label>
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="file-input"
+                />
+                {imagePreview && (
+                    <div className="image-preview">
+                        <img src={imagePreview} alt="Предпросмотр" />
+                    </div>
+                )}
+            </div>
 
             <div className="form-group">
                 <label>🐕 Имя животного *</label>
@@ -97,7 +127,7 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
             </div>
 
             <div className="form-group">
-                <label> Описание</label>
+                <label>📝 Описание</label>
                 <textarea
                     value={form.description}
                     onChange={(e) => setForm({ ...form, description: e.target.value })}
@@ -111,7 +141,7 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
                 className="submit-btn"
                 disabled={!isFormValid || isLoading}
             >
-                {isLoading ? 'Создание...' : ' Создать анкету'}
+                {isLoading ? 'Создание...' : '📝 Создать анкету'}
             </button>
         </form>
     );
