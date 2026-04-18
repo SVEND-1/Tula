@@ -10,20 +10,41 @@ import org.example.tula.animals.db.AnimalEntity;
 import org.example.tula.animals.db.AnimalRepository;
 import org.example.tula.animals.db.StatusAnimal;
 import org.example.tula.animals.domain.mapper.AnimalMapper;
+import org.example.tula.likes.api.dto.Like;
 import org.example.tula.likes.api.dto.response.TakeResponse;
+import org.example.tula.likes.db.LikeEntity;
+import org.example.tula.likes.db.StatusAnswer;
+import org.example.tula.likes.domain.LikeService;
+import org.example.tula.notify.event.NotifyEvent;
+import org.example.tula.notify.event.NotifyType;
+import org.example.tula.notify.kafka.NotifyKafkaProducer;
+import org.example.tula.users.db.UserEntity;
 import org.example.tula.users.domain.UserService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class AnimalService {
 
     private final AnimalRepository animalRepository;
     private final AnimalMapper animalMapper;
     private final UserService userService;
+    private final LikeService likeService;
+    private final NotifyKafkaProducer notifyKafkaProducer;
+
+    public AnimalService(AnimalRepository animalRepository, AnimalMapper animalMapper,
+                         UserService userService, @Lazy LikeService likeService,
+                         NotifyKafkaProducer notifyKafkaProducer) {
+        this.animalRepository = animalRepository;
+        this.animalMapper = animalMapper;
+        this.userService = userService;
+        this.likeService = likeService;
+        this.notifyKafkaProducer = notifyKafkaProducer;
+    }
 
     public Animal findAnimalById(Long id) {
         return animalMapper.convertEntityToDTO(
@@ -66,7 +87,6 @@ public class AnimalService {
                 throw new IllegalArgumentException("Данный питомец был взят");
             }
 
-            animal.setPersonTakeId(userService.getCurrentUser().getId());
             animal.setStatus(StatusAnimal.RESERVATION);
             animalRepository.save(animal);
 
@@ -81,18 +101,22 @@ public class AnimalService {
         }
     }
 
-    public String rejectionTakenAnimal(Long id) {
+    @Transactional//TODO возможно перенести в другой класс
+    public String rejectionTakenAnimal(Long id) {//TODO ДОБАВИТЬ ОТКАЗ И УВЕДОМЛЕНИЕ
         try {
-            AnimalEntity animal = animalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Животное не найдено"));
+            Like like = likeService.findById(id);
+            AnimalEntity animal = animalRepository.findById(like.animalId()).orElseThrow(() -> new EntityNotFoundException("Животное не найдено"));
 
-            if (animal.getPersonTakeId() == null) {
-                throw new IllegalArgumentException("Нельзя отклонить заявку так как нету получателя");
+            if(!isValidReject(animal)) {
+                return "Что то пошло не так";
             }
-            //TODO ДОБАВИТЬ ПРОВЕРКУ НА ВЛАДЕЛЬЦА ЖИВОТНОГО
 
-            animal.setPersonTakeId(null);
+            likeService.setStatusAnswer(like.id(), StatusAnswer.REJECT);
+
             animal.setStatus(StatusAnimal.DONT_TAKE);
             animalRepository.save(animal);
+
+            notifyStatus(like.userId(),animal.getName(),NotifyType.REJECT);
 
             return "Вы отказали в получение питомца";
         }catch (Exception e) {
@@ -101,28 +125,67 @@ public class AnimalService {
         }
     }
 
-    public String confirmTakenAnimal(Long id) {
+    public String confirmTakenAnimal(Long likeId) {
         try {
-            AnimalEntity animal = animalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Животное не найдено"));
+            Like like = likeService.findById(likeId);
+            AnimalEntity animal = animalRepository.findById(like.animalId()).orElseThrow(() -> new EntityNotFoundException("Животное не найдено"));
 
-            if (animal.getPersonTakeId() == null) {
-                throw new IllegalArgumentException("Нельзя одобрить заявку так как нету получателя");
+            if(!isValidConfirm(like.userId(),animal)) {
+                return "Что то пошло не так";
             }
 
-            if (animal.getStatus().name().equals("TAKE")) {
-                throw new IllegalArgumentException("Данный питомец был взят");
-            }
+            likeService.setStatusAnswer(like.id(), StatusAnswer.CONFIRM);
 
-            //TODO ДОБАВИТЬ ПРОВЕРКУ НА ВЛАДЕЛЬЦА ЖИВОТНОГО
-
+            animal.setPersonTakeId(like.userId());
             animal.setStatus(StatusAnimal.TAKE);
             animalRepository.save(animal);
+
+            notifyStatus(like.userId(),animal.getName(),NotifyType.CONFIRM);
 
             return "Вы успешно одобрили получние питомца";
         }catch (Exception e) {
             log.error("Не удалось одобрить получние питомца,ex={}", e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean isValidReject(AnimalEntity animal){
+        //TODO ДОБАВИТЬ ПРОВЕРКУ НА ВЛАДЕЛЬЦА ЖИВОТНОГО
+        if (animal.getPersonTakeId() == null) {
+            log.warn("Нельзя отклонить заявку так как нету получателя");
+            throw new IllegalArgumentException("Нельзя отклонить заявку так как нету получателя");
+        }
+        return true;
+    }
+
+    private boolean isValidConfirm(Long userId,AnimalEntity animal){
+        if (userId == null) {
+            throw new IllegalArgumentException("Нельзя одобрить заявку так как нету получателя");
+        }
+
+        if (animal.getStatus().name().equals("TAKE")) {
+            throw new IllegalArgumentException("Данный питомец был взят");
+        }
+
+        //TODO ДОБАВИТЬ ПРОВЕРКУ НА ВЛАДЕЛЬЦА ЖИВОТНОГО
+        return true;
+    }
+
+    private void notifyStatus(Long userId,String animalName,NotifyType notifyType) {
+        UserEntity user = userService.findUserById(userId);
+
+        Map<String, String> params = Map.of(
+                "animalName", animalName,
+                "userName", user.getName()
+        );
+
+        NotifyEvent notifyEvent = new NotifyEvent(
+                user.getEmail(),
+                params,
+                notifyType
+        );
+
+        notifyKafkaProducer.sendMessageToKafka(notifyEvent);
     }
 
 }

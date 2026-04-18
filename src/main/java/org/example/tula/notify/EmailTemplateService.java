@@ -24,6 +24,7 @@ public class EmailTemplateService {
                     params.getOrDefault("code", ""));
             case LOGIN -> "Tula Hackaton: Вход в аккаунт";
             case LIKE -> "Вашего питомца хотят взять";
+            case REJECT -> "Вам отказали в взятия питомца";
 
             default -> "Уведомление от Tula Hackaton";
         };
@@ -85,6 +86,17 @@ public class EmailTemplateService {
                 Пользователь %s заинтересовался вашим питомцем %s.
                 
                 Зайдите в личный кабинет, чтобы ответить.
+                
+                С уважением,
+                Команда Tula Hackaton
+                """,
+                    params.getOrDefault("userName", "Пользователь"),
+                    params.getOrDefault("animalName", "питомцем"));
+
+            case REJECT -> String.format("""
+                %s, вам было отказано в приюте питомца %s.
+                
+                Вы можете подобрать себе другого питомца.
                 
                 С уважением,
                 Команда Tula Hackaton

@@ -31,13 +31,13 @@ public class AnimalController {
         return ResponseEntity.ok(animalService.save(request));
     }
 
-    @PutMapping("/rejection/{id}")
-    public ResponseEntity<String> rejectionTakenAnimal(@PathVariable Long id) {
-        return ResponseEntity.ok(animalService.rejectionTakenAnimal(id));
+    @PutMapping("/rejection/{likeId}")
+    public ResponseEntity<String> rejectionTakenAnimal(@PathVariable Long likeId) {
+        return ResponseEntity.ok(animalService.rejectionTakenAnimal(likeId));
     }
 
-    @PutMapping("/confirm/{id}")
-    public ResponseEntity<String> confirmTakenAnimal(@PathVariable Long id) {
-        return ResponseEntity.ok(animalService.confirmTakenAnimal(id));
+    @PutMapping("/confirm/{likeId}")
+    public ResponseEntity<String> confirmTakenAnimal(@PathVariable Long likeId) {
+        return ResponseEntity.ok(animalService.confirmTakenAnimal(likeId));
     }
 }
