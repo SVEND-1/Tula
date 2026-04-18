@@ -1,8 +1,12 @@
 package org.example.tula.users.db;
 
+import io.minio.messages.Owner;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.tula.animals.db.AnimalEntity;
+import org.example.tula.likes.db.LikeEntity;
+import org.example.tula.owners.db.OwnerEntity;
+import org.example.tula.reviews.db.ReviewEntity;
 
 import java.util.List;
 
@@ -24,7 +28,7 @@ public class UserEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "email")
+    @Column(name = "email",unique = true)
     private String email;
 
     @Column(name = "password")
@@ -34,6 +38,12 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "owner")
-    private List<AnimalEntity> animals;
+    @OneToOne(mappedBy = "owner")
+    private OwnerEntity owner;
+
+    @OneToMany(mappedBy = "reviewer")
+    private List<ReviewEntity> reviews;
+
+    @OneToMany(mappedBy = "user")
+    private List<LikeEntity> likes;
 }
