@@ -1,0 +1,253 @@
+// Сбрасываем overflow только для этой страницы
+.liked-page {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: 100vh;
+}
+
+.liked-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: linear-gradient(to bottom, #ffcdb0, #fff3eb);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  .logo {
+    font-size: 36px;
+    font-weight: 600;
+  }
+
+  .profile {
+    font-size: 18px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #ffffff, #ffd2b3);
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .back-btn {
+    padding: 8px 20px;
+    background: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: "Playpen Sans", cursive;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+
+    &:hover {
+      transform: scale(1.05);
+      background: #ffcdb0;
+    }
+  }
+}
+
+.liked-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #ffcdb0, #fff3eb);
+  padding: 100px 40px 40px 40px;
+  overflow-y: visible;
+  overflow-x: hidden;
+}
+
+.liked-title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+.liked-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+.liked-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.liked-card-image {
+  height: 250px;
+  position: relative;
+  background: linear-gradient(135deg, #ffcdb0, #ffdbc5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .animal-emoji {
+      font-size: 100px;
+    }
+  }
+
+  .status-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    background: white;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+    &.available {
+      background: #4caf50;
+      color: white;
+    }
+
+    &.taken {
+      background: #f44336;
+      color: white;
+    }
+
+    &.verification {
+      background: #ff9800;
+      color: white;
+    }
+  }
+}
+
+.liked-card-info {
+  padding: 20px;
+
+  h3 {
+    font-size: 24px;
+    margin: 0 0 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .gender-icon {
+      font-size: 20px;
+    }
+  }
+
+  .details {
+    display: flex;
+    gap: 8px;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .description {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.4;
+    margin-bottom: 15px;
+  }
+
+  .liked-date {
+    font-size: 12px;
+    color: #ff6b9d;
+    margin-bottom: 15px;
+    padding: 8px;
+    background: #ffe3ec;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .remove-btn {
+    width: 100%;
+    padding: 10px;
+    background: #ffebee;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: "Playpen Sans", cursive;
+    transition: all 0.2s;
+    color: #f44336;
+
+    &:hover {
+      background: #f44336;
+      color: white;
+    }
+  }
+}
+
+.empty-liked {
+  text-align: center;
+  padding: 80px 20px;
+
+  .empty-emoji {
+    font-size: 80px;
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 30px;
+  }
+
+  .go-main-btn {
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #ffcdb0, #ffb88c);
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: "Playpen Sans", cursive;
+    transition: all 0.2s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .liked-container {
+    padding: 90px 20px 20px 20px;
+  }
+
+  .liked-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .liked-title {
+    font-size: 28px;
+  }
+}

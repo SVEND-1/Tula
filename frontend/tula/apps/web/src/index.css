@@ -109,3 +109,6 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+body.liked-page-active {
+    overflow: auto !important;
+}

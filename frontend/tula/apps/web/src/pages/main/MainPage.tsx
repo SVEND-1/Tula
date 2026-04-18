@@ -71,7 +71,29 @@ export default function MainPage() {
         try {
             if (direction === 'right') {
                 await sendLike(currentAnimal.id);
-                setToastMessage(`🐾 Вам понравился ${currentAnimal.name}! Ожидайте ответа от хозяина`);
+
+                // Сохраняем лайк в localStorage
+                const storedLikes = localStorage.getItem('likedAnimals');
+                const likes = storedLikes ? JSON.parse(storedLikes) : [];
+                const alreadyLiked = likes.some((a: any) => a.id === currentAnimal.id);
+
+                if (!alreadyLiked) {
+                    likes.push({
+                        id: currentAnimal.id,
+                        name: currentAnimal.name,
+                        breed: currentAnimal.breed,
+                        age: currentAnimal.age,
+                        description: currentAnimal.description,
+                        gender: currentAnimal.gender,
+                        animalType: currentAnimal.animalType,
+                        status: currentAnimal.status,
+                        likedAt: new Date().toISOString()
+                    });
+                    localStorage.setItem('likedAnimals', JSON.stringify(likes));
+                    console.log('✅ Лайк сохранён в localStorage');
+                }
+
+                setToastMessage(`🐾 Вам понравился ${currentAnimal.name}!`);
                 setShowToast(true);
                 setTimeout(() => setShowToast(false), 2000);
             } else {
@@ -146,7 +168,7 @@ export default function MainPage() {
         <>
             <header className="adopt-header">
                 <div className="logo">Adoptly</div>
-                <div className="profile">Профиль</div>
+                <div className="profile" onClick={() => window.location.href = '/liked'}>❤️ Избранное</div>
             </header>
 
             <div className={`toast ${showToast ? 'show' : ''}`}>
