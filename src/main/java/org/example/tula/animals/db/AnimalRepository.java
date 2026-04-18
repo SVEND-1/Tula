@@ -21,4 +21,6 @@ public interface AnimalRepository extends JpaRepository<AnimalEntity,Long> {
             @Param("age")Integer age,@Param("breed") String breed,
             @Param("gender")Gender gender,@Param("animalType") AnimalType animalType
     );
+
+    List<AnimalEntity> findAllByOwnerId(Long ownerId);
 }

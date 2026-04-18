@@ -2,7 +2,6 @@ package org.example.tula.animals.domain;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.api.dto.request.AnimalFeedFilter;
@@ -11,7 +10,6 @@ import org.example.tula.animals.db.*;
 import org.example.tula.animals.domain.mapper.AnimalMapper;
 import org.example.tula.likes.api.dto.Like;
 import org.example.tula.likes.api.dto.response.TakeResponse;
-import org.example.tula.likes.db.LikeEntity;
 import org.example.tula.likes.db.StatusAnswer;
 import org.example.tula.likes.domain.LikeService;
 import org.example.tula.notify.event.NotifyEvent;
@@ -37,7 +35,7 @@ public class AnimalService {
     private final NotifyKafkaProducer notifyKafkaProducer;
 
     public AnimalService(AnimalRepository animalRepository, AnimalMapper animalMapper,
-                         UserService userService, @Lazy LikeService likeService,
+                         @Lazy UserService userService, @Lazy LikeService likeService,
                          NotifyKafkaProducer notifyKafkaProducer) {
         this.animalRepository = animalRepository;
         this.animalMapper = animalMapper;
@@ -55,16 +53,19 @@ public class AnimalService {
         );
     }
 
-    public Animal findAnimalById(Long id) {
-        return animalMapper.convertEntityToDTO(
-                animalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Питомец не найден"))
+    public List<Animal> findAllAnimalByOwner(){
+        return animalMapper.convertEntityListToDTO(
+                animalRepository.findAllByOwnerId(userService.getCurrentUser().getId())
         );
     }
 
-    public List<Animal> findAllAnimals() {
-        return animalMapper.convertEntityListToDTO(
-                animalRepository.findAll()
+    public Animal findAnimalById(Long id) {
+        return animalMapper.convertEntityToDTO(
+                findAnimalEntityById(id)
         );
+    }
+    public AnimalEntity findAnimalEntityById(Long id) {
+        return animalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Питомец не найден"));
     }
 
     public Animal save(CreatedAnimalRequest request) {
@@ -78,6 +79,7 @@ public class AnimalService {
                             .gender(request.gender())
                             .animalType(request.animalType())
                             .status(StatusAnimal.DONT_TAKE)
+                            .owner(userService.getCurrentUser())
                             .createAt(LocalDateTime.now())
                             .build()
             );
@@ -85,6 +87,31 @@ public class AnimalService {
         }catch (Exception e) {
             log.error("Не удалось создать питомеца,ex={}", e.getMessage());
             throw new RuntimeException(e);
+        }
+    }
+
+    public Animal update(Long id,AnimalEntity updatedEntity){
+        try {
+            AnimalEntity animal = findAnimalEntityById(id);
+            AnimalEntity animalEntity = animalRepository.save(
+                    AnimalEntity.builder()
+                            .id(animal.getId())
+                            .name(animal.getName())
+                            .age(updatedEntity.getAge())
+                            .description(updatedEntity.getDescription())
+                            .breed(animal.getBreed())
+                            .gender(animal.getGender())
+                            .animalType(animal.getAnimalType())
+                            .status(updatedEntity.getStatus())
+                            .personTakeId(updatedEntity.getPersonTakeId())
+                            .owner(animal.getOwner())
+                            .createAt(animal.getCreateAt())
+                            .build()
+            );
+            return animalMapper.convertEntityToDTO(animalEntity);
+        }catch (Exception e){
+            log.error("Не удалось обновить питомца");
+            throw new RuntimeException(e.getMessage());
         }
     }
 

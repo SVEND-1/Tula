@@ -33,7 +33,7 @@ public class AnimalController {
     }
 
     @PutMapping("/rejection/{likeId}")
-    public ResponseEntity<String> rejectionTakenAnimal(@PathVariable Long likeId) {
+    public ResponseEntity<String> rejectionTakenAnimal(@PathVariable Long likeId) {//TODO В OWNER ПЕРЕНЕСТИ
         return ResponseEntity.ok(animalService.rejectionTakenAnimal(likeId));
     }
 

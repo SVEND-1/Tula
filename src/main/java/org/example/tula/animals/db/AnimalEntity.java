@@ -2,6 +2,7 @@ package org.example.tula.animals.db;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.tula.users.db.UserEntity;
 
 import java.time.LocalDateTime;
 
@@ -43,7 +44,10 @@ public class AnimalEntity {
     private StatusAnimal status;
 
     @Column(name = "person_take_id")
-    private Long personTakeId;
+    private Long personTakeId;//TODO поменять
+
+    @ManyToOne
+    private UserEntity owner;
 
     @Column(name = "create_at")
     private LocalDateTime createAt;
