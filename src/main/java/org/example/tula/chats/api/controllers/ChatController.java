@@ -9,10 +9,9 @@ import org.example.tula.chats.api.dto.responses.ChatResponse;
 import org.example.tula.chats.domain.services.ChatService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "Чат между продавцом и покупателем")
 @RestController
@@ -33,4 +32,14 @@ public class ChatController {
                 .body(chatService.createNewChat(animalId));
     }
 
+    @Operation(summary = "Показать все чаты")
+    @GetMapping
+    public ResponseEntity<List<ChatResponse>> getAllChats(
+            @RequestParam(name = "pageSize", required = false) Integer pageSize,
+            @RequestParam(name = "pageNum", required = false) Integer pageNum
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(chatService.getAllChatsByUser(pageSize, pageNum));
+    }
 }
