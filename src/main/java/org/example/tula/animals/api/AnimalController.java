@@ -1,9 +1,12 @@
 package org.example.tula.animals.api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.api.dto.request.AnimalFeedFilter;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
+import org.example.tula.animals.api.dto.response.AnimalProfileResponse;
 import org.example.tula.animals.domain.AnimalService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,32 +16,26 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/animals")
 @RequiredArgsConstructor
+@Tag(name = "Animal", description = "Управление животными")
 public class AnimalController {
 
     private final AnimalService animalService;
 
-    @GetMapping()
+    @Operation(summary = "Получение питомцев с фильтром")
+    @GetMapping
     public ResponseEntity<List<Animal>> getAllAnimalsFiltered(@ModelAttribute AnimalFeedFilter filter) {
         return ResponseEntity.ok(animalService.petFeed(filter));
     }
 
-    @GetMapping("/{id}")
+    @Operation(summary = "Получение информации о питомце")
+    @GetMapping("/{id}")//TODO ВОзмодно удалить
     public ResponseEntity<Animal> getAnimal(@PathVariable Long id) {
         return ResponseEntity.ok(animalService.findAnimalById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<Animal> createAnimal(@RequestBody CreatedAnimalRequest request) {
-        return ResponseEntity.ok(animalService.save(request));
-    }
-
-    @PutMapping("/rejection/{likeId}")
-    public ResponseEntity<String> rejectionTakenAnimal(@PathVariable Long likeId) {//TODO В OWNER ПЕРЕНЕСТИ
-        return ResponseEntity.ok(animalService.rejectionTakenAnimal(likeId));
-    }
-
-    @PutMapping("/confirm/{likeId}")
-    public ResponseEntity<String> confirmTakenAnimal(@PathVariable Long likeId) {
-        return ResponseEntity.ok(animalService.confirmTakenAnimal(likeId));
+    @Operation(summary = "Профиль питомца")
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<AnimalProfileResponse> profile(@PathVariable Long id) {
+        return ResponseEntity.ok(animalService.profile(id));
     }
 }

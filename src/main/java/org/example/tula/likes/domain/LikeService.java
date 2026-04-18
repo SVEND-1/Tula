@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.tula.animals.db.AnimalEntity;
 import org.example.tula.animals.domain.AnimalService;
 import org.example.tula.likes.api.dto.Like;
 import org.example.tula.likes.api.dto.response.TakeResponse;
@@ -15,7 +16,6 @@ import org.example.tula.likes.domain.mapper.LikeMapper;
 import org.example.tula.notify.event.NotifyEvent;
 import org.example.tula.notify.event.NotifyType;
 import org.example.tula.notify.kafka.NotifyKafkaProducer;
-import org.example.tula.users.db.UserEntity;
 import org.example.tula.users.domain.UserService;
 import org.springframework.stereotype.Service;
 
@@ -43,13 +43,15 @@ public class LikeService {
         try {
             TakeResponse takeResponse = animalService.takenAnimal(animalId);
 
+            AnimalEntity animal = animalService.findAnimalEntityById(animalId);
+
             notify(takeResponse);
 
             return likeMapper.convertEntityToDTO(likeRepository.save(
                     LikeEntity.builder()
                             .status(StatusLike.LIKE)
-                            .userId(userService.getCurrentUser().getId())
-                            .animalId(animalId)
+                            .user(userService.getCurrentUser())
+                            .animal(animal)
                             .createdAt(LocalDateTime.now())
                             .build()
             ));
@@ -60,23 +62,27 @@ public class LikeService {
     }
 
     public Like dislike(Long animalId) {
+        AnimalEntity animal = animalService.findAnimalEntityById(animalId);
+
         return likeMapper.convertEntityToDTO(
                 likeRepository.save(
                         LikeEntity.builder()
                                 .status(StatusLike.DISLIKE)
-                                .userId(userService.getCurrentUser().getId())//TODO поменять
-                                .animalId(animalId)
+                                .user(userService.getCurrentUser())
+                                .animal(animal)
                                 .createdAt(LocalDateTime.now())
                                 .build()
                 )
         );
     }
 
+    @Transactional
     public Like setStatusAnswer(Long likeId, StatusAnswer answer) {
         try {
             LikeEntity like = likeRepository.findById(likeId).orElseThrow(() -> new EntityNotFoundException("Реакция не найдена"));
 
-            if(like.getStatus().equals(StatusLike.DISLIKE)) {//TODO ДОБАВИТЬ ПРОВЕРКУ НА ХОЗЯИНА
+            if(like.getStatus().equals(StatusLike.DISLIKE) &&
+                    !like.getUser().getId().equals(userService.getCurrentUser().getId())) {
                 log.error("Нельзя сменить у DISLIKE");
                 throw new IllegalArgumentException("Нельзя сменить у DISLIKE");
             }

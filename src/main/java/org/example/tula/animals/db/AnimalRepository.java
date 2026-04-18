@@ -16,11 +16,12 @@ public interface AnimalRepository extends JpaRepository<AnimalEntity,Long> {
           AND (:breed IS NULL OR a.breed = :breed)
           AND (:gender IS NULL OR a.gender = :gender)
           AND (:animalType IS NULL OR a.animalType = :animalType)
+          AND (a.status != org.example.tula.animals.db.StatusAnimal.TAKE)
         """)
     List<AnimalEntity> findAllByFilter(
             @Param("age")Integer age,@Param("breed") String breed,
             @Param("gender")Gender gender,@Param("animalType") AnimalType animalType
     );
 
-    List<AnimalEntity> findAllByOwnerId(Long ownerId);
+    List<AnimalEntity> findAllByOwner_Owner_Id(Long ownerOwnerId);
 }
