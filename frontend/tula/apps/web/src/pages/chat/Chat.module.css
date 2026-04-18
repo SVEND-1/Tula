@@ -1,0 +1,36 @@
+.page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebarWrap {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.mainWrap {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Мобильный: прячем ту часть, которая не активна */
+@media (max-width: 640px) {
+  .hideMobile {
+    display: none;
+  }
+
+  .sidebarWrap,
+  .mainWrap {
+    flex: 1;
+    width: 100%;
+  }
+}
