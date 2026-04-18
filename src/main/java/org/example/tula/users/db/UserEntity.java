@@ -2,6 +2,9 @@ package org.example.tula.users.db;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.tula.animals.db.AnimalEntity;
+
+import java.util.List;
 
 
 @Setter
@@ -30,4 +33,7 @@ public class UserEntity {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "owner")
+    private List<AnimalEntity> animals;
 }

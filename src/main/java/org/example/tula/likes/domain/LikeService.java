@@ -9,6 +9,7 @@ import org.example.tula.likes.api.dto.Like;
 import org.example.tula.likes.api.dto.response.TakeResponse;
 import org.example.tula.likes.db.LikeEntity;
 import org.example.tula.likes.db.LikeRepository;
+import org.example.tula.likes.db.StatusAnswer;
 import org.example.tula.likes.db.StatusLike;
 import org.example.tula.likes.domain.mapper.LikeMapper;
 import org.example.tula.notify.event.NotifyEvent;
@@ -69,6 +70,23 @@ public class LikeService {
                                 .build()
                 )
         );
+    }
+
+    public Like setStatusAnswer(Long likeId, StatusAnswer answer) {
+        try {
+            LikeEntity like = likeRepository.findById(likeId).orElseThrow(() -> new EntityNotFoundException("Реакция не найдена"));
+
+            if(like.getStatus().equals(StatusLike.DISLIKE)) {//TODO ДОБАВИТЬ ПРОВЕРКУ НА ХОЗЯИНА
+                log.error("Нельзя сменить у DISLIKE");
+                throw new IllegalArgumentException("Нельзя сменить у DISLIKE");
+            }
+
+            like.setStatusAnswer(answer);
+            return likeMapper.convertEntityToDTO(likeRepository.save(like));
+        }catch (Exception e){
+            log.error("Не удалось сменить статус на answer={},ex-{}",answer, e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     private void notify(TakeResponse takeResponse) {
