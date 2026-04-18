@@ -7,7 +7,7 @@ import AuthTitle from "../../../components/auth/global/AuthTitle";
 import AuthSubtitle from "../../../components/auth/global/AuthSubtitle";
 import RegisterForm from "../../../components/auth/register/RegisterForm";
 import * as React from "react";
-import "../../style/AuthForm.css";
+import "../../../style/AuthForm.css";
 
 export default function Register() {
     const navigate = useNavigate();
