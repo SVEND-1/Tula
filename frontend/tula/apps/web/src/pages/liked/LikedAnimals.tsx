@@ -42,6 +42,7 @@ export default function LikedAnimals() {
     const [shelterName, setShelterName] = useState('');
     const [isCreatingShelter, setIsCreatingShelter] = useState(false);
     const [hasOwner, setHasOwner] = useState(false);
+    const [ownerName, setOwnerName] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -64,6 +65,7 @@ export default function LikedAnimals() {
         if (storedImages) {
             const parsed = JSON.parse(storedImages);
             setAnimalImages(parsed);
+            console.log('Загружены картинки из localStorage:', Object.keys(parsed));
         }
     };
 
@@ -72,9 +74,14 @@ export default function LikedAnimals() {
             const response = await getOwnerAnimals();
             if (response.data && response.status === 200) {
                 setHasOwner(true);
+                // Сохраняем название приюта из профиля
+                if (profile?.name) {
+                    setOwnerName(profile.name);
+                }
             }
         } catch (error) {
             setHasOwner(false);
+            setOwnerName('');
         }
     };
 
@@ -93,6 +100,9 @@ export default function LikedAnimals() {
                     status: animal.status
                 }));
                 setMyAnimals(animals);
+                console.log('Загружены мои животные:', animals);
+            } else {
+                setMyAnimals([]);
             }
         } catch (error) {
             console.error('Ошибка загрузки моих животных:', error);
@@ -121,6 +131,11 @@ export default function LikedAnimals() {
                 }));
                 setLikedAnimals(likes);
             }
+
+            // Если есть имя в профиле, устанавливаем название приюта
+            if (response.data.name) {
+                setOwnerName(response.data.name);
+            }
         } catch (error: any) {
             console.error('Ошибка загрузки профиля:', error);
             const storedLikes = localStorage.getItem('likedAnimals');
@@ -137,6 +152,7 @@ export default function LikedAnimals() {
         setIsCreatingShelter(true);
         try {
             await createOwner(shelterName);
+            setOwnerName(shelterName);
             alert('✅ Приют успешно создан! Теперь вы можете добавлять питомцев');
             setShelterName('');
             setHasOwner(true);
@@ -157,8 +173,13 @@ export default function LikedAnimals() {
             if (response.data) {
                 const existingAnimals = localStorage.getItem('animalImages');
                 const images = existingAnimals ? JSON.parse(existingAnimals) : {};
+
                 images[response.data.id] = imageBase64 || '';
+                const uniqueKey = `${response.data.name}_${response.data.breed}_${response.data.age}`;
+                images[uniqueKey] = imageBase64 || '';
+
                 localStorage.setItem('animalImages', JSON.stringify(images));
+                setAnimalImages(images);
 
                 alert(`✅ Животное "${response.data.name}" успешно создано! Оно появится в ленте`);
                 await loadMyAnimals();
@@ -172,6 +193,22 @@ export default function LikedAnimals() {
         } finally {
             setIsCreatingAnimal(false);
         }
+    };
+
+    const getAnimalImage = (animal: LikedAnimal | MyAnimal | Animal) => {
+        if (animalImages[animal.id]) {
+            return animalImages[animal.id];
+        }
+        const uniqueKey = `${animal.name}_${animal.breed}_${animal.age}`;
+        if (animalImages[uniqueKey]) {
+            return animalImages[uniqueKey];
+        }
+        for (const key in animalImages) {
+            if (key.includes(String(animal.id)) || key.includes(animal.name)) {
+                return animalImages[key];
+            }
+        }
+        return null;
     };
 
     const uniqueLikedAnimals = useMemo(() => {
@@ -194,11 +231,6 @@ export default function LikedAnimals() {
 
     const getGenderIcon = (gender: string) => gender === 'MAN' ? '♂️' : '♀️';
     const getGenderText = (gender: string) => gender === 'MAN' ? 'Мальчик' : 'Девочка';
-
-    const getAnimalImage = (animal: LikedAnimal | MyAnimal | Animal) => {
-        const uniqueKey = `${animal.name}_${animal.breed}_${animal.age}`;
-        return animalImages[uniqueKey] || null;
-    };
 
     const formatDate = (dateString: string) => {
         if (!dateString) return 'Не указано';
@@ -294,7 +326,7 @@ export default function LikedAnimals() {
                             onClick={() => setActiveTab('createShelter')}
                         >
                             <span className="nav-icon">🏠</span>
-                            Создать приют
+                            Приют
                         </button>
                         <button
                             className="nav-item"
@@ -459,18 +491,27 @@ export default function LikedAnimals() {
 
                     {activeTab === 'createShelter' && (
                         <div className="create-shelter-main">
-                            <h2>🏠 Создать приют</h2>
-
                             {hasOwner ? (
-                                <div className="shelter-exists">
-                                    <span>✅</span>
-                                    <p>У вас уже есть приют! Вы можете создавать питомцев.</p>
-                                    <button onClick={() => setActiveTab('mypets')} className="add-btn">
-                                        🐕 Мои питомцы
-                                    </button>
+                                <div className="shelter-info-card">
+                                    <div className="shelter-header">
+                                        <span className="shelter-icon">🏠</span>
+                                        <h2>Мой приют</h2>
+                                    </div>
+                                    <div className="shelter-details">
+                                        <p className="shelter-name">
+                                            <strong>Название:</strong> {ownerName || profile?.name || 'Название не указано'}
+                                        </p>
+                                        <button onClick={() => setActiveTab('mypets')} className="my-pets-btn">
+                                            🐕 Мои питомцы ({myAnimals.length})
+                                        </button>
+                                    </div>
                                 </div>
                             ) : (
-                                <div className="shelter-form-container">
+                                <div className="shelter-form-card">
+                                    <div className="shelter-header">
+                                        <span className="shelter-icon">🏠</span>
+                                        <h2>Создать приют</h2>
+                                    </div>
                                     <form onSubmit={handleCreateShelter} className="shelter-form">
                                         <div className="form-group">
                                             <label>🏷️ Название приюта</label>
@@ -492,7 +533,10 @@ export default function LikedAnimals() {
                             <div className="divider"></div>
 
                             <div className="create-animal-section">
-                                <h3>📝 Добавить питомца</h3>
+                                <div className="create-animal-header">
+                                    <span className="animal-icon">📝</span>
+                                    <h3>Добавить питомца</h3>
+                                </div>
                                 <p>Заполните форму чтобы добавить питомца в ленту</p>
                                 <CreateAnimalForm onSubmit={handleCreateAnimal} isLoading={isCreatingAnimal} />
                             </div>

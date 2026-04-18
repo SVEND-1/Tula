@@ -56,5 +56,7 @@ export const createOwnerAnimal = (data: CreateAnimalRequest) => {
 export const getOwnerProfile = (id: number) => {
     return OWNER_API.get<OwnerProfileResponse>(`/${id}`);
 };
-
+export const deleteOwnerAnimal = (animalId: number) => {
+    return OWNER_API.delete(`/animal/${animalId}`);
+};
 export default OWNER_API;

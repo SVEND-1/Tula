@@ -13,71 +13,86 @@ html, body {
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
+  background: linear-gradient(to bottom, #ffcdb0, #fff3eb);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
 
   .logo {
     font-size: 34px;
     font-weight: 600;
+    font-family: "Playpen Sans", cursive;
   }
-}
 
-.global-close {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 42px;
-  height: 42px;
-  border: none;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.9);
-  font-size: 26px;
-  cursor: pointer;
-  z-index: 9999;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .profile {
+    font-size: 16px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #ffffff, #ffd2b3);
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-family: "Playpen Sans", cursive;
+  }
 
-  &:hover {
+  .back-btn {
+    padding: 8px 20px;
     background: white;
-    transform: scale(1.05);
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: "Playpen Sans", cursive;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+
+    &:hover {
+      transform: scale(1.05);
+      background: #ffcdb0;
+    }
   }
 }
 
-.page {
-  display: flex;
-  justify-content: center;
-  padding: 30px 20px;
+.owner-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #ffcdb0, #fff3eb);
+  padding: 100px 40px 40px 40px;
 }
 
-.container {
-  width: min(900px, 95vw);
+.owner-card {
+  max-width: 900px;
+  margin: 0 auto;
   background: white;
   border-radius: 24px;
   padding: 30px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-.block {
-  padding: 10px 0;
+.owner-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 30px 0;
+  text-align: center;
+  font-family: "Playpen Sans", cursive;
+}
 
-  h1 {
-    font-size: 32px;
-    margin: 0;
-  }
+.owner-section {
+  margin-bottom: 40px;
 
-  h2 {
-    margin-bottom: 15px;
+  .section-title {
     font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 20px 0;
+    font-family: "Playpen Sans", cursive;
+    border-left: 4px solid #ffb88c;
+    padding-left: 15px;
   }
 }
 
-.divider {
-  height: 1px;
-  background: #e6e6e6;
-  margin: 15px 0;
-}
-
-.slider-wrapper {
+.animals-slider {
   position: relative;
   display: flex;
   align-items: center;
@@ -89,7 +104,7 @@ html, body {
   overflow-x: auto;
   scroll-behavior: smooth;
   width: 100%;
-  padding: 5px 0;
+  padding: 10px 0;
 
   &::-webkit-scrollbar {
     height: 6px;
@@ -106,89 +121,148 @@ html, body {
   }
 }
 
-.animal-card {
-  min-width: 180px;
+.animal-item {
+  min-width: 150px;
+  background: #f7f7f7;
   border-radius: 16px;
   overflow: hidden;
-  background: #f7f7f7;
-  flex-shrink: 0;
   cursor: pointer;
   transition: transform 0.2s;
+  text-align: center;
+  padding: 12px;
 
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   }
 
-  img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-  }
-
-  .animal-image-placeholder {
+  .animal-image {
     width: 100%;
     height: 120px;
     background: linear-gradient(135deg, #ffcdb0, #ffdbc5);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 
-    .animal-emoji {
-      font-size: 50px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .image-placeholder {
+      .animal-emoji {
+        font-size: 50px;
+      }
     }
   }
 
-  .animal-info {
-    padding: 10px;
+  .animal-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    font-family: "Playpen Sans", cursive;
+  }
 
-    .animal-name {
-      font-weight: 600;
-      font-size: 16px;
-    }
-
-    .animal-breed {
-      font-size: 12px;
-      color: #666;
-      margin-top: 3px;
-    }
-
-    .animal-age {
-      font-size: 11px;
-      color: #999;
-      margin-top: 3px;
-    }
+  .animal-breed {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+    font-family: "Playpen Sans", cursive;
   }
 }
 
-.arrow {
+.slider-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: none;
-  background: rgba(255,255,255,0.95);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   cursor: pointer;
-  z-index: 5;
   font-size: 20px;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
+  z-index: 10;
 
-  &:hover {
-    background: white;
-    transform: translateY(-50%) scale(1.05);
+  &.visible {
+    display: flex;
   }
 
   &.left {
-    left: -15px;
+    left: -18px;
   }
 
   &.right {
-    right: -15px;
+    right: -18px;
+  }
+
+  &:hover {
+    background: #ffcdb0;
+    transform: translateY(-50%) scale(1.05);
+  }
+}
+
+.add-review-form {
+  background: #fff3eb;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 25px;
+
+  h3 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    color: #333;
+    font-family: "Playpen Sans", cursive;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ffcdb0;
+    border-radius: 12px;
+    font-family: "Playpen Sans", cursive;
+    font-size: 14px;
+    resize: vertical;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: #ffb88c;
+    }
+
+    &:disabled {
+      background: #f5f5f5;
+    }
+  }
+
+  .submit-review-btn {
+    padding: 10px 24px;
+    background: linear-gradient(135deg, #ffcdb0, #ffb88c);
+    border: none;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: "Playpen Sans", cursive;
+    transition: all 0.2s;
+
+    &:hover:not(:disabled) {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 }
 
@@ -198,26 +272,23 @@ html, body {
   gap: 12px;
 }
 
-.review {
-  padding: 15px;
-  border-radius: 12px;
+.review-item {
   background: #f7f7f7;
+  border-radius: 12px;
+  padding: 15px 20px;
 
-  .review-name {
-    font-weight: 600;
-    margin-bottom: 5px;
-  }
-
-  .review-text {
+  .review-content {
     font-size: 14px;
     color: #555;
     line-height: 1.4;
+    margin-bottom: 8px;
+    font-family: "Playpen Sans", cursive;
   }
 
   .review-date {
     font-size: 11px;
     color: #999;
-    margin-top: 5px;
+    font-family: "Playpen Sans", cursive;
   }
 }
 
@@ -227,14 +298,16 @@ html, body {
   background: #f7f7f7;
   border-radius: 12px;
 
-  span {
-    font-size: 40px;
-    display: block;
-    margin-bottom: 10px;
+  p {
+    color: #999;
+    margin-bottom: 8px;
+    font-family: "Playpen Sans", cursive;
   }
 
-  p {
-    color: #666;
+  span {
+    font-size: 13px;
+    color: #bbb;
+    font-family: "Playpen Sans", cursive;
   }
 }
 
@@ -272,5 +345,41 @@ html, body {
 
   &:hover {
     background: #ffcdb0;
+  }
+}
+
+@media (max-width: 768px) {
+  .owner-container {
+    padding: 80px 15px 15px 15px;
+  }
+
+  .owner-card {
+    padding: 20px;
+  }
+
+  .owner-title {
+    font-size: 24px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+
+  .animal-item {
+    min-width: 120px;
+  }
+
+  .slider-arrow {
+    &.left {
+      left: -10px;
+    }
+
+    &.right {
+      right: -10px;
+    }
+  }
+
+  .add-review-form {
+    padding: 15px;
   }
 }
