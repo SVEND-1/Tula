@@ -4,14 +4,17 @@ import org.example.tula.animals.db.AnimalType;
 import org.example.tula.animals.db.Gender;
 import org.example.tula.animals.db.StatusAnimal;
 
+import java.time.LocalDateTime;
+
 public record Animal(
         String name,
-        int age,
+        Integer age,
         String description,
         String breed,
         Gender gender,
         AnimalType animalType,
         StatusAnimal status,
-        Long personTakeId
+        Long personTakeId,
+        LocalDateTime createAt
 ) {
 }
