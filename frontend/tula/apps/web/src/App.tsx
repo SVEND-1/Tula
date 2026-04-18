@@ -8,6 +8,7 @@ import ResetPassword from "./pages/auth/reset-password/ResetPassword";
 import MainPage from "./pages/main/MainPage";
 import AdminAnimals from "./pages/admin/AdminAnimals";
 import Chat from "./pages/chat/Chat.tsx";
+import {ReceiptsPage} from "./pages/receipt/ReceiptPage.tsx";
 
 function App() {
     return (
@@ -22,6 +23,8 @@ function App() {
                 <Route path="/main" element={<MainPage />} />
                 <Route path="/admin" element={<AdminAnimals />} />
                 <Route path="/chat" element={<Chat />} />
+
+                <Route path="/receipt" element={<ReceiptsPage/>} />
             </Routes>
         </BrowserRouter>
     );
