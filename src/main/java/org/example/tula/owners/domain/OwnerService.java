@@ -1,6 +1,5 @@
 package org.example.tula.owners.domain;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.tula.animals.api.dto.Animal;
@@ -14,11 +13,15 @@ import org.example.tula.likes.domain.LikeService;
 import org.example.tula.notify.event.NotifyEvent;
 import org.example.tula.notify.event.NotifyType;
 import org.example.tula.notify.kafka.NotifyKafkaProducer;
+import org.example.tula.owners.api.dto.response.OwnerProfileResponse;
 import org.example.tula.owners.db.OwnerEntity;
 import org.example.tula.owners.db.OwnerRepository;
+import org.example.tula.reviews.api.dto.Review;
+import org.example.tula.reviews.domain.mapper.ReviewMapper;
 import org.example.tula.users.db.UserEntity;
 import org.example.tula.users.domain.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -34,6 +37,7 @@ public class OwnerService {
     private final NotifyKafkaProducer notifyKafkaProducer;
     private final OwnerRepository ownerRepository;
     private final AnimalMapper animalMapper;
+    private final ReviewMapper reviewMapper;
 
 
     public OwnerEntity findByIdEntity(Long id){
@@ -52,6 +56,23 @@ public class OwnerService {
         }catch (Exception e){
             log.error("Не удалось найти животных у данного пользователя,ex={}",e.getMessage());
             throw new RuntimeException(e);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public OwnerProfileResponse profile(Long ownerId){
+        try {
+            OwnerEntity owner = findByIdEntity(ownerId);
+            List<Animal> animals = animalMapper.convertEntityListToDTO(owner.getAnimals());
+            List<Review> reviews = reviewMapper.convertEntityListToDTO(owner.getReviews());
+            return new OwnerProfileResponse(
+                    owner.getName(),
+                    animals,
+                    reviews
+            );
+        }catch (Exception e){
+            log.error("Не удалось загрузить профиль приюта,ex={}",e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 

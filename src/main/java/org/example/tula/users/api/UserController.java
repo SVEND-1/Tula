@@ -14,8 +14,8 @@ public class UserController {
 
     private final UserService userService;
 
-//    @GetMapping
-//    public ResponseEntity<UserProfileResponse> profile() {
-//        return ResponseEntity.ok(userService.profile());
-//    }
+    @GetMapping
+    public ResponseEntity<UserProfileResponse> profile() {
+        return ResponseEntity.ok(userService.profile());
+    }
 }

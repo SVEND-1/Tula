@@ -3,9 +3,12 @@ package org.example.tula.users.domain;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.domain.mapper.AnimalMapper;
 import org.example.tula.config.JwtTokenProvider;
 import org.example.tula.likes.domain.LikeService;
+import org.example.tula.reviews.api.dto.Review;
+import org.example.tula.reviews.domain.mapper.ReviewMapper;
 import org.example.tula.users.api.dto.users.request.UserCreateRequest;
 import org.example.tula.users.api.dto.users.response.UserProfileResponse;
 import org.example.tula.users.api.dto.users.response.UserRegistrationResponse;
@@ -17,6 +20,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -25,6 +30,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final JwtTokenProvider jwtTokenProvider;
+    private final AnimalMapper animalMapper;
+    private final ReviewMapper reviewMapper;
 
     public UserEntity getCurrentUser() {
         String token = jwtTokenProvider.getCurrentToken();
@@ -48,20 +55,28 @@ public class UserService {
         return userMapper.convertEntityToDto(user);
     }
 
-//    public UserProfileResponse profile(){
-//        try {
-//            UserEntity user = getCurrentUser();
-//            return new UserProfileResponse(
-//                    user.getName(),
-//                    user.getEmail(),
-//                    ,
-//                    user.getOwner() != null ? animalMapper.convertEntityListToDTO(user.getOwner().getAnimals()) : null
-//            );
-//        }catch (Exception e) {
-//            log.error("Не удалось загрузить профиль,ex={}",e.getMessage());
-//            throw new RuntimeException(e.getMessage());
-//        }
-//    }
+    @Transactional(readOnly = true)
+    public UserProfileResponse profile(){
+        try {
+            UserEntity user = getCurrentUser();
+            List<Animal> likeAnimals = user.getLikes().stream()
+                    .map(el -> animalMapper.convertEntityToDTO(el.getAnimal()))
+                    .toList();
+            List<Animal> myAnimals = user.getOwner() != null ? animalMapper.convertEntityListToDTO(user.getOwner().getAnimals()) : null;
+            List<Review> myReview = reviewMapper.convertEntityListToDTO(user.getOwner() != null ? user.getOwner().getReviews() : null);
+
+            return new UserProfileResponse(
+                    user.getName(),
+                    user.getEmail(),
+                   likeAnimals,
+                    myAnimals,
+                    myReview
+            );
+        }catch (Exception e) {
+            log.error("Не удалось загрузить профиль,ex={}",e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 
     public UserRegistrationResponse save(UserCreateRequest request) {
         try {
