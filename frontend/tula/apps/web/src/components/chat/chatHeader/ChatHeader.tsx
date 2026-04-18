@@ -19,8 +19,7 @@ const ChatHeader: React.FC<Props> = ({ pet, onBack }) => (
     <div className={styles.avatar}>{pet.emoji}</div>
 
     <div className={styles.info}>
-      <span className={styles.name}>{pet.name} · {pet.breed}</span>
-      <span className={styles.status}>● онлайн</span>
+      <span className={styles.name}>{pet.name} - {pet.breed}</span>
     </div>
 
     <div className={styles.actions}>
