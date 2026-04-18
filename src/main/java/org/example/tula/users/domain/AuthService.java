@@ -185,8 +185,6 @@ public class AuthService {
             user.setRole(Role.USER);
             UserRegistrationResponse savedUser = userService.save(userMapper.convertDtoToCreateRequest(user));
 
-            ownerService.createOwner(user.getName());
-
 
             String token = jwtTokenProvider.createToken(savedUser.email(), savedUser.role().name());
             Cookie cookie = new Cookie("jwtToken", token);

@@ -64,7 +64,7 @@ public class LikeService {
                 likeRepository.save(
                         LikeEntity.builder()
                                 .status(StatusLike.DISLIKE)
-                                .userId(userService.getCurrentUser().getId())//TODO поменять
+                                .userId(userService.getCurrentUser().getId())
                                 .animalId(animalId)
                                 .createdAt(LocalDateTime.now())
                                 .build()
@@ -72,11 +72,13 @@ public class LikeService {
         );
     }
 
+    @Transactional
     public Like setStatusAnswer(Long likeId, StatusAnswer answer) {
         try {
             LikeEntity like = likeRepository.findById(likeId).orElseThrow(() -> new EntityNotFoundException("Реакция не найдена"));
 
-            if(like.getStatus().equals(StatusLike.DISLIKE)) {//TODO ДОБАВИТЬ ПРОВЕРКУ НА ХОЗЯИНА
+            if(like.getStatus().equals(StatusLike.DISLIKE) &&
+                    !like.getUserId().equals(userService.getCurrentUser().getId())) {
                 log.error("Нельзя сменить у DISLIKE");
                 throw new IllegalArgumentException("Нельзя сменить у DISLIKE");
             }

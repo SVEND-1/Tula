@@ -40,18 +40,6 @@ public class OwnerService {
         return ownerRepository.findByOwnerId(id);
     }
 
-    public String createOwner(String name){
-        try {
-            ownerRepository.save(OwnerEntity.builder()
-                            .name(name)
-                            .owner(userService.getCurrentUser())
-                    .build());
-            return "Успешно";
-        }catch (Exception e) {
-            log.error("Не удалось создать приют ,ex={}" ,e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
 
     @Transactional
     public List<Animal> findAllAnimalByOwner(){
@@ -65,14 +53,27 @@ public class OwnerService {
         }
     }
 
+    public String createOwner(String name){
+        try {
+            ownerRepository.save(OwnerEntity.builder()
+                    .name(name)
+                    .owner(userService.getCurrentUser())
+                    .build());
+            return "Успешно";
+        }catch (Exception e) {
+            log.error("Не удалось создать приют ,ex={}" ,e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
 
-    @Transactional//TODO возможно перенести в другой класс
+
+    @Transactional
     public String rejectionTakenAnimal(Long id) {
         try {
             Like like = likeService.findById(id);
             AnimalEntity animal = animalService.findAnimalEntityById(like.animalId());
 
-            if(!isValidReject(like.userId(),animal)) {
+            if(!isValidReject(like.userId(),animal) && !isValidOwner(animal)) {
                 return "Что то пошло не так";
             }
 
@@ -95,7 +96,7 @@ public class OwnerService {
             Like like = likeService.findById(likeId);
             AnimalEntity animal = animalService.findAnimalEntityById(like.animalId());
 
-            if(!isValidConfirm(like.userId(),animal)) {
+            if(!isValidConfirm(like.userId(),animal) && !isValidOwner(animal)) {
                 return "Что то пошло не так";
             }
 
@@ -114,8 +115,8 @@ public class OwnerService {
         }
     }
 
+
     private boolean isValidReject(Long userId,AnimalEntity animal){
-        //TODO ДОБАВИТЬ ПРОВЕРКУ НА ВЛАДЕЛЬЦА ЖИВОТНОГО
         if (userId == null) {
             log.warn("Нельзя отклонить заявку так как нету получателя");
             throw new IllegalArgumentException("Нельзя отклонить заявку так как нету получателя");
@@ -131,8 +132,13 @@ public class OwnerService {
         if (animal.getStatus().name().equals("TAKE")) {
             throw new IllegalArgumentException("Данный питомец был взят");
         }
+        return true;
+    }
 
-        //TODO ДОБАВИТЬ ПРОВЕРКУ НА ВЛАДЕЛЬЦА ЖИВОТНОГО
+    private boolean isValidOwner(AnimalEntity animal){
+        if(animal.getOwner().getOwner().getId() != userService.getCurrentUser().getId()){
+            throw new IllegalArgumentException("Вы не являетессь хозяеном питомца");
+        }
         return true;
     }
 
