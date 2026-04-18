@@ -25,7 +25,6 @@ import java.util.List;
 public class ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatMessageMapper chatMessageMapper;
-    private final ChatRepository chatRepository;
     private final ChatService chatService;
     private final UserService userService;
 

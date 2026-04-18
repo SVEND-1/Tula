@@ -9,7 +9,7 @@ import org.example.tula.users.db.UserEntity;
 import java.time.LocalDateTime;
 
 @Entity
-@Table("chat_messages")
+@Table(name = "chat_messages")
 @Getter
 @Setter
 @AllArgsConstructor
