@@ -53,12 +53,6 @@ public class AnimalService {
         );
     }
 
-    public List<Animal> findAllAnimalByOwner(){
-        return animalMapper.convertEntityListToDTO(
-                animalRepository.findAllByOwnerId(userService.getCurrentUser().getId())
-        );
-    }
-
     public Animal findAnimalById(Long id) {
         return animalMapper.convertEntityToDTO(
                 findAnimalEntityById(id)
@@ -70,6 +64,7 @@ public class AnimalService {
 
     public Animal save(CreatedAnimalRequest request) {
         try {
+            //TODO if проверка на создание приюта
             AnimalEntity animalEntity = animalRepository.save(//TODO добавть  владельца
                     AnimalEntity.builder()
                             .name(request.name())
@@ -79,7 +74,7 @@ public class AnimalService {
                             .gender(request.gender())
                             .animalType(request.animalType())
                             .status(StatusAnimal.DONT_TAKE)
-                            .owner(userService.getCurrentUser())
+                            .owner(userService.getCurrentUser().getOwner())
                             .createAt(LocalDateTime.now())
                             .build()
             );

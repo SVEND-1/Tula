@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public record Animal(
         String name,
-        int age,
+        Integer age,
         String description,
         String breed,
         Gender gender,

@@ -23,7 +23,7 @@ public class AnimalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Animal> getAnimal(@PathVariable Long id) {
+    public ResponseEntity<Animal> profile(@PathVariable Long id) {
         return ResponseEntity.ok(animalService.findAnimalById(id));
     }
 
@@ -32,13 +32,4 @@ public class AnimalController {
         return ResponseEntity.ok(animalService.save(request));
     }
 
-    @PutMapping("/rejection/{likeId}")
-    public ResponseEntity<String> rejectionTakenAnimal(@PathVariable Long likeId) {//TODO В OWNER ПЕРЕНЕСТИ
-        return ResponseEntity.ok(animalService.rejectionTakenAnimal(likeId));
-    }
-
-    @PutMapping("/confirm/{likeId}")
-    public ResponseEntity<String> confirmTakenAnimal(@PathVariable Long likeId) {
-        return ResponseEntity.ok(animalService.confirmTakenAnimal(likeId));
-    }
 }
