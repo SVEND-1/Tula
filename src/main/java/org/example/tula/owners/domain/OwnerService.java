@@ -78,19 +78,21 @@ public class OwnerService {
         try {
             isValidCreatedOwner();
 
-            Like like = likeService.findById(id);
-            AnimalEntity animal = animalService.findAnimalEntityById(like.animalId());
+            log.info("AAAAAAAAAAAAA {}",id);
 
-            if(!isValidReject(like.userId(),animal) && !isValidOwner(animal)) {
+            Like like = likeService.findById(id);
+            AnimalEntity animal = animalService.findAnimalEntityById(like.animal().id());
+
+            if(!isValidReject(like.user().id(), animal) && !isValidOwner(animal)) {
                 return "Что то пошло не так";
             }
 
             likeService.setStatusAnswer(like.id(), StatusAnswer.REJECT);
 
             animal.setStatus(StatusAnimal.DONT_TAKE);
-            animalService.update(like.animalId(),animal);
+            animalService.update(like.animal().id(), animal);
 
-            notifyStatus(like.userId(),animal.getName(), NotifyType.REJECT);
+            notifyStatus(like.user().id(), animal.getName(), NotifyType.REJECT);
 
             return "Вы отказали в получение питомца";
         }catch (Exception e) {
@@ -104,19 +106,19 @@ public class OwnerService {
             isValidCreatedOwner();
 
             Like like = likeService.findById(likeId);
-            AnimalEntity animal = animalService.findAnimalEntityById(like.animalId());
+            AnimalEntity animal = animalService.findAnimalEntityById(like.animal().id());
 
-            if(!isValidConfirm(like.userId(),animal) && !isValidOwner(animal)) {
+            if(!isValidConfirm(like.user().id(), animal) && !isValidOwner(animal)) {
                 return "Что то пошло не так";
             }
 
             likeService.setStatusAnswer(like.id(), StatusAnswer.CONFIRM);
 
-            animal.setPersonTakeId(like.userId());
+            animal.setPersonTakeId(like.user().id());
             animal.setStatus(StatusAnimal.TAKE);
-            animalService.update(like.animalId(),animal);
+            animalService.update(like.animal().id(), animal);
 
-            notifyStatus(like.userId(),animal.getName(),NotifyType.CONFIRM);
+            notifyStatus(like.user().id(), animal.getName(),NotifyType.CONFIRM);
 
             return "Вы успешно одобрили получние питомца";
         }catch (Exception e) {
