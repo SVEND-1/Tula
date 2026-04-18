@@ -5,6 +5,7 @@ import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
 import org.example.tula.animals.domain.AnimalService;
 import org.example.tula.owners.api.dto.Owner;
+import org.example.tula.owners.api.dto.response.OwnerProfileResponse;
 import org.example.tula.owners.domain.OwnerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,11 @@ public class OwnerController {
     @GetMapping("/animal")
     public ResponseEntity<List<Animal>> findAnimalByOwner() {
         return ResponseEntity.ok(ownerService.findAllAnimalByOwner());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OwnerProfileResponse> profile(@PathVariable Long id) {
+        return ResponseEntity.ok(ownerService.profile(id));
     }
 
     @PostMapping("/animal")
