@@ -236,7 +236,6 @@ body {
     transform: translateY(0);
 }
 
-/* Responsive */
 @media (max-width: 480px) {
     .auth-form {
         padding: 30px 20px;
@@ -245,4 +244,48 @@ body {
     .auth-title {
         font-size: 24px;
     }
+}
+
+
+
+/* Добавить в src/style/AuthForm.css */
+
+.photo-upload {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.photo-preview {
+    margin-bottom: 10px;
+}
+
+.file-input-wrapper {
+    margin: 10px 0;
+}
+
+.file-input-label {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.file-input-label:hover {
+    background-color: #45a049;
+}
+
+.photo-note {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.create-animal-form h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
 }

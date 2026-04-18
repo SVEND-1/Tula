@@ -7,8 +7,9 @@ import org.example.tula.animals.db.StatusAnimal;
 import java.time.LocalDateTime;
 
 public record Animal(
+        Long id,
         String name,
-        int age,
+        Integer age,
         String description,
         String breed,
         Gender gender,
