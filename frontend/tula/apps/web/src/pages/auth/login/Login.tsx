@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from  "../../../api/authApi.ts"
+import { login } from  "../../../api/authApi"
 import AuthContainer from "../../../components/auth/global/AuthContainer";
 import AuthTitle from "../../../components/auth/global/AuthTitle";
 import AuthSubtitle from "../../../components/auth/global/AuthSubtitle";
 import LoginForm from "../../../components/auth/login/LoginForm";
-import type { LoginResponse } from "../../../api/authApi.ts";
+import type { LoginResponse } from "../../../api/authApi";
+import "../../../style/AuthForm.css"
+import "../../../style/AuthForm.css"
 
 export default function Login() {
     const [email, setEmail] = useState<string>("");
@@ -21,10 +23,8 @@ export default function Login() {
             const data: LoginResponse = response.data;
 
             if (data.success) {
-                // сохраняем токен
                 localStorage.setItem("token", data.token);
 
-                // можно сохранить пользователя при необходимости
                 if (data.user) {
                     localStorage.setItem("user", JSON.stringify(data.user));
                 }

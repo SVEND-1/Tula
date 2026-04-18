@@ -5,7 +5,7 @@ import AuthContainer from "../../../components/auth/global/AuthContainer";
 import AuthTitle from "../../../components/auth/global/AuthTitle";
 import AuthSubtitle from "../../../components/auth/global/AuthSubtitle";
 import ForgotPasswordForm from "../../../components/auth/forgot-password/ForgotPasswordForm";
-import "../../style/AuthForm.css";
+import "../../../style/AuthForm.css";
 
 export default function ForgotPassword() {
     const [email, setEmail] = useState<string>("");
