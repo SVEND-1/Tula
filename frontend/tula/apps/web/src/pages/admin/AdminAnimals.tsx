@@ -1,7 +1,7 @@
 import { createAnimal } from '../../api/animalApi';
 import type { CreateAnimalRequest } from '../../types/animal/animal.types.ts';
 import CreateAnimalForm from '../../components/admin/CreateAnimalForm';
-import '../../style/AdminAnimals.css';
+import '../../style/AdminAnimals.scss';
 import { useState } from "react";
 
 export default function AdminAnimals() {
@@ -13,22 +13,12 @@ export default function AdminAnimals() {
             const response = await createAnimal(data);
 
             if (response.data) {
-                const uniqueKey = `${response.data.name}_${response.data.breed}_${response.data.age}`;
-
                 const existingAnimals = localStorage.getItem('animalImages');
                 const images = existingAnimals ? JSON.parse(existingAnimals) : {};
-                images[uniqueKey] = imageBase64 || '';
+                images[response.data.id] = imageBase64 || '';
                 localStorage.setItem('animalImages', JSON.stringify(images));
 
-                const animalData = localStorage.getItem('animalData');
-                const animals = animalData ? JSON.parse(animalData) : {};
-                animals[uniqueKey] = response.data;
-                localStorage.setItem('animalData', JSON.stringify(animals));
-
-                console.log('Уникальный ключ:', uniqueKey);
-                console.log('Сохранённые фото:', images);
-
-                alert(` Животное "${response.data.name}" успешно создано!`);
+                alert(`✅ Животное "${response.data.name}" успешно создано!`);
             }
         } catch (error: any) {
             console.error('Ошибка:', error);

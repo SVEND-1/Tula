@@ -5,7 +5,7 @@ import AuthContainer from "../../../components/auth/global/AuthContainer";
 import AuthTitle from "../../../components/auth/global/AuthTitle";
 import AuthSubtitle from "../../../components/auth/global/AuthSubtitle";
 import ResetPasswordForm from "../../../components/auth/reset-password/ResetPasswordForm";
-import "../../../style/AuthForm.css";
+import "../../../style/AuthForm.scss";
 
 export default function ResetPassword() {
     const [searchParams] = useSearchParams();
@@ -55,7 +55,7 @@ export default function ResetPassword() {
         <AuthContainer>
             <div className="auth-form-wrapper">
                 <div className="auth-form">
-                    <AuthTitle>AI chats</AuthTitle>
+                    <AuthTitle>Adoptly</AuthTitle>
                     <AuthSubtitle>reset password</AuthSubtitle>
 
                     <ResetPasswordForm

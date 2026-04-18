@@ -5,7 +5,7 @@ import AuthContainer from "../../../components/auth/global/AuthContainer";
 import AuthTitle from "../../../components/auth/global/AuthTitle";
 import AuthSubtitle from "../../../components/auth/global/AuthSubtitle";
 import VerifyResetCodeForm from "../../../components/auth/reset-password/VerifyResetCodeForm";
-import "../../../style/AuthForm.css";
+import "../../../style/AuthForm.scss";
 
 export default function VerifyResetCode() {
     const [searchParams] = useSearchParams();
@@ -48,7 +48,7 @@ export default function VerifyResetCode() {
         <AuthContainer>
             <div className="auth-form-wrapper">
                 <div className="auth-form">
-                    <AuthTitle>AI chats</AuthTitle>
+                    <AuthTitle>Adoptly</AuthTitle>
                     <AuthSubtitle>verify reset code</AuthSubtitle>
 
                     <VerifyResetCodeForm

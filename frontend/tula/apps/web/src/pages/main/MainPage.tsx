@@ -13,10 +13,17 @@ export default function MainPage() {
     const [swipeClass, setSwipeClass] = useState('');
     const [animalImages, setAnimalImages] = useState<Record<string, string>>({});
     const [isProcessing, setIsProcessing] = useState(false);
+    const [showHint, setShowHint] = useState(true);
 
     useEffect(() => {
         loadAnimals();
         loadImagesFromStorage();
+
+        const timer = setTimeout(() => {
+            setShowHint(false);
+        }, 5000);
+
+        return () => clearTimeout(timer);
     }, []);
 
     const loadImagesFromStorage = () => {
@@ -57,6 +64,10 @@ export default function MainPage() {
         setIsProcessing(true);
         setSwipeClass(direction);
 
+        if (showHint) {
+            setShowHint(false);
+        }
+
         try {
             if (direction === 'right') {
                 await sendLike(currentAnimal.id);
@@ -90,6 +101,12 @@ export default function MainPage() {
         if (age === 1) return `${age} год`;
         if (age < 5) return `${age} года`;
         return `${age} лет`;
+    };
+
+    const truncateText = (text: string, maxLength: number = 120) => {
+        if (!text) return 'Нет описания';
+        if (text.length <= maxLength) return text;
+        return text.slice(0, maxLength) + '...';
     };
 
     const getAnimalImage = (animal: Animal) => {
@@ -137,29 +154,31 @@ export default function MainPage() {
             </div>
 
             <main className="home">
-                <div className="hint">
-                    <div className="hint-text">Выбери своего питомца</div>
-                    <svg className="arrow" viewBox="0 0 300 200">
-                        <defs>
-                            <marker id="arrowHead"
-                                    markerWidth="10"
-                                    markerHeight="10"
-                                    refX="8"
-                                    refY="5"
-                                    orient="auto">
-                                <path d="M0,0 L10,5 L0,10 Z"
-                                      fill="#333"
-                                      stroke="#333"
-                                      strokeLinejoin="round"/>
-                            </marker>
-                        </defs>
-                        <path className="arrow-path"
-                              d="M 20 120
-                                 C 60 20, 160 20, 160 90
-                                 C 160 160, 220 160, 260 110"
-                              markerEnd="url(#arrowHead)"/>
-                    </svg>
-                </div>
+                {showHint && (
+                    <div className="hint">
+                        <div className="hint-text">Выбери своего питомца</div>
+                        <svg className="arrow" viewBox="0 0 300 200">
+                            <defs>
+                                <marker id="arrowHead"
+                                        markerWidth="10"
+                                        markerHeight="10"
+                                        refX="8"
+                                        refY="5"
+                                        orient="auto">
+                                    <path d="M0,0 L10,5 L0,10 Z"
+                                          fill="#333"
+                                          stroke="#333"
+                                          strokeLinejoin="round"/>
+                                </marker>
+                            </defs>
+                            <path className="arrow-path"
+                                  d="M 20 120
+                                     C 60 20, 160 20, 160 90
+                                     C 160 160, 220 160, 260 110"
+                                  markerEnd="url(#arrowHead)"/>
+                        </svg>
+                    </div>
+                )}
 
                 <div className="card-wrapper">
                     <div className="card-stack">
@@ -182,7 +201,7 @@ export default function MainPage() {
                                 <div className="card-info">
                                     <h2>{nextAnimal.name}</h2>
                                     <span>{nextAnimal.breed} • {getAgeText(nextAnimal.age)}</span>
-                                    <p>{nextAnimal.description}</p>
+                                    <p>{truncateText(nextAnimal.description)}</p>
                                 </div>
                             </div>
                         )}
@@ -213,7 +232,7 @@ export default function MainPage() {
                                     <span className="gender-icon">{getGenderIcon(currentAnimal.gender)}</span>
                                 </h2>
                                 <span>{currentAnimal.breed} • {getAgeText(currentAnimal.age)}</span>
-                                <p>{currentAnimal.description}</p>
+                                <p className="description">{truncateText(currentAnimal.description)}</p>
                             </div>
                         </div>
                     </div>
@@ -221,17 +240,26 @@ export default function MainPage() {
                     <div className="buttons">
                         <button
                             onClick={() => handleSwipe('left')}
-                            className="dislike-btn"
+                            className="btn-dislike"
                             disabled={isProcessing}
                         >
-                            ←
+                            <svg viewBox="0 0 24 24" className="icon">
+                                <path d="M18 6L6 18M6 6l12 12"
+                                      stroke="currentColor"
+                                      strokeWidth="2.5"
+                                      strokeLinecap="round"/>
+                            </svg>
                         </button>
+
                         <button
                             onClick={() => handleSwipe('right')}
-                            className="like-btn"
+                            className="btn-like"
                             disabled={isProcessing}
                         >
-                            →
+                            <svg viewBox="0 0 24 24" className="icon">
+                                <path d="M12 21s-7-4.6-9.5-9C.5 8.2 3 5 6.5 5c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3C20 5 22.5 8.2 21.5 12 19 16.4 12 21 12 21z"
+                                      fill="currentColor"/>
+                            </svg>
                         </button>
                     </div>
                 </div>
