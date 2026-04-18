@@ -3,6 +3,8 @@ import { sendLike, sendDislike } from '../../api/likeApi';
 import type { Animal } from '../../types/animal/animal.types.ts';
 import '../../style/MainPage.scss';
 import { useEffect, useState } from "react";
+import { createChat } from "../../api/chatApi";
+import {useNavigate} from "react-router-dom";
 
 export default function MainPage() {
     const [animals, setAnimals] = useState<Animal[]>([]);
@@ -18,6 +20,8 @@ export default function MainPage() {
         loadAnimals();
         loadImagesFromStorage();
     }, []);
+
+    const navigate = useNavigate();
 
     const loadImagesFromStorage = () => {
         const storedImages = localStorage.getItem('animalImages');
@@ -60,9 +64,16 @@ export default function MainPage() {
         try {
             if (direction === 'right') {
                 await sendLike(currentAnimal.id);
-                setToastMessage(`🐾 Вам понравился ${currentAnimal.name}! Ожидайте ответа от хозяина`);
+
+                const chatRes = await createChat(currentAnimal.id);
+                const chatId = chatRes.data.id;
+
+                setToastMessage(`Чат создан`);
                 setShowToast(true);
-                setTimeout(() => setShowToast(false), 2000);
+
+                setTimeout(() => {
+                    navigate(`/chat/${chatId}`);
+                }, 500);
             } else {
                 await sendDislike(currentAnimal.id);
                 setToastMessage(`👎 Вы пропустили ${currentAnimal.name}`);
