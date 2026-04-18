@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.tula.animals.db.AnimalEntity;
 import org.example.tula.animals.domain.AnimalService;
+import org.example.tula.chats.domain.services.ChatService;
 import org.example.tula.likes.api.dto.Like;
 import org.example.tula.likes.api.dto.response.TakeResponse;
 import org.example.tula.likes.db.LikeEntity;
@@ -31,6 +32,7 @@ public class LikeService {
     private final AnimalService animalService;
     private final UserService userService;
     private final NotifyKafkaProducer notifyKafkaProducer;
+    private final ChatService chatService;
 
     public Like findById(Long id) {
         return likeMapper.convertEntityToDTO(
@@ -39,13 +41,14 @@ public class LikeService {
     }
 
     @Transactional
-    public Like like(Long animalId) {//TODO ДОБАВИТЬ СОЗДАНИЕ ЧАТА
+    public Like like(Long animalId) {
         try {
             TakeResponse takeResponse = animalService.takenAnimal(animalId);
-
             AnimalEntity animal = animalService.findAnimalEntityById(animalId);
 
             notify(takeResponse);
+
+            chatService.createNewChat(animalId);
 
             return likeMapper.convertEntityToDTO(likeRepository.save(
                     LikeEntity.builder()
