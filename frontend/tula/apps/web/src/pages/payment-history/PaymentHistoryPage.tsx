@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PaymentList from '../../components/payment-history/PaymentList.tsx';
+import PaymentList from '../../components/payment-history/PaymentList';
 import PaymentDetails from '../../components/payment-history/PaymentDetails';
 import Pagination from '../../components/payment-history/Pagination';
 import CloseButton from '../../components/subscription/CloseButton';
 import { createPayment, getPayments, getReceipt, createReceipt } from '../../api/paymentApi';
+import { createSubscription } from '../../api/subscriptionApi';
 import type { PaymentResponse, ReceiptResponse } from '../../api/paymentApi';
 import '../../style/payment-history/PaymentHistoryPage.scss';
 
@@ -79,9 +80,22 @@ const PaymentHistoryPage: React.FC = () => {
                 const updatedPayments = response.data.content;
                 const foundPayment = updatedPayments.find(p => p.id === paymentId);
 
+                console.log('Проверка платежа:', { paymentId, foundPayment });
+
                 if (foundPayment && foundPayment.status === 'succeeded') {
                     clearInterval(interval);
                     localStorage.removeItem('currentPaymentId');
+
+                    try {
+                        console.log('Оформляем подписку для paymentId:', paymentId);
+                        const subscriptionResponse = await createSubscription(paymentId);
+                        console.log('Ответ подписки:', subscriptionResponse.data);
+                        alert('✅ Подписка успешно оформлена!');
+                    } catch (subError: any) {
+                        console.error('Ошибка оформления подписки:', subError.response?.data || subError.message);
+                        alert(`❌ Ошибка оформления подписки: ${subError.response?.data?.message || 'Неизвестная ошибка'}`);
+                    }
+
                     alert('✅ Оплата прошла успешно!');
                     loadPayments(currentPage);
                 }
@@ -108,6 +122,23 @@ const PaymentHistoryPage: React.FC = () => {
 
     const handleClose = () => {
         navigate('/profile');
+    };
+
+    const handleManualActivateSubscription = async () => {
+        const paymentId = localStorage.getItem('currentPaymentId');
+        if (!paymentId) {
+            alert('Нет paymentId. Сначала создайте платеж.');
+            return;
+        }
+        try {
+            const response = await createSubscription(paymentId);
+            console.log('Активация:', response.data);
+            alert('✅ Подписка активирована!');
+            localStorage.removeItem('currentPaymentId');
+        } catch (err: any) {
+            console.error('Ошибка:', err.response?.data);
+            alert(`Ошибка: ${err.response?.data?.message || err.message}`);
+        }
     };
 
     return (
@@ -165,6 +196,28 @@ const PaymentHistoryPage: React.FC = () => {
                     </div>
                 )}
             </div>
+
+            {/* Кнопка ручной активации подписки */}
+            <button
+                onClick={handleManualActivateSubscription}
+                style={{
+                    position: 'fixed',
+                    bottom: '20px',
+                    right: '20px',
+                    zIndex: 9999,
+                    padding: '10px 20px',
+                    background: 'linear-gradient(135deg, #ffcdb0, #ffb88c)',
+                    border: 'none',
+                    borderRadius: '30px',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    fontFamily: '"Playpen Sans", cursive',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                }}
+            >
+                🔧 Активировать подписку вручную
+            </button>
         </div>
     );
 };

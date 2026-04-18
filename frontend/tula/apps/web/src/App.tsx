@@ -12,6 +12,7 @@ import Chat from "./pages/chat/Chat.tsx";
 import AnimalDetails from "./pages/animal/AnimalDetails";
 import OwnerProfile from "./pages/owner/OwnerProfile";
 import PaymentHistoryPage from "./pages/payment-history/PaymentHistoryPage";
+import SubscriptionPage from "./pages/subscription/SubscriptionPage";
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
                 <Route path="/animal/:id" element={<AnimalDetails />} />
                 <Route path="/owner/:id" element={<OwnerProfile />} />
                 <Route path="/payments" element={<PaymentHistoryPage />} />
+                <Route path="/subscription" element={<SubscriptionPage />} />
             </Routes>
         </BrowserRouter>
     );

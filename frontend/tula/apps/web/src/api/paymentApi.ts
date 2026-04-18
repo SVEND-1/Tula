@@ -70,6 +70,14 @@ export interface SettlementReceipt {
     amountCurrency: string;
 }
 
+export interface SubscriptionDetailResponse {
+    id: number;
+    status: string;
+    startDate: string;
+    endDate: string;
+    paymentId: string;
+}
+
 export const createPayment = () => {
     return PAYMENT_API.post<PaymentCreateResponse>('');
 };
@@ -88,6 +96,10 @@ export const createReceipt = (paymentId: string) => {
 
 export const getReceipt = (paymentId: string) => {
     return PAYMENT_API.get<ReceiptResponse>(`/${paymentId}/receipt`);
+};
+
+export const getSubscription = (id: number) => {
+    return PAYMENT_API.get<SubscriptionDetailResponse>(`/subscription/${id}`);
 };
 
 export default PAYMENT_API;
