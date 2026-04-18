@@ -5,6 +5,7 @@ import VerifyResetCode from "./pages/auth/reset-password/VerifyResetCode";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import ForgotPassword from "./pages/auth/forgot-password/ForgotPassword";
 import ResetPassword from "./pages/auth/reset-password/ResetPassword";
+import Chat from "./pages/chat/Chat.tsx";
 
 
 
@@ -19,6 +20,8 @@ function App() {
                 <Route path="/reset-verify" element={<VerifyResetCode />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
+
+                <Route path="/chat" element={<Chat />} />
             </Routes>
         </BrowserRouter>
     );
