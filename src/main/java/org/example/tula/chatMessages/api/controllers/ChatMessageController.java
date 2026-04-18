@@ -7,9 +7,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.tula.chatMessages.api.dto.requests.CreateChatMessageRequest;
+import org.example.tula.chatMessages.api.dto.requests.GetAllChatMessagesRequest;
 import org.example.tula.chatMessages.api.dto.responses.ChatMessageResponse;
 import org.example.tula.chatMessages.domain.services.ChatMessageService;
-import org.example.tula.chats.api.dto.responses.ChatResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,14 +37,13 @@ public class ChatMessageController {
     }
 
     @Operation(summary = "Получить все сообщения чата")
-    @GetMapping("/{chat_id}")
+    @GetMapping
     public ResponseEntity<List<ChatMessageResponse>> getAllMessagesFromChat(
-            @Parameter(description = "Id чата из которого будут браться сообщения")
-            @PathVariable("chat_id") Long chatId
+            @RequestBody @Valid GetAllChatMessagesRequest request
     ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(chatMessageService.getAllMessagesFromChat(chatId));
+                .body(chatMessageService.getAllMessagesFromChat(request));
     }
 
     @Operation(summary = "Получить все последнее сообщения чата")
@@ -59,25 +58,23 @@ public class ChatMessageController {
     }
 
     @Operation(summary = "Получить все сообщения продавца из чата")
-    @GetMapping("/seller/{chat_id}")
+    @GetMapping("/seller")
     public ResponseEntity<List<ChatMessageResponse>> getAllSellerMessagesFromChat(
-            @Parameter(description = "Id чата для получения из него всех сообщений продавца")
-            @PathVariable("chat_id") Long chatId
+            @RequestParam @Valid GetAllChatMessagesRequest request
     ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(chatMessageService.getAllSellerMessagesFromChat(chatId));
+                .body(chatMessageService.getAllSellerMessagesFromChat(request));
     }
 
     @Operation(summary = "Получить все сообщения покупателя из чата")
-    @GetMapping("/buyer/{chat_id}")
+    @GetMapping("/buyer")
     public ResponseEntity<List<ChatMessageResponse>> getAllBuyerMessagesFromChat(
-            @Parameter(description = "Id чата для получения из него всех сообщений покупателя")
-            @PathVariable("chat_id") Long chatId
+            @RequestParam @Valid GetAllChatMessagesRequest request
     ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(chatMessageService.getAllBuyerMessagesFromChat(chatId));
+                .body(chatMessageService.getAllBuyerMessagesFromChat(request));
     }
 
 }
