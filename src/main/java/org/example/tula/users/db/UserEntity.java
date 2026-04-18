@@ -4,6 +4,7 @@ import io.minio.messages.Owner;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.tula.animals.db.AnimalEntity;
+import org.example.tula.likes.db.LikeEntity;
 import org.example.tula.owners.db.OwnerEntity;
 import org.example.tula.reviews.db.ReviewEntity;
 
@@ -43,4 +44,6 @@ public class UserEntity {
     @OneToMany(mappedBy = "reviewer")
     private List<ReviewEntity> reviews;
 
+    @OneToMany(mappedBy = "user")
+    private List<LikeEntity> likes;
 }

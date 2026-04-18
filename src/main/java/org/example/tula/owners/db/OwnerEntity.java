@@ -14,7 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "owners")
+@Table(name = "owners", indexes = {
+        @Index(name = "idx_owners_owner_id", columnList = "owner_id")
+})
 public class OwnerEntity {
 
     @Id

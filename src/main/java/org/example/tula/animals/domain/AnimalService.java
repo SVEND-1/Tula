@@ -58,23 +58,18 @@ public class AnimalService {
     }
 
     public AnimalProfileResponse profile(Long id){
-        AnimalEntity animal = findAnimalEntityById(id);
-        return new AnimalProfileResponse(//TODO перенести маппер
-                animal.getName(),
-                animal.getAge(),
-                animal.getDescription(),
-                animal.getBreed(),
-                animal.getGender(),
-                animal.getAnimalType(),
-                animal.getOwner().getName(),
-                animal.getCreateAt()
+        return animalMapper.convertEntityToProfile(
+                findAnimalEntityById(id)
         );
     }
 
     public Animal save(CreatedAnimalRequest request) {
         try {
+            if(userService.getCurrentUser().getOwner() == null) {
+                log.warn("Для начало создайте питомник");
+                throw new RuntimeException("Для начало создайте питомник");
+            }
 
-            //TODO if проверка на создание приюта
             AnimalEntity animalEntity = animalRepository.save(
                     AnimalEntity.builder()
                             .name(request.name())
