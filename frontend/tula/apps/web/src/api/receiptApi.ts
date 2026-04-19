@@ -4,7 +4,7 @@ import type { Receipt, Payment, PaymentPageResponse, PaymentCreateResponse } fro
 // ─── Payments API ────────────────────────────────────────────────
 
 const paymentsApi = axios.create({
-  baseURL: '/api/payments',
+  baseURL: 'http://localhost:8080/api/payments',
   withCredentials: true,
   headers: { 'Content-Type': 'application/json' },
 });
