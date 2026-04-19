@@ -22,7 +22,7 @@ public class YooKassaManager {
 
     private final PaymentService paymentService;
     private final UserService userService;
-    private final String RETURN_URL = "http://localhost:5173/}";
+    private final String RETURN_URL = "http://localhost:5173/";
     private final ReceiptMapper receiptMapper;
 
     public YooKassaManager(@Lazy PaymentService paymentService, UserService userService, ReceiptMapper receiptMapper) {

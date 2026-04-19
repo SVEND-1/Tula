@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { getAllChats, getMessages, sendMessage, createChat } from '../../api/chatApi';
 import type { ChatMessageResponse } from '../../api/chatApi';
 import type { PetChat, Message } from '../../types/chat/chat.types';
+import { useSound } from '../../hooks/useSound';
 
 const getTimeFromDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -17,6 +18,7 @@ export const useChat = () => {
     const [chats, setChats] = useState<PetChat[]>([]);
     const [activeChatId, setActiveChatId] = useState<number | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const { playMessageSound } = useSound();
 
     // Загрузка всех чатов
     const loadChats = useCallback(async () => {
@@ -132,6 +134,7 @@ export const useChat = () => {
     const closeChat = useCallback(() => setActiveChatId(null), []);
 
     const sendMessageToChat = useCallback(async (text: string) => {
+        playMessageSound();
         if (!activeChatId) return;
 
         const user = JSON.parse(localStorage.getItem('user') || '{}');

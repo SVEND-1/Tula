@@ -4,6 +4,7 @@ import { getAllAnimals } from '../../api/animalApi';
 import { sendLike, sendDislike } from '../../api/likeApi';
 import type { Animal } from '../../types/animal/animal.types.ts';
 import '../../style/MainPage.scss';
+import { useSound } from '../../hooks/useSound';
 
 export default function MainPage() {
     const navigate = useNavigate();
@@ -16,6 +17,7 @@ export default function MainPage() {
     const [animalImages, setAnimalImages] = useState<Record<string, string>>({});
     const [isProcessing, setIsProcessing] = useState(false);
     const [showHint, setShowHint] = useState(true);
+    const { playLikeSound, playDislikeSound } = useSound();
 
     useEffect(() => {
         loadAnimals();
@@ -72,8 +74,9 @@ export default function MainPage() {
 
         try {
             if (direction === 'right') {
+                playLikeSound();
                 const response = await sendLike(currentAnimal.id);
-                console.log('Ответ сервера:', response.data); // Теперь это строка
+                console.log('Ответ сервера:', response.data);
 
                 const storedLikes = localStorage.getItem('likedAnimals');
                 const likes = storedLikes ? JSON.parse(storedLikes) : [];
@@ -99,6 +102,7 @@ export default function MainPage() {
                 setShowToast(true);
                 setTimeout(() => setShowToast(false), 2000);
             } else {
+                playDislikeSound();
                 await sendDislike(currentAnimal.id);
                 setToastMessage(`👎 Вы пропустили ${currentAnimal.name}`);
                 setShowToast(true);

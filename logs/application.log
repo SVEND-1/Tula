@@ -11869,3 +11869,578 @@ Caused by: java.lang.ClassNotFoundException: org.example.tula.animals.domain.Ani
 2026-04-19T08:25:41.350+03:00  WARN 10656 --- [Tula] [http-nio-8080-exec-2] o.e.tula.owners.domain.OwnerService      : Для начало создайте питомник
 2026-04-19T08:25:41.350+03:00 ERROR 10656 --- [Tula] [http-nio-8080-exec-2] o.e.tula.owners.domain.OwnerService      : Не удалось найти животных у данного пользователя,ex=Для начало создайте питомник
 2026-04-19T08:25:41.355+03:00  WARN 10656 --- [Tula] [http-nio-8080-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.RuntimeException: java.lang.RuntimeException: Для начало создайте питомник]
+2026-04-19T08:54:49.974+03:00  INFO 4616 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : Starting TulaApplication using Java 21.0.10 with PID 4616 (D:\hackathon animals\target\classes started by napal in D:\hackathon animals)
+2026-04-19T08:54:49.978+03:00  INFO 4616 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-04-19T08:54:50.045+03:00  INFO 4616 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-19T08:54:50.046+03:00  INFO 4616 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-19T08:54:51.432+03:00  INFO 4616 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-19T08:54:51.655+03:00  INFO 4616 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 215 ms. Found 9 JPA repository interfaces.
+2026-04-19T08:54:52.669+03:00  INFO 4616 --- [Tula] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-19T08:54:52.683+03:00  INFO 4616 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-19T08:54:52.683+03:00  INFO 4616 --- [Tula] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-19T08:54:52.752+03:00  INFO 4616 --- [Tula] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-19T08:54:52.752+03:00  INFO 4616 --- [Tula] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2705 ms
+2026-04-19T08:54:52.979+03:00  INFO 4616 --- [Tula] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-19T08:54:53.087+03:00  INFO 4616 --- [Tula] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-19T08:54:53.142+03:00  INFO 4616 --- [Tula] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-19T08:54:53.792+03:00  INFO 4616 --- [Tula] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-19T08:54:53.823+03:00  INFO 4616 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-19T08:54:54.125+03:00  INFO 4616 --- [Tula] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5529c61a
+2026-04-19T08:54:54.128+03:00  INFO 4616 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-19T08:54:54.203+03:00  WARN 4616 --- [Tula] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-19T08:54:55.571+03:00  INFO 4616 --- [Tula] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-19T08:54:55.835+03:00  INFO 4616 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-19T08:54:56.327+03:00  INFO 4616 --- [Tula] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-19T08:54:56.831+03:00  WARN 4616 --- [Tula] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'animalController' defined in file [D:\hackathon animals\target\classes\org\example\tula\animals\api\AnimalController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'animalService' defined in file [D:\hackathon animals\target\classes\org\example\tula\animals\domain\AnimalService.class]: Unsatisfied dependency expressed through constructor parameter 3: Error creating bean with name 'subscriptionService' defined in file [D:\hackathon animals\target\classes\org\example\tula\subscriptions\domain\SubscriptionService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'paymentService': Injection of autowired dependencies failed
+2026-04-19T08:54:56.832+03:00  INFO 4616 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-19T08:54:56.835+03:00  INFO 4616 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-19T08:54:56.839+03:00  INFO 4616 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-19T08:54:56.845+03:00  INFO 4616 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-04-19T08:54:56.861+03:00  INFO 4616 --- [Tula] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-04-19T08:54:56.884+03:00 ERROR 4616 --- [Tula] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'animalController' defined in file [D:\hackathon animals\target\classes\org\example\tula\animals\api\AnimalController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'animalService' defined in file [D:\hackathon animals\target\classes\org\example\tula\animals\domain\AnimalService.class]: Unsatisfied dependency expressed through constructor parameter 3: Error creating bean with name 'subscriptionService' defined in file [D:\hackathon animals\target\classes\org\example\tula\subscriptions\domain\SubscriptionService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'paymentService': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962) ~[spring-context-6.1.5.jar:6.1.5]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.5.jar:6.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.example.tula.TulaApplication.main(TulaApplication.java:10) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.4.jar:3.2.4]
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'animalService' defined in file [D:\hackathon animals\target\classes\org\example\tula\animals\domain\AnimalService.class]: Unsatisfied dependency expressed through constructor parameter 3: Error creating bean with name 'subscriptionService' defined in file [D:\hackathon animals\target\classes\org\example\tula\subscriptions\domain\SubscriptionService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'paymentService': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.5.jar:6.1.5]
+	... 22 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'subscriptionService' defined in file [D:\hackathon animals\target\classes\org\example\tula\subscriptions\domain\SubscriptionService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'paymentService': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.5.jar:6.1.5]
+	... 36 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'paymentService': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:514) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1419) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.5.jar:6.1.5]
+	... 50 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'SHOP_ID' in value "${SHOP_ID}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:180) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveNestedPlaceholders(AbstractPropertyResolver.java:230) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertyResolver.getProperty(ConfigurationPropertySourcesPropertyResolver.java:80) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertyResolver.getProperty(ConfigurationPropertySourcesPropertyResolver.java:61) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.core.env.AbstractEnvironment.getProperty(AbstractEnvironment.java:552) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer$1.getProperty(PropertySourcesPlaceholderConfigurer.java:153) ~[spring-context-6.1.5.jar:6.1.5]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer$1.getProperty(PropertySourcesPlaceholderConfigurer.java:149) ~[spring-context-6.1.5.jar:6.1.5]
+	at org.springframework.core.env.PropertySourcesPropertyResolver.getProperty(PropertySourcesPropertyResolver.java:85) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.core.env.PropertySourcesPropertyResolver.getPropertyAsRawString(PropertySourcesPropertyResolver.java:74) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:153) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:200) ~[spring-context-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:922) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1374) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:784) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:767) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:508) ~[spring-beans-6.1.5.jar:6.1.5]
+	... 62 common frames omitted
+
+2026-04-19T08:59:41.715+03:00  INFO 10020 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : Starting TulaApplication using Java 21.0.10 with PID 10020 (D:\hackathon animals\target\classes started by napal in D:\hackathon animals)
+2026-04-19T08:59:41.719+03:00  INFO 10020 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-04-19T08:59:41.780+03:00  INFO 10020 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-19T08:59:41.781+03:00  INFO 10020 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-19T08:59:43.321+03:00  INFO 10020 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-19T08:59:43.585+03:00  INFO 10020 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 256 ms. Found 9 JPA repository interfaces.
+2026-04-19T08:59:44.767+03:00  INFO 10020 --- [Tula] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-19T08:59:44.790+03:00  INFO 10020 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-19T08:59:44.790+03:00  INFO 10020 --- [Tula] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-19T08:59:44.857+03:00  INFO 10020 --- [Tula] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-19T08:59:44.858+03:00  INFO 10020 --- [Tula] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3077 ms
+2026-04-19T08:59:45.046+03:00  INFO 10020 --- [Tula] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-19T08:59:45.121+03:00  INFO 10020 --- [Tula] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-19T08:59:45.161+03:00  INFO 10020 --- [Tula] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-19T08:59:45.472+03:00  INFO 10020 --- [Tula] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-19T08:59:45.506+03:00  INFO 10020 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-19T08:59:45.703+03:00  INFO 10020 --- [Tula] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@79d844a6
+2026-04-19T08:59:45.705+03:00  INFO 10020 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-19T08:59:45.757+03:00  WARN 10020 --- [Tula] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-19T08:59:47.137+03:00  INFO 10020 --- [Tula] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-19T08:59:47.475+03:00  INFO 10020 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-19T08:59:48.004+03:00  INFO 10020 --- [Tula] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-19T08:59:48.579+03:00  WARN 10020 --- [Tula] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'animalController' defined in file [D:\hackathon animals\target\classes\org\example\tula\animals\api\AnimalController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'animalService' defined in file [D:\hackathon animals\target\classes\org\example\tula\animals\domain\AnimalService.class]: Unsatisfied dependency expressed through constructor parameter 3: Error creating bean with name 'subscriptionService' defined in file [D:\hackathon animals\target\classes\org\example\tula\subscriptions\domain\SubscriptionService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'paymentService': Injection of autowired dependencies failed
+2026-04-19T08:59:48.580+03:00  INFO 10020 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-19T08:59:48.583+03:00  INFO 10020 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-19T08:59:48.590+03:00  INFO 10020 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-19T08:59:48.595+03:00  INFO 10020 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-04-19T08:59:48.611+03:00  INFO 10020 --- [Tula] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-04-19T08:59:48.636+03:00 ERROR 10020 --- [Tula] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'animalController' defined in file [D:\hackathon animals\target\classes\org\example\tula\animals\api\AnimalController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'animalService' defined in file [D:\hackathon animals\target\classes\org\example\tula\animals\domain\AnimalService.class]: Unsatisfied dependency expressed through constructor parameter 3: Error creating bean with name 'subscriptionService' defined in file [D:\hackathon animals\target\classes\org\example\tula\subscriptions\domain\SubscriptionService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'paymentService': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962) ~[spring-context-6.1.5.jar:6.1.5]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.5.jar:6.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.example.tula.TulaApplication.main(TulaApplication.java:10) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.4.jar:3.2.4]
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'animalService' defined in file [D:\hackathon animals\target\classes\org\example\tula\animals\domain\AnimalService.class]: Unsatisfied dependency expressed through constructor parameter 3: Error creating bean with name 'subscriptionService' defined in file [D:\hackathon animals\target\classes\org\example\tula\subscriptions\domain\SubscriptionService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'paymentService': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.5.jar:6.1.5]
+	... 22 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'subscriptionService' defined in file [D:\hackathon animals\target\classes\org\example\tula\subscriptions\domain\SubscriptionService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'paymentService': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.5.jar:6.1.5]
+	... 36 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'paymentService': Injection of autowired dependencies failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:514) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1419) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.5.jar:6.1.5]
+	... 50 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'SHOP_ID' in value "${SHOP_ID}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:180) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveNestedPlaceholders(AbstractPropertyResolver.java:230) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertyResolver.getProperty(ConfigurationPropertySourcesPropertyResolver.java:80) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertyResolver.getProperty(ConfigurationPropertySourcesPropertyResolver.java:61) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.core.env.AbstractEnvironment.getProperty(AbstractEnvironment.java:552) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer$1.getProperty(PropertySourcesPlaceholderConfigurer.java:153) ~[spring-context-6.1.5.jar:6.1.5]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer$1.getProperty(PropertySourcesPlaceholderConfigurer.java:149) ~[spring-context-6.1.5.jar:6.1.5]
+	at org.springframework.core.env.PropertySourcesPropertyResolver.getProperty(PropertySourcesPropertyResolver.java:85) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.core.env.PropertySourcesPropertyResolver.getPropertyAsRawString(PropertySourcesPropertyResolver.java:74) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:153) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210) ~[spring-core-6.1.5.jar:6.1.5]
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:200) ~[spring-context-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:922) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1374) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:784) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:767) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:508) ~[spring-beans-6.1.5.jar:6.1.5]
+	... 62 common frames omitted
+
+2026-04-19T09:00:33.984+03:00  INFO 15816 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : Starting TulaApplication using Java 21.0.10 with PID 15816 (D:\hackathon animals\target\classes started by napal in D:\hackathon animals)
+2026-04-19T09:00:33.991+03:00  INFO 15816 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-04-19T09:00:34.068+03:00  INFO 15816 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-19T09:00:34.068+03:00  INFO 15816 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-19T09:00:35.454+03:00  INFO 15816 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-19T09:00:35.690+03:00  INFO 15816 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 228 ms. Found 9 JPA repository interfaces.
+2026-04-19T09:00:36.623+03:00  INFO 15816 --- [Tula] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-19T09:00:36.638+03:00  INFO 15816 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-19T09:00:36.638+03:00  INFO 15816 --- [Tula] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-19T09:00:36.717+03:00  INFO 15816 --- [Tula] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-19T09:00:36.718+03:00  INFO 15816 --- [Tula] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2649 ms
+2026-04-19T09:00:36.918+03:00  INFO 15816 --- [Tula] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-19T09:00:36.997+03:00  INFO 15816 --- [Tula] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-19T09:00:37.035+03:00  INFO 15816 --- [Tula] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-19T09:00:37.317+03:00  INFO 15816 --- [Tula] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-19T09:00:37.350+03:00  INFO 15816 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-19T09:00:37.704+03:00  INFO 15816 --- [Tula] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4371ecde
+2026-04-19T09:00:37.706+03:00  INFO 15816 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-19T09:00:37.756+03:00  WARN 15816 --- [Tula] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-19T09:00:39.042+03:00  INFO 15816 --- [Tula] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-19T09:00:39.330+03:00  INFO 15816 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-19T09:00:39.769+03:00  INFO 15816 --- [Tula] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-19T09:00:40.397+03:00  INFO 15816 --- [Tula] [restartedMain] o.e.tula.payments.domain.PaymentService  : YooKassa инициализирована
+2026-04-19T09:00:40.557+03:00  WARN 15816 --- [Tula] [restartedMain] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.OncePerRequestFilter.doFilter(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,jakarta.servlet.FilterChain) throws jakarta.servlet.ServletException,java.io.IOException] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-04-19T09:00:40.557+03:00  WARN 15816 --- [Tula] [restartedMain] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.GenericFilterBean.init(jakarta.servlet.FilterConfig) throws jakarta.servlet.ServletException] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-04-19T09:00:41.302+03:00  INFO 15816 --- [Tula] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@78c870f1, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1ac186d1, org.springframework.security.web.context.SecurityContextHolderFilter@640c6149, org.springframework.security.web.header.HeaderWriterFilter@1128cfb5, org.springframework.web.filter.CorsFilter@1f5203eb, org.springframework.security.web.authentication.logout.LogoutFilter@4f813921, org.example.tula.config.JwtFilter@3dba2686, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@9b968c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@ef2571e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@92f847f, org.springframework.security.web.session.SessionManagementFilter@3616f296, org.springframework.security.web.access.ExceptionTranslationFilter@1930f0c8, org.springframework.security.web.access.intercept.AuthorizationFilter@99190e2]
+2026-04-19T09:00:41.833+03:00  INFO 15816 --- [Tula] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-04-19T09:00:41.927+03:00  INFO 15816 --- [Tula] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-04-19T09:00:41.981+03:00  INFO 15816 --- [Tula] [restartedMain] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-notify-group-1
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = notify-group
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2026-04-19T09:00:42.136+03:00  INFO 15816 --- [Tula] [restartedMain] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.6.1
+2026-04-19T09:00:42.137+03:00  INFO 15816 --- [Tula] [restartedMain] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 5e3c2b738d253ff5
+2026-04-19T09:00:42.137+03:00  INFO 15816 --- [Tula] [restartedMain] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1776578442133
+2026-04-19T09:00:42.144+03:00  INFO 15816 --- [Tula] [restartedMain] fkaConsumerFactory$ExtendedKafkaConsumer : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Subscribed to topic(s): notifyUser
+2026-04-19T09:00:42.173+03:00  INFO 15816 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : Started TulaApplication in 8.884 seconds (process running for 10.354)
+2026-04-19T09:00:42.961+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.Metadata        : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cluster ID: MkU3OEVBNTcwNTJENDM2Qg
+2026-04-19T09:00:42.981+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Discovered group coordinator localhost:9092 (id: 2147483646 rack: null)
+2026-04-19T09:00:42.985+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] (Re-)joining group
+2026-04-19T09:00:43.061+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Request joining group due to: need to re-join with the given member-id: consumer-notify-group-1-cd7781e4-482d-43a1-af55-559d774ee8f6
+2026-04-19T09:00:43.062+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Request joining group due to: rebalance failed due to 'The group member needs to have a valid member id before actually entering a consumer group.' (MemberIdRequiredException)
+2026-04-19T09:00:43.062+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] (Re-)joining group
+2026-04-19T09:00:46.128+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Successfully joined group with generation Generation{generationId=73, memberId='consumer-notify-group-1-cd7781e4-482d-43a1-af55-559d774ee8f6', protocol='range'}
+2026-04-19T09:00:46.136+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Finished assignment for group at generation 73: {consumer-notify-group-1-cd7781e4-482d-43a1-af55-559d774ee8f6=Assignment(partitions=[notifyUser-0])}
+2026-04-19T09:00:46.228+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Successfully synced group in generation Generation{generationId=73, memberId='consumer-notify-group-1-cd7781e4-482d-43a1-af55-559d774ee8f6', protocol='range'}
+2026-04-19T09:00:46.229+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Notifying assignor about the new Assignment(partitions=[notifyUser-0])
+2026-04-19T09:00:46.232+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Adding newly assigned partitions: notifyUser-0
+2026-04-19T09:00:46.272+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Setting offset for partition notifyUser-0 to the committed offset FetchPosition{offset=162, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9092 (id: 1 rack: null)], epoch=6}}
+2026-04-19T09:00:46.273+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notify-group: partitions assigned: [notifyUser-0]
+2026-04-19T09:01:00.259+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-19T09:01:00.260+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-19T09:01:00.265+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2026-04-19T09:01:00.371+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.e.t.chats.domain.services.ChatService  : Getting all chats by user
+2026-04-19T09:01:02.058+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-3] o.e.t.chats.domain.services.ChatService  : Getting all chats by user
+2026-04-19T09:01:02.090+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-1] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:01:02.249+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-4] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:01:02.257+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-5] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:01:02.402+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-6] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:01:03.579+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-7] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:01:05.868+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-9] o.e.t.c.d.services.ChatMessageService    : Creating a new message for chat with id 1
+2026-04-19T09:01:07.702+03:00  WARN 15816 --- [Tula] [http-nio-8080-exec-2] o.e.tula.owners.domain.OwnerService      : Для начало создайте питомник
+2026-04-19T09:01:07.703+03:00 ERROR 15816 --- [Tula] [http-nio-8080-exec-2] o.e.tula.owners.domain.OwnerService      : Не удалось найти животных у данного пользователя,ex=Для начало создайте питомник
+2026-04-19T09:01:07.726+03:00  WARN 15816 --- [Tula] [http-nio-8080-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.RuntimeException: java.lang.RuntimeException: Для начало создайте питомник]
+2026-04-19T09:01:07.758+03:00  WARN 15816 --- [Tula] [http-nio-8080-exec-3] o.e.tula.owners.domain.OwnerService      : Для начало создайте питомник
+2026-04-19T09:01:07.759+03:00 ERROR 15816 --- [Tula] [http-nio-8080-exec-3] o.e.tula.owners.domain.OwnerService      : Не удалось найти животных у данного пользователя,ex=Для начало создайте питомник
+2026-04-19T09:01:07.763+03:00  WARN 15816 --- [Tula] [http-nio-8080-exec-3] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.RuntimeException: java.lang.RuntimeException: Для начало создайте питомник]
+2026-04-19T09:01:07.792+03:00  WARN 15816 --- [Tula] [http-nio-8080-exec-5] o.e.tula.owners.domain.OwnerService      : Для начало создайте питомник
+2026-04-19T09:01:07.792+03:00 ERROR 15816 --- [Tula] [http-nio-8080-exec-5] o.e.tula.owners.domain.OwnerService      : Не удалось найти животных у данного пользователя,ex=Для начало создайте питомник
+2026-04-19T09:01:07.797+03:00  WARN 15816 --- [Tula] [http-nio-8080-exec-5] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.RuntimeException: java.lang.RuntimeException: Для начало создайте питомник]
+2026-04-19T09:01:07.827+03:00  WARN 15816 --- [Tula] [http-nio-8080-exec-4] o.e.tula.owners.domain.OwnerService      : Для начало создайте питомник
+2026-04-19T09:01:07.828+03:00 ERROR 15816 --- [Tula] [http-nio-8080-exec-4] o.e.tula.owners.domain.OwnerService      : Не удалось найти животных у данного пользователя,ex=Для начало создайте питомник
+2026-04-19T09:01:07.832+03:00  WARN 15816 --- [Tula] [http-nio-8080-exec-4] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.RuntimeException: java.lang.RuntimeException: Для начало создайте питомник]
+2026-04-19T09:09:43.424+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-19T09:10:43.175+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.a.k.clients.producer.ProducerConfig    : ProducerConfig values: 
+	acks = -1
+	auto.include.jmx.reporter = true
+	batch.size = 16384
+	bootstrap.servers = [localhost:9092]
+	buffer.memory = 33554432
+	client.dns.lookup = use_all_dns_ips
+	client.id = producer-1
+	compression.type = none
+	connections.max.idle.ms = 540000
+	delivery.timeout.ms = 120000
+	enable.idempotence = true
+	interceptor.classes = []
+	key.serializer = class org.apache.kafka.common.serialization.StringSerializer
+	linger.ms = 0
+	max.block.ms = 60000
+	max.in.flight.requests.per.connection = 5
+	max.request.size = 1048576
+	metadata.max.age.ms = 300000
+	metadata.max.idle.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partitioner.adaptive.partitioning.enable = true
+	partitioner.availability.timeout.ms = 0
+	partitioner.class = null
+	partitioner.ignore.keys = false
+	receive.buffer.bytes = 32768
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retries = 2147483647
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	transaction.timeout.ms = 60000
+	transactional.id = null
+	value.serializer = class org.springframework.kafka.support.serializer.JsonSerializer
+
+2026-04-19T09:10:43.283+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.a.k.clients.producer.KafkaProducer     : [Producer clientId=producer-1] Instantiated an idempotent producer.
+2026-04-19T09:10:43.395+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.6.1
+2026-04-19T09:10:43.396+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 5e3c2b738d253ff5
+2026-04-19T09:10:43.415+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1776579043393
+2026-04-19T09:10:43.711+03:00  INFO 15816 --- [Tula] [kafka-producer-network-thread | producer-1] org.apache.kafka.clients.Metadata        : [Producer clientId=producer-1] Cluster ID: MkU3OEVBNTcwNTJENDM2Qg
+2026-04-19T09:10:43.733+03:00  INFO 15816 --- [Tula] [kafka-producer-network-thread | producer-1] o.a.k.c.p.internals.TransactionManager   : [Producer clientId=producer-1] ProducerId set to 1005 with epoch 0
+2026-04-19T09:10:43.779+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.e.t.chats.domain.services.ChatService  : Creating a new chat for animal profile with id 2
+2026-04-19T09:10:43.860+03:00 ERROR 15816 --- [Tula] [http-nio-8080-exec-2] o.example.tula.likes.domain.LikeService  : Не удалось лакнуть питомца,ex=You already have chat by this animal
+2026-04-19T09:10:43.868+03:00  WARN 15816 --- [Tula] [http-nio-8080-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.RuntimeException: org.example.tula.chats.domain.exceptions.ChatException: You already have chat by this animal]
+2026-04-19T09:10:47.150+03:00  INFO 15816 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.e.tula.notify.EmailSenderService       : Сообщение успешно отправилось
+2026-04-19T09:10:56.969+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-1] o.e.t.chats.domain.services.ChatService  : Getting all chats by user
+2026-04-19T09:10:57.026+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-5] o.e.t.chats.domain.services.ChatService  : Getting all chats by user
+2026-04-19T09:10:57.043+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-4] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:10:57.093+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-6] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:10:57.098+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-7] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:10:57.155+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-8] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:10:58.366+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-9] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:11:01.392+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.e.t.c.d.services.ChatMessageService    : Creating a new message for chat with id 1
+2026-04-19T09:11:06.931+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-10] o.e.t.c.d.services.ChatMessageService    : Creating a new message for chat with id 1
+2026-04-19T09:11:36.714+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-3] o.e.t.c.d.services.ChatMessageService    : Creating a new message for chat with id 1
+2026-04-19T09:12:41.719+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-4] o.e.t.chats.domain.services.ChatService  : Getting all chats by user
+2026-04-19T09:12:41.886+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-6] o.e.t.chats.domain.services.ChatService  : Getting all chats by user
+2026-04-19T09:12:41.913+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-7] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:12:42.011+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-8] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:12:42.012+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-9] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:12:42.095+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:12:42.956+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-10] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:12:45.771+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-3] o.e.t.c.d.services.ChatMessageService    : Creating a new message for chat with id 1
+2026-04-19T09:12:48.158+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-1] o.e.t.c.d.services.ChatMessageService    : Creating a new message for chat with id 1
+2026-04-19T09:12:50.922+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-5] o.e.t.c.d.services.ChatMessageService    : Creating a new message for chat with id 1
+2026-04-19T09:13:30.088+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.e.t.chats.domain.services.ChatService  : Getting all chats by user
+2026-04-19T09:13:30.122+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-10] o.e.t.chats.domain.services.ChatService  : Getting all chats by user
+2026-04-19T09:13:30.134+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-1] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:13:30.172+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-5] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:13:30.182+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-7] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:13:30.213+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-4] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:13:31.114+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-8] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:13:34.247+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-3] o.e.t.c.d.services.ChatMessageService    : Creating a new message for chat with id 1
+2026-04-19T09:13:40.067+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-10] o.e.t.c.d.services.ChatMessageService    : Creating a new message for chat with id 1
+2026-04-19T09:13:42.001+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-1] o.e.t.c.d.services.ChatMessageService    : Creating a new message for chat with id 1
+2026-04-19T09:13:43.185+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-5] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:13:43.536+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-4] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:13:46.014+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-8] o.e.t.c.d.services.ChatMessageService    : Creating a new message for chat with id 2
+2026-04-19T09:14:10.618+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-10] o.e.t.c.d.services.ChatMessageService    : Creating a new message for chat with id 2
+2026-04-19T09:15:38.599+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-4] o.e.t.chats.domain.services.ChatService  : Getting all chats by user
+2026-04-19T09:15:38.599+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-9] o.e.t.chats.domain.services.ChatService  : Getting all chats by user
+2026-04-19T09:15:38.925+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-8] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:15:38.944+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:15:39.008+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-3] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:15:39.018+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-10] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:15:47.839+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-1] o.e.t.chats.domain.services.ChatService  : Getting all chats by user
+2026-04-19T09:15:48.089+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-6] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:15:48.179+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-5] o.e.t.chats.domain.services.ChatService  : Getting all chats by user
+2026-04-19T09:15:48.211+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-7] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:15:48.388+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-4] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:15:48.487+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-9] o.e.t.c.d.services.ChatMessageService    : Getting all messages from chat
+2026-04-19T09:15:51.481+03:00  INFO 15816 --- [Tula] [http-nio-8080-exec-2] o.e.t.c.d.services.ChatMessageService    : Creating a new message for chat with id 2
