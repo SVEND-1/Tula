@@ -168,6 +168,52 @@ export default function MainPage() {
 
     return (
         <>
+            {/* Фоновые анимации */}
+            <div className="bg-animation">
+                <div className="floating-shape shape-1"></div>
+                <div className="floating-shape shape-2"></div>
+                <div className="floating-shape shape-3"></div>
+                <div className="floating-shape shape-4"></div>
+                <div className="floating-shape shape-5"></div>
+                <div className="floating-shape shape-6"></div>
+                <div className="floating-shape shape-7"></div>
+                <div className="floating-shape shape-8"></div>
+                <div className="floating-shape shape-9"></div>
+                <div className="floating-shape shape-10"></div>
+
+                <div className="heart">❤️</div>
+                <div className="heart">❤️</div>
+                <div className="heart">❤️</div>
+                <div className="heart">❤️</div>
+                <div className="heart">❤️</div>
+                <div className="heart">❤️</div>
+                <div className="heart">❤️</div>
+                <div className="heart">❤️</div>
+                <div className="heart">❤️</div>
+                <div className="heart">❤️</div>
+                <div className="heart">❤️</div>
+                <div className="heart">❤️</div>
+                <div className="heart">❤️</div>
+                <div className="heart">❤️</div>
+                <div className="heart">❤️</div>
+
+                <div className="paw">🐾</div>
+                <div className="paw">🐾</div>
+                <div className="paw">🐾</div>
+                <div className="paw">🐾</div>
+                <div className="paw">🐾</div>
+                <div className="paw">🐾</div>
+                <div className="paw">🐾</div>
+                <div className="paw">🐾</div>
+                <div className="paw">🐾</div>
+                <div className="paw">🐾</div>
+                <div className="paw">🐾</div>
+                <div className="paw">🐾</div>
+                <div className="paw">🐾</div>
+                <div className="paw">🐾</div>
+                <div className="paw">🐾</div>
+            </div>
+
             <header className="adopt-header">
                 <div className="logo">Adoptly</div>
                 <div className="profile" onClick={() => navigate('/liked')}>Профиль</div>
@@ -189,9 +235,9 @@ export default function MainPage() {
                                             <img src={nextImage} alt={nextAnimal.name} />
                                         ) : (
                                             <div className="image-placeholder">
-                                                <span className="animal-emoji">
-                                                    {nextAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
-                                                </span>
+                                            <span className="animal-emoji">
+                                                {nextAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
+                                            </span>
                                             </div>
                                         );
                                     })()}
@@ -212,17 +258,17 @@ export default function MainPage() {
                                         <img src={currentImage} alt={currentAnimal.name} />
                                     ) : (
                                         <div className="image-placeholder">
-                                            <span className="animal-emoji large">
-                                                {currentAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
-                                            </span>
+                                        <span className="animal-emoji large">
+                                            {currentAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
+                                        </span>
                                         </div>
                                     );
                                 })()}
                                 <span className={`status-badge ${currentAnimal.status?.toLowerCase() || 'available'}`}>
-                                    {currentAnimal.status === 'AVAILABLE' ? 'Доступен' :
-                                        currentAnimal.status === 'TAKEN' ? 'Забран' :
-                                            currentAnimal.status === 'VERIFICATION' ? 'На проверке' : 'Доступен'}
-                                </span>
+                                {currentAnimal.status === 'AVAILABLE' ? 'Доступен' :
+                                    currentAnimal.status === 'TAKEN' ? 'Забран' :
+                                        currentAnimal.status === 'VERIFICATION' ? 'На проверке' : 'Доступен'}
+                            </span>
                             </div>
                             <div className="card-info">
                                 <h2>

@@ -22,6 +22,38 @@
     font-family: "Playpen Sans", cursive;
 }
 
+@media (max-width: 768px) {
+    .pagination {
+        gap: 12px;
+    }
+
+    .pagination__button {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .pagination__info {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagination {
+        gap: 8px;
+    }
+
+    .pagination__button {
+        width: 26px;
+        height: 26px;
+        font-size: 12px;
+    }
+
+    .pagination__info {
+        font-size: 11px;
+    }
+}
+
 .pagination__button:hover:not(:disabled) {
     border-color: #ffb07a;
     color: #ff7a3d;

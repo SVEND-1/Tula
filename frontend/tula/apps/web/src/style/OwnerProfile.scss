@@ -20,10 +20,26 @@ html, body {
   right: 0;
   z-index: 100;
 
+  @media (max-width: 768px) {
+    padding: 15px 20px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 12px 15px;
+  }
+
   .logo {
     font-size: 34px;
     font-weight: 600;
     font-family: "Playpen Sans", cursive;
+
+    @media (max-width: 768px) {
+      font-size: 28px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 24px;
+    }
   }
 
   .profile {
@@ -34,6 +50,16 @@ html, body {
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     font-family: "Playpen Sans", cursive;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+      padding: 5px 10px;
+    }
   }
 
   .back-btn {
@@ -47,6 +73,16 @@ html, body {
     transition: all 0.2s;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 
+    @media (max-width: 768px) {
+      padding: 6px 16px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 5px 12px;
+      font-size: 12px;
+    }
+
     &:hover {
       transform: scale(1.05);
       background: #ffcdb0;
@@ -58,6 +94,14 @@ html, body {
   min-height: 100vh;
   background: linear-gradient(to bottom, #ffcdb0, #fff3eb);
   padding: 100px 40px 40px 40px;
+
+  @media (max-width: 768px) {
+    padding: 80px 20px 20px 20px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 70px 15px 15px 15px;
+  }
 }
 
 .owner-card {
@@ -67,6 +111,16 @@ html, body {
   border-radius: 24px;
   padding: 30px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 15px;
+    border-radius: 16px;
+  }
 }
 
 .owner-title {
@@ -76,10 +130,28 @@ html, body {
   margin: 0 0 30px 0;
   text-align: center;
   font-family: "Playpen Sans", cursive;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
 }
 
 .owner-section {
   margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 30px;
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: 25px;
+  }
 
   .section-title {
     font-size: 24px;
@@ -89,6 +161,18 @@ html, body {
     font-family: "Playpen Sans", cursive;
     border-left: 4px solid #ffb88c;
     padding-left: 15px;
+
+    @media (max-width: 768px) {
+      font-size: 20px;
+      margin-bottom: 15px;
+      padding-left: 12px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 18px;
+      margin-bottom: 12px;
+      padding-left: 10px;
+    }
   }
 }
 
@@ -105,6 +189,14 @@ html, body {
   scroll-behavior: smooth;
   width: 100%;
   padding: 10px 0;
+
+  @media (max-width: 768px) {
+    gap: 12px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 10px;
+  }
 
   &::-webkit-scrollbar {
     height: 6px;
@@ -131,6 +223,16 @@ html, body {
   text-align: center;
   padding: 12px;
 
+  @media (max-width: 768px) {
+    min-width: 120px;
+    padding: 10px;
+  }
+
+  @media (max-width: 480px) {
+    min-width: 100px;
+    padding: 8px;
+  }
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
@@ -146,6 +248,14 @@ html, body {
     justify-content: center;
     overflow: hidden;
 
+    @media (max-width: 768px) {
+      height: 100px;
+    }
+
+    @media (max-width: 480px) {
+      height: 80px;
+    }
+
     img {
       width: 100%;
       height: 100%;
@@ -155,6 +265,14 @@ html, body {
     .image-placeholder {
       .animal-emoji {
         font-size: 50px;
+
+        @media (max-width: 768px) {
+          font-size: 40px;
+        }
+
+        @media (max-width: 480px) {
+          font-size: 30px;
+        }
       }
     }
   }
@@ -164,6 +282,16 @@ html, body {
     font-weight: 600;
     margin-top: 10px;
     font-family: "Playpen Sans", cursive;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+      margin-top: 6px;
+    }
   }
 
   .animal-breed {
@@ -171,6 +299,15 @@ html, body {
     color: #666;
     margin-top: 4px;
     font-family: "Playpen Sans", cursive;
+
+    @media (max-width: 768px) {
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 10px;
+    }
   }
 }
 
@@ -191,16 +328,44 @@ html, body {
   justify-content: center;
   z-index: 10;
 
+  @media (max-width: 768px) {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+  }
+
+  @media (max-width: 480px) {
+    width: 26px;
+    height: 26px;
+    font-size: 16px;
+  }
+
   &.visible {
     display: flex;
   }
 
   &.left {
     left: -18px;
+
+    @media (max-width: 768px) {
+      left: -12px;
+    }
+
+    @media (max-width: 480px) {
+      left: -8px;
+    }
   }
 
   &.right {
     right: -18px;
+
+    @media (max-width: 768px) {
+      right: -12px;
+    }
+
+    @media (max-width: 480px) {
+      right: -8px;
+    }
   }
 
   &:hover {
@@ -215,11 +380,31 @@ html, body {
   padding: 20px;
   margin-bottom: 25px;
 
+  @media (max-width: 768px) {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+
   h3 {
     margin: 0 0 15px 0;
     font-size: 18px;
     color: #333;
     font-family: "Playpen Sans", cursive;
+
+    @media (max-width: 768px) {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
   }
 
   textarea {
@@ -232,6 +417,18 @@ html, body {
     resize: vertical;
     margin-bottom: 15px;
     box-sizing: border-box;
+
+    @media (max-width: 768px) {
+      padding: 10px;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 8px;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
 
     &:focus {
       outline: none;
@@ -254,6 +451,16 @@ html, body {
     font-family: "Playpen Sans", cursive;
     transition: all 0.2s;
 
+    @media (max-width: 768px) {
+      padding: 8px 20px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 6px 16px;
+      font-size: 12px;
+    }
+
     &:hover:not(:disabled) {
       transform: scale(1.02);
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -270,6 +477,10 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  @media (max-width: 480px) {
+    gap: 10px;
+  }
 }
 
 .review-item {
@@ -277,18 +488,38 @@ html, body {
   border-radius: 12px;
   padding: 15px 20px;
 
+  @media (max-width: 768px) {
+    padding: 12px 15px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px 12px;
+  }
+
   .review-content {
     font-size: 14px;
     color: #555;
     line-height: 1.4;
     margin-bottom: 8px;
     font-family: "Playpen Sans", cursive;
+
+    @media (max-width: 768px) {
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+    }
   }
 
   .review-date {
     font-size: 11px;
     color: #999;
     font-family: "Playpen Sans", cursive;
+
+    @media (max-width: 768px) {
+      font-size: 10px;
+    }
   }
 }
 
@@ -298,16 +529,32 @@ html, body {
   background: #f7f7f7;
   border-radius: 12px;
 
+  @media (max-width: 768px) {
+    padding: 30px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 20px;
+  }
+
   p {
     color: #999;
     margin-bottom: 8px;
     font-family: "Playpen Sans", cursive;
+
+    @media (max-width: 768px) {
+      font-size: 13px;
+    }
   }
 
   span {
     font-size: 13px;
     color: #bbb;
     font-family: "Playpen Sans", cursive;
+
+    @media (max-width: 768px) {
+      font-size: 12px;
+    }
   }
 }
 
@@ -326,6 +573,12 @@ html, body {
     border-top-color: #ff8c42;
     border-radius: 50%;
     animation: spin 1s linear infinite;
+
+    @media (max-width: 768px) {
+      width: 40px;
+      height: 40px;
+      border-width: 3px;
+    }
   }
 
   @keyframes spin {
@@ -342,6 +595,16 @@ html, body {
   font-size: 14px;
   cursor: pointer;
   font-family: "Playpen Sans", cursive;
+
+  @media (max-width: 768px) {
+    padding: 8px 20px;
+    font-size: 13px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 6px 15px;
+    font-size: 12px;
+  }
 
   &:hover {
     background: #ffcdb0;
@@ -381,5 +644,27 @@ html, body {
 
   .add-review-form {
     padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .owner-container {
+    padding: 70px 12px 12px 12px;
+  }
+
+  .owner-card {
+    padding: 15px;
+  }
+
+  .owner-title {
+    font-size: 20px;
+  }
+
+  .section-title {
+    font-size: 18px;
+  }
+
+  .animal-item {
+    min-width: 100px;
   }
 }

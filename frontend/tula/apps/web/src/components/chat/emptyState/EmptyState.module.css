@@ -1,23 +1,47 @@
 .wrap {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  color: var(--text-muted);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+    .wrap {
+        gap: 8px;
+    }
 }
 
 .icon {
-  font-size: 52px;
+    font-size: 52px;
+}
+
+@media (max-width: 768px) {
+    .icon {
+        font-size: 40px;
+    }
 }
 
 .title {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-secondary);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 14px;
+    }
 }
 
 .subtitle {
-  font-size: 13px;
+    font-size: 13px;
+}
+
+@media (max-width: 768px) {
+    .subtitle {
+        font-size: 11px;
+    }
 }
