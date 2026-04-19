@@ -10,12 +10,15 @@ import org.example.tula.animals.api.dto.response.AnimalProfileResponse;
 import org.example.tula.animals.db.*;
 import org.example.tula.animals.domain.mapper.AnimalMapper;
 import org.example.tula.likes.api.dto.response.TakeResponse;
+import org.example.tula.minio.services.MinioService;
 import org.example.tula.subscriptions.db.Status;
 import org.example.tula.subscriptions.domain.SubscriptionService;
 import org.example.tula.users.db.UserEntity;
 import org.example.tula.users.domain.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,13 +32,17 @@ public class AnimalService {
     private final AnimalMapper animalMapper;
     private final UserService userService;
     private final SubscriptionService subscriptionService;
+    private final MinioService minioService;
+    @Value("minio.buckets.pets")
+    private String bucket;
 
     public AnimalService(AnimalRepository animalRepository, AnimalMapper animalMapper,
-                         @Lazy UserService userService, SubscriptionService subscriptionService) {
+                         @Lazy UserService userService, SubscriptionService subscriptionService, MinioService minioService) {
         this.animalRepository = animalRepository;
         this.animalMapper = animalMapper;
         this.userService = userService;
         this.subscriptionService = subscriptionService;
+        this.minioService = minioService;
     }
 
     public List<Animal> petFeed(AnimalFeedFilter filter){
@@ -63,7 +70,7 @@ public class AnimalService {
     }
 
     @Transactional
-    public Animal save(CreatedAnimalRequest request) {
+    public Animal save(CreatedAnimalRequest request, MultipartFile avatarFile) {
         try {
             UserEntity user = userService.getCurrentUser();
             if(user.getOwner() == null) {
@@ -78,6 +85,7 @@ public class AnimalService {
                             .name(request.name())
                             .age(request.age())
                             .description(request.description())
+                            .imageUrl(minioService.uploadFile(bucket,avatarFile))
                             .breed(request.breed())
                             .gender(request.gender())
                             .animalType(request.animalType())

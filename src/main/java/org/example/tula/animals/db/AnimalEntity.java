@@ -30,7 +30,7 @@ public class AnimalEntity {
     @Column(name = "age")
     private Integer age;
 
-    @Column(name = "description")
+    @Column(name = "description",length = 1000)
     private String description;
 
     @Column(name = "image_url")
