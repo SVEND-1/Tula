@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @Slf4j
 public class AnimalImageService {
-    private static final String MODULE_KEY = "pet-images";
+    private static final String MODULE_KEY = "pets-images";
     private static final int URL_EXPIRY_SECONDS = 3600;
 
     private final MinioService minioService;

@@ -8,7 +8,9 @@ import org.example.tula.animals.api.dto.request.AnimalFeedFilter;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
 import org.example.tula.animals.api.dto.response.AnimalPageResponse;
 import org.example.tula.animals.api.dto.response.AnimalProfileResponse;
-import org.example.tula.animals.db.*;
+import org.example.tula.animals.db.AnimalEntity;
+import org.example.tula.animals.db.AnimalRepository;
+import org.example.tula.animals.db.StatusAnimal;
 import org.example.tula.animals.domain.mapper.AnimalMapper;
 import org.example.tula.likes.api.dto.response.TakeResponse;
 import org.example.tula.minio.services.MinioService;
@@ -21,13 +23,10 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -37,17 +36,13 @@ public class AnimalService {
     private final AnimalMapper animalMapper;
     private final UserService userService;
     private final SubscriptionService subscriptionService;
-    private final MinioService minioService;
-    @Value("minio.buckets.pets")
-    private String bucket;
 
     public AnimalService(AnimalRepository animalRepository, AnimalMapper animalMapper,
-                         @Lazy UserService userService, SubscriptionService subscriptionService, MinioService minioService) {
+                         @Lazy UserService userService, SubscriptionService subscriptionService) {
         this.animalRepository = animalRepository;
         this.animalMapper = animalMapper;
         this.userService = userService;
         this.subscriptionService = subscriptionService;
-        this.minioService = minioService;
     }
 
     public AnimalPageResponse petFeed(AnimalFeedFilter filter) {
@@ -89,38 +84,39 @@ public class AnimalService {
             return new AnimalPageResponse(List.of(), 0, 0, 0, 0, true, true, true);
         }
     }
+
     public Animal findAnimalById(Long id) {
         return animalMapper.convertEntityToDTO(
                 findAnimalEntityById(id)
         );
     }
+
     public AnimalEntity findAnimalEntityById(Long id) {
         return animalRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Питомец не найден"));
     }
 
-    public AnimalProfileResponse profile(Long id){
+    public AnimalProfileResponse profile(Long id) {
         return animalMapper.convertEntityToProfile(
                 findAnimalEntityById(id)
         );
     }
 
     @Transactional
-    public Animal save(CreatedAnimalRequest request, MultipartFile avatarFile) {
+    public Animal save(CreatedAnimalRequest request) {
         try {
             UserEntity user = userService.getCurrentUser();
-            if(user.getOwner() == null) {
+            if (user.getOwner() == null) {
                 log.warn("Для начало создайте питомник");
                 throw new RuntimeException("Для начало создайте питомник");
             }
 
-            isValid(user);
+//            isValid(user);
 
             AnimalEntity animalEntity = animalRepository.save(
                     AnimalEntity.builder()
                             .name(request.name())
                             .age(request.age())
                             .description(request.description())
-                            .imageURL(minioService.uploadFile(bucket,avatarFile))
                             .breed(request.breed())
                             .gender(request.gender())
                             .animalType(request.animalType())
@@ -130,13 +126,13 @@ public class AnimalService {
                             .build()
             );
             return animalMapper.convertEntityToDTO(animalEntity);
-        }catch (Exception e) {
-            log.error("Не удалось создать питомеца,ex={}", e.getMessage());
+        } catch (Exception e) {
+            log.error("Не удалось создать питомца, ex={}", e.getMessage(), e);
             throw new RuntimeException(e);
         }
     }
 
-    public Animal update(Long id,AnimalEntity updatedEntity){
+    public Animal update(Long id, AnimalEntity updatedEntity) {
         try {
             AnimalEntity animal = findAnimalEntityById(id);
             AnimalEntity animalEntity = animalRepository.save(
@@ -155,7 +151,7 @@ public class AnimalService {
                             .build()
             );
             return animalMapper.convertEntityToDTO(animalEntity);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("Не удалось обновить питомца");
             throw new RuntimeException(e.getMessage());
         }
@@ -178,7 +174,7 @@ public class AnimalService {
                     animal.getOwner().getOwner().getEmail(),
                     animal.getName()
             );
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.error("Не удалось взять питомца,ex={}", e.getMessage());
             throw new RuntimeException(e);
         }
@@ -191,7 +187,7 @@ public class AnimalService {
                 .filter(el -> el.getStatus() == StatusAnimal.DONT_TAKE ||
                         el.getStatus() == StatusAnimal.RESERVATION)
                 .toList();
-        if(subscriptionService.findByUserEmail(user.getEmail()).getActive() == Status.BLOCKED &&
+        if (subscriptionService.findByUserEmail(user.getEmail()).getActive() == Status.BLOCKED &&
                 animalEntities.size() >= 3) {
             log.warn("Нельзя создать больше 3 активных питомцев");
             throw new RuntimeException("Нельзя создать больше 3 активных питомцев");
