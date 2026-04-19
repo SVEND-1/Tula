@@ -1,9 +1,7 @@
 package org.example.tula.users.db;
 
-import io.minio.messages.Owner;
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.tula.animals.db.AnimalEntity;
 import org.example.tula.likes.db.LikeEntity;
 import org.example.tula.owners.db.OwnerEntity;
 import org.example.tula.payments.db.PaymentEntity;

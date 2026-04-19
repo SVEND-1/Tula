@@ -5,7 +5,7 @@ import org.example.tula.animals.db.Gender;
 
 public record CreatedAnimalRequest(
     String name,
-    int age,
+    Integer age,
     String description,
     String breed,
     Gender gender,

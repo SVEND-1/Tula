@@ -1,0 +1,148 @@
+import React, { useState } from 'react';
+import type { Gender, AnimalType, CreateAnimalRequest } from '../../types/animal/animal.types.ts';
+
+interface CreateAnimalFormProps {
+    onSubmit: (data: CreateAnimalRequest, imageBase64?: string) => Promise<void>;
+    isLoading: boolean;
+}
+
+export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFormProps) {
+    const [form, setForm] = useState<CreateAnimalRequest>({
+        name: '',
+        age: 0,
+        description: '',
+        breed: '',
+        gender: 'MAN',
+        animalType: 'DOG',
+    });
+    const [imagePreview, setImagePreview] = useState<string>('');
+    const [imageBase64, setImageBase64] = useState<string>('');
+
+    const isFormValid = form.name.trim() && form.age > 0 && form.breed.trim();
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result as string;
+                setImagePreview(base64String);
+                setImageBase64(base64String);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        await onSubmit(form, imageBase64);
+
+        setForm({
+            name: '',
+            age: 0,
+            description: '',
+            breed: '',
+            gender: 'MAN',
+            animalType: 'DOG',
+        });
+        setImagePreview('');
+        setImageBase64('');
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="create-animal-form">
+            <h2>➕ Создать анкету животного</h2>
+
+            <div className="form-group">
+                <label>🖼️ Фото животного</label>
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="file-input"
+                />
+                {imagePreview && (
+                    <div className="image-preview">
+                        <img src={imagePreview} alt="Предпросмотр" />
+                    </div>
+                )}
+            </div>
+
+            <div className="form-group">
+                <label>🐕 Имя животного *</label>
+                <input
+                    type="text"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    placeholder="Например: Бобик, Мурка"
+                    required
+                />
+            </div>
+
+            <div className="form-group">
+                <label>📅 Возраст (лет) *</label>
+                <input
+                    type="number"
+                    value={form.age}
+                    onChange={(e) => setForm({ ...form, age: parseInt(e.target.value) || 0 })}
+                    placeholder="0"
+                    min="0"
+                    required
+                />
+            </div>
+
+            <div className="form-group">
+                <label>🐾 Порода *</label>
+                <input
+                    type="text"
+                    value={form.breed}
+                    onChange={(e) => setForm({ ...form, breed: e.target.value })}
+                    placeholder="Например: Лабрадор, Персидская"
+                    required
+                />
+            </div>
+
+            <div className="form-row">
+                <div className="form-group">
+                    <label>⚥ Пол</label>
+                    <select
+                        value={form.gender}
+                        onChange={(e) => setForm({ ...form, gender: e.target.value as Gender })}
+                    >
+                        <option value="MAN">Мальчик</option>
+                        <option value="WOMAN">Девочка</option>
+                    </select>
+                </div>
+
+                <div className="form-group">
+                    <label>🐶 Тип животного</label>
+                    <select
+                        value={form.animalType}
+                        onChange={(e) => setForm({ ...form, animalType: e.target.value as AnimalType })}
+                    >
+                        <option value="DOG">🐕 Собака</option>
+                        <option value="CAT">🐈 Кошка</option>
+                    </select>
+                </div>
+            </div>
+
+            <div className="form-group">
+                <label>📝 Описание</label>
+                <textarea
+                    value={form.description}
+                    onChange={(e) => setForm({ ...form, description: e.target.value })}
+                    placeholder="Расскажите об особенностях, характере, привычках..."
+                    rows={4}
+                />
+            </div>
+
+            <button
+                type="submit"
+                className="submit-btn"
+                disabled={!isFormValid || isLoading}
+            >
+                {isLoading ? 'Создание...' : '📝 Создать анкету'}
+            </button>
+        </form>
+    );
+}
