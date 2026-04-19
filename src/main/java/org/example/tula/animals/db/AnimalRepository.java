@@ -1,5 +1,7 @@
 package org.example.tula.animals.db;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,8 +20,9 @@ public interface AnimalRepository extends JpaRepository<AnimalEntity,Long> {
           AND (:animalType IS NULL OR a.animalType = :animalType)
           AND (a.status != org.example.tula.animals.db.StatusAnimal.TAKE)
         """)
-    List<AnimalEntity> findAllByFilter(
+    Page<AnimalEntity> findAllByFilter(
             @Param("age")Integer age,@Param("breed") String breed,
-            @Param("gender")Gender gender,@Param("animalType") AnimalType animalType
+            @Param("gender")Gender gender,@Param("animalType") AnimalType animalType,
+            Pageable pageable
     );
 }
