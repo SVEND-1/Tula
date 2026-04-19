@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Payment, Receipt } from '../../types/receipt/receipt.types.ts';
-import { getPayments, getReceipt, createPayment } from '../../api/receiptApi';
+// Используем paymentApi — там правильный baseURL и токен из localStorage
+import { getPayments, getReceipt, createPayment } from '../../api/paymentApi';
 
 export function useReceipts(page = 0, size = 10) {
   const [payments, setPayments] = useState<Payment[]>([]);
@@ -15,7 +16,8 @@ export function useReceipts(page = 0, size = 10) {
       setLoading(true);
       setError(null);
       const res = await getPayments(page, size);
-        setPayments(res.data.content ?? []);
+      // content может не прийти если бекенд вернул неожиданную структуру
+      setPayments(res.data.content ?? []);
     } catch {
       setError('Не удалось загрузить историю платежей');
     } finally {
