@@ -1,0 +1,32 @@
+/* Глобальные CSS-переменные — цветовая схема Adoptly */
+:root {
+  --bg:           #fff3eb;
+  --header-bg:    #ffcdb0;
+  --card-bg:      #fffaf7;
+  --accent:       #ff8c5a;
+  --accent-light: #ffdbc5;
+  --accent-dark:  #e0622a;
+  --text-primary:   #2d1a0e;
+  --text-secondary: #8a5c42;
+  --text-muted:     #b8896f;
+  --border:       rgba(255, 140, 90, 0.18);
+  --header-h:     64px;
+  --sidebar-w:    300px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+}
+
+/* Скроллбар — тонкий, в тон акцента */
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--accent-light); border-radius: 4px; }
