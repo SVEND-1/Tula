@@ -20,6 +20,29 @@ services:
     networks:
       - app-network
 
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    restart: unless-stopped
+    ports:
+      - "9000:9000"  # API порт (для приложения)
+      - "9001:9001"  # Web UI порт (консоль администратора)
+    environment:
+      - MINIO_ROOT_USER=minioadmin       # Логин для веб-интерфейса
+      - MINIO_ROOT_PASSWORD=minioadmin  # Пароль
+      - MINIO_DOMAIN=localhost           # Домен для виртуального хостинга
+      - MINIO_SERVER_URL=http://localhost:9000  # URL сервера
+    volumes:
+      - ./minio/data:/data              # Данные хранятся локально
+      - ./minio/config:/root/.minio     # Конфигурация
+    command: server /data --console-address ":9001"
+    networks:
+      - app-network
+
+volumes:
+  minio-data:
+    driver: local
+
 networks:
   app-network:
     driver: bridge
