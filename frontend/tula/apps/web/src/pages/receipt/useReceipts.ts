@@ -15,7 +15,7 @@ export function useReceipts(page = 0, size = 10) {
       setLoading(true);
       setError(null);
       const res = await getPayments(page, size);
-      setPayments(res.data.content);
+        setPayments(res.data.content ?? []);
     } catch {
       setError('Не удалось загрузить историю платежей');
     } finally {

@@ -16,7 +16,7 @@ const formatDate = (iso: string) => {
   return d.toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
 };
 
-const PaymentList: React.FC<Props> = ({ payments, selectedPaymentId, loading, onSelect, onBuyPremium }) => (
+const PaymentList: React.FC<Props> = ({ payments = [], selectedPaymentId, loading, onSelect, onBuyPremium }) => (
   <aside className={styles.sidebar}>
     <div className={styles.top}>
       <h2 className={styles.title}>История платежей</h2>
