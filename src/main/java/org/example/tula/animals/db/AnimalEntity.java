@@ -60,6 +60,9 @@ public class AnimalEntity {
     @ManyToOne
     private OwnerEntity owner;
 
+    @Column(name = "image_url")
+    private String imageURL;
+
     @Column(name = "create_at")
     private LocalDateTime createAt;
 }

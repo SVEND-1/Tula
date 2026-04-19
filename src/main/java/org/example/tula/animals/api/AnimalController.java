@@ -43,4 +43,6 @@ public class AnimalController {
     public ResponseEntity<AnimalProfileResponse> profile(@PathVariable Long id) {
         return ResponseEntity.ok(animalService.profile(id));
     }
+
+
 }
