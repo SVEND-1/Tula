@@ -1,16 +1,21 @@
 package org.example.tula.owners.api;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
+import org.example.tula.animals.domain.AnimalImageService;
 import org.example.tula.animals.domain.AnimalService;
-import org.example.tula.owners.api.dto.Owner;
 import org.example.tula.owners.api.dto.response.OwnerProfileResponse;
 import org.example.tula.owners.domain.OwnerService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,6 +26,7 @@ import java.util.List;
 public class OwnerController {
     private final OwnerService ownerService;
     private final AnimalService animalService;
+    private final AnimalImageService animalImageService;
 
     @Operation(summary = "Получение всех животных в приюте")
     @GetMapping("/animal")
@@ -58,5 +64,46 @@ public class OwnerController {
         return ResponseEntity.ok(ownerService.confirmTakenAnimal(likeId));
     }
 
+    @Operation(summary = "Выгрузка картинки питомца")
+    @PatchMapping(value = "/animal-img/{animalId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> uploadAnimalImage(
+            @PathVariable("animalId") Long animalId,
+            @Parameter(
+                    description = "Файл для загрузки",
+                    required = true,
+                    content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)
+            )
+            @RequestPart("file") MultipartFile file
+    ) {
+        String path = animalImageService.uploadImage(animalId, file);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(path);
+    }
+
+    @Operation(summary = "Получить URL картинки питомца")
+    @GetMapping("/animal-img/{animalId}")
+    public ResponseEntity<String> getAnimalImageUrl(
+            @PathVariable("animalId") Long animalId
+    ) {
+        String url = animalImageService.getAnimalImageUrl(animalId);
+
+        if (url == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(url);
+    }
+
+    @Operation(summary = "Удалить картинку питомца")
+    @DeleteMapping("/animal-img/{animalId}")
+    public ResponseEntity<Void> deleteAnimalImage(
+            @PathVariable("animalId") Long animalId
+    ) {
+        animalImageService.deleteAnimalImage(animalId);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
 
 }

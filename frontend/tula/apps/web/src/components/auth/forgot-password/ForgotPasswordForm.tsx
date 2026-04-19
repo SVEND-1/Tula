@@ -2,6 +2,7 @@ import Field from "../global/Field";
 import Button from "../global/Button";
 import type {ForgotPasswordFormProps} from "../../../types/auth/auth.types";
 
+
 export default function ForgotPasswordForm({
                                                email,
                                                setEmail,
