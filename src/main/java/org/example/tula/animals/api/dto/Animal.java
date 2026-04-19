@@ -16,7 +16,7 @@ public record Animal(
         AnimalType animalType,
         StatusAnimal status,
         Long personTakeId,
-        String imageURL,
+        String imagePath,
         LocalDateTime createAt
 ) {
 }

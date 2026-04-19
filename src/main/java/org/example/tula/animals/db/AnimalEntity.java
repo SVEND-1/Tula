@@ -57,8 +57,8 @@ public class AnimalEntity {
     @ManyToOne
     private OwnerEntity owner;
 
-    @Column(name = "image_url")
-    private String imageURL;
+    @Column(name = "image_path")
+    private String imagePath;
 
     @Column(name = "create_at")
     private LocalDateTime createAt;
