@@ -5,6 +5,7 @@ import { createOwner, getOwnerAnimals, createOwnerAnimal } from '../../api/owner
 import type { CreateAnimalRequest } from '../../types/animal/animal.types';
 import CreateAnimalForm from '../../components/admin/CreateAnimalForm';
 import '../../style/LikedAnimals.scss';
+import QrCode from '../../components/qr/QrCode';
 
 interface LikedAnimal {
     id: number;
@@ -43,6 +44,7 @@ export default function LikedAnimals() {
     const [isCreatingShelter, setIsCreatingShelter] = useState(false);
     const [hasOwner, setHasOwner] = useState(false);
     const [ownerName, setOwnerName] = useState('');
+    const [ownerId] = useState<number | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -177,13 +179,13 @@ export default function LikedAnimals() {
         try {
             await createOwner(shelterName);
             setOwnerName(shelterName);
-            alert('✅ Приют успешно создан! Теперь вы можете добавлять питомцев');
+            alert(' Приют успешно создан! Теперь вы можете добавлять питомцев');
             setShelterName('');
             setHasOwner(true);
             setActiveTab('mypets');
         } catch (error: any) {
             console.error('Ошибка создания приюта:', error);
-            alert('❌ Ошибка создания приюта');
+            alert(' Ошибка создания приюта');
         } finally {
             setIsCreatingShelter(false);
         }
@@ -205,7 +207,7 @@ export default function LikedAnimals() {
                 localStorage.setItem('animalImages', JSON.stringify(images));
                 setAnimalImages(images);
 
-                alert(`✅ Животное "${response.data.name}" успешно создано! Оно появится в ленте`);
+                alert(` Животное "${response.data.name}" успешно создано! Оно появится в ленте`);
                 await loadMyAnimals();
                 await loadProfile();
                 setActiveTab('mypets');
@@ -213,7 +215,7 @@ export default function LikedAnimals() {
         } catch (error: any) {
             console.error('Ошибка:', error);
             const errorMessage = error.response?.data?.message || 'Ошибка создания анкеты';
-            alert(`❌ ${errorMessage}`);
+            alert(` ${errorMessage}`);
         } finally {
             setIsCreatingAnimal(false);
         }
@@ -391,18 +393,11 @@ export default function LikedAnimals() {
                                 </div>
                             </div>
 
-                            {/* Кнопки для перехода на платежи и подписку */}
                             <div className="action-buttons">
-                                <button
-                                    onClick={() => navigate('/payments')}
-                                    className="action-btn payments-btn"
-                                >
+                                <button onClick={() => navigate('/payments')} className="action-btn payments-btn">
                                     💳 История платежей
                                 </button>
-                                <button
-                                    onClick={() => navigate('/subscription')}
-                                    className="action-btn subscription-btn"
-                                >
+                                <button onClick={() => navigate('/subscription')} className="action-btn subscription-btn">
                                     ⭐ Оформить подписку
                                 </button>
                             </div>
@@ -550,6 +545,10 @@ export default function LikedAnimals() {
                                         <button onClick={() => setActiveTab('mypets')} className="my-pets-btn">
                                             🐕 Мои питомцы ({myAnimals.length})
                                         </button>
+
+                                        {ownerName && (
+                                            <QrCode ownerId={ownerId} ownerName={ownerName} />
+                                        )}
                                     </div>
                                 </div>
                             ) : (
