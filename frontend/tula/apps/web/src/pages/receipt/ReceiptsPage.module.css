@@ -1,86 +1,38 @@
 .page {
-    display: flex;
-    height: 100vh;
-    background: var(--bg);
-    font-family: "Playpen Sans", cursive;
+  display: flex;
+  height: 100vh;
+  background: var(--bg);
+  font-family: 'Nunito', sans-serif;
+  position: relative;
 }
 
-/* LEFT */
-.sidebar {
-    width: 320px;
-    background: var(--card-bg);
-    border-right: 1px solid var(--border);
-    padding: 20px;
-    overflow-y: auto;
-}
-
-.title {
-    font-size: 20px;
-    margin-bottom: 20px;
-}
-
-.list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.item {
-    padding: 12px;
-    border-radius: 12px;
-    background: white;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.item:hover {
-    background: var(--accent-light);
-}
-
-.active {
-    border: 2px solid var(--accent);
-}
-
-.itemTitle {
-    font-weight: 600;
-}
-
-.itemSub {
-    font-size: 12px;
-    color: var(--text-muted);
-}
-
-/* RIGHT */
+/* Правая часть — скроллится, центрирует контент */
 .main {
-    flex: 1;
-    padding: 30px;
-    overflow-y: auto;
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
-.header {
-    font-size: 22px;
-    margin-bottom: 20px;
+/* Красная полоса вверху при ошибке запроса */
+.errorBanner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: #ffebee;
+  color: #c62828;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 20px;
+  text-align: center;
+  z-index: 100;
+  border-bottom: 1px solid #ef9a9a;
 }
 
-.subheader {
-    margin-top: 20px;
-    font-size: 18px;
-}
+/* Мобильный: сайдбар занимает весь экран, главная скрывается */
+@media (max-width: 640px) {
+  .page { flex-direction: column; }
 
-.card {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.itemRow {
-    padding: 5px 0;
-    border-bottom: 1px solid var(--border);
-}
-
-.empty {
-    color: var(--text-muted);
-    font-size: 18px;
+  .main { padding: 20px 16px; }
 }

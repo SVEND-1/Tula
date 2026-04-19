@@ -8,7 +8,7 @@ import ResetPassword from "./pages/auth/reset-password/ResetPassword";
 import MainPage from "./pages/main/MainPage";
 import AdminAnimals from "./pages/admin/AdminAnimals";
 import Chat from "./pages/chat/Chat.tsx";
-import {ReceiptsPage} from "./pages/receipt/ReceiptPage.tsx";
+import {ReceiptsPage} from "./pages/receipt/ReceiptsPage.tsx";
 
 function App() {
     return (
