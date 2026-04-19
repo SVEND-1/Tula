@@ -9,8 +9,10 @@ import org.example.tula.animals.domain.AnimalService;
 import org.example.tula.owners.api.dto.Owner;
 import org.example.tula.owners.api.dto.response.OwnerProfileResponse;
 import org.example.tula.owners.domain.OwnerService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,9 +37,10 @@ public class OwnerController {
     }
 
     @Operation(summary = "Создание питомца в приют")
-    @PostMapping("/animal")
-    public ResponseEntity<Animal> createAnimal(@RequestBody CreatedAnimalRequest request) {
-        return ResponseEntity.ok(animalService.save(request));
+    @PostMapping(value = "/animal", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Animal> createAnimal(@RequestPart CreatedAnimalRequest request,
+                                               @RequestPart(value = "avatar") MultipartFile avatarFile) {
+        return ResponseEntity.ok(animalService.save(request,avatarFile));
     }
 
     @Operation(summary = "Создание приюта")

@@ -5,6 +5,7 @@ import AuthContainer from "../../../components/auth/global/AuthContainer";
 import AuthTitle from "../../../components/auth/global/AuthTitle";
 import AuthSubtitle from "../../../components/auth/global/AuthSubtitle";
 import VerifyResetCodeForm from "../../../components/auth/reset-password/VerifyResetCodeForm";
+import "../../../style/AuthForm.css";
 
 export default function VerifyResetCode() {
     const [searchParams] = useSearchParams();
