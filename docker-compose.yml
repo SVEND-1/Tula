@@ -67,8 +67,6 @@ services:
       - MINIO_ENDPOINT=http://minio:9000
       - MINIO_ACCESS_KEY=admin
       - MINIO_SECRET_KEY=strongpassword123
-      - OLLAMA_URL=http://gemma3:270m
-      - OLLAMA_MODEL=llama3.2:1b
     depends_on:
       - postgres
       - kafka

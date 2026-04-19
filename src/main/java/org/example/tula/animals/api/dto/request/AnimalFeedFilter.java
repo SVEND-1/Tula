@@ -7,6 +7,8 @@ public record AnimalFeedFilter(
         Integer age,
         String breed,
         Gender gender,
-        AnimalType animalType
+        AnimalType animalType,
+        Integer size,
+        Integer page
 ) {
 }
