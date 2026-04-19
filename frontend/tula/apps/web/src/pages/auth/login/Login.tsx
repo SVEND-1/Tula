@@ -6,8 +6,7 @@ import AuthTitle from "../../../components/auth/global/AuthTitle";
 import AuthSubtitle from "../../../components/auth/global/AuthSubtitle";
 import LoginForm from "../../../components/auth/login/LoginForm";
 import type { LoginResponse } from "../../../api/authApi";
-import "../../../style/AuthForm.css"
-import "../../../style/AuthForm.css"
+import "../../../style/AuthForm.scss"
 
 export default function Login() {
     const [email, setEmail] = useState<string>("");
@@ -49,7 +48,7 @@ export default function Login() {
         <AuthContainer>
             <div className="auth-form-wrapper">
                 <div className="auth-form">
-                    <AuthTitle>AI chats</AuthTitle>
+                    <AuthTitle>Adoptly</AuthTitle>
                     <AuthSubtitle>login</AuthSubtitle>
 
                     <LoginForm

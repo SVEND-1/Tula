@@ -1,147 +1,206 @@
 import { useState, useCallback, useEffect } from 'react';
-import type { PetChat, Message } from '../../types/chat/chat.types.ts';
-import { getChats, getMessages, sendMessageApi } from '../../api/chatApi';
+import { getAllChats, getMessages, sendMessage, createChat } from '../../api/chatApi';
+import type { ChatMessageResponse } from '../../api/chatApi';
+import type { PetChat, Message } from '../../types/chat/chat.types';
 
-// формат времени
-const formatTime = (dateString: string) => {
-    return new Date(dateString).toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-    });
+const getTimeFromDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
+};
+
+const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
 };
 
 export const useChat = () => {
     const [chats, setChats] = useState<PetChat[]>([]);
     const [activeChatId, setActiveChatId] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-
-    const activeChat = chats.find(c => c.id === activeChatId) ?? null;
-
-    // 🔹 загрузка чатов
-    useEffect(() => {
-        const loadChats = async () => {
-            try {
-                const res = await getChats();
-
-                const mapped: PetChat[] = res.data.map((chat: any) => ({
-                    id: chat.id,
-                    name: chat.animal.name,
-                    breed: chat.animal.breed,
-                    emoji: '🐾',
-                    preview: '',
-                    time: '',
-                    unread: 0,
-                    messages: [],
-                }));
-
-                setChats(mapped);
-            } catch (e) {
-                console.error('Ошибка загрузки чатов', e);
-            }
-        };
-
-        loadChats();
-    }, []);
-
-    // 🔹 открыть чат и загрузить сообщения
-    const selectChat = useCallback(async (id: number) => {
-        setActiveChatId(id);
-
+    // Загрузка всех чатов
+    const loadChats = useCallback(async () => {
+        setIsLoading(true);
         try {
-            const res = await getMessages(id);
+            const response = await getAllChats();
+            const chatData = response.data;
 
-            const messages: Message[] = res.data.map((m: any) => ({
-                id: String(m.id),
-
-                // 🔥 ВАЖНО: правильная логика BUYER / SELLER
-                from: m.senderType === 'BUYER' ? 'out' : 'in',
-
-                text: m.message,
-                time: formatTime(m.createdAt),
+            const formattedChats: PetChat[] = chatData.map(chat => ({
+                id: chat.id,
+                name: chat.animal.name,
+                breed: chat.animal.breed,
+                emoji: chat.animal.animalType === 'DOG' ? '🐕' : '🐈',
+                preview: 'Новое сообщение',
+                time: formatDate(chat.updatedAt),
+                unread: 0,
+                messages: [],
+                animalId: chat.animal.id,
+                sellerId: chat.seller.id,
+                buyerId: chat.buyer.id
             }));
 
-            setChats(prev =>
-                prev.map(c =>
-                    c.id === id ? { ...c, messages } : c
-                )
-            );
-        } catch (e) {
-            console.error('Ошибка загрузки сообщений', e);
+            setChats(formattedChats);
+
+            // Загружаем последние сообщения для каждого чата
+            for (const chat of formattedChats) {
+                try {
+                    const lastMsgResponse = await getMessages(chat.id, 1, 0);
+                    if (lastMsgResponse.data && lastMsgResponse.data.length > 0) {
+                        const lastMsg = lastMsgResponse.data[0];
+                        chat.preview = lastMsg.message;
+                        chat.time = formatDate(lastMsg.createdAt);
+                    }
+                } catch (e) {
+                    console.error('Ошибка загрузки последнего сообщения:', e);
+                }
+            }
+
+            setChats([...formattedChats]);
+        } catch (error) {
+            console.error('Ошибка загрузки чатов:', error);
+        } finally {
+            setIsLoading(false);
         }
     }, []);
 
-    const closeChat = useCallback(() => {
-        setActiveChatId(null);
+    useEffect(() => {
+        loadChats();
+    }, [loadChats]);
+
+    // Загрузка сообщений выбранного чата
+    const loadMessages = useCallback(async (chatId: number) => {
+        try {
+            const response = await getMessages(chatId);
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const currentUserId = user.id;
+
+            const messages: Message[] = (response.data || []).map((msg: ChatMessageResponse) => {
+                // Проверяем, что fromUser существует
+                const fromUserId = msg.fromUser?.id;
+                return {
+                    id: msg.id,
+                    from: fromUserId === currentUserId ? 'out' : 'in',
+                    text: msg.message,
+                    time: formatDate(msg.createdAt)
+                };
+            });
+
+            setChats(prev => prev.map(chat =>
+                chat.id === chatId
+                    ? { ...chat, messages, unread: 0 }
+                    : chat
+            ));
+        } catch (error) {
+            console.error('Ошибка загрузки сообщений:', error);
+        }
     }, []);
 
-    // 🔹 отправка сообщения
-    const sendMessage = useCallback(async (text: string) => {
-        if (!activeChatId) return;
-
+    // Создание нового чата
+    const createNewChat = useCallback(async (animalId: number) => {
         try {
-            const res = await sendMessageApi(activeChatId, text);
+            const response = await createChat(animalId);
+            const newChat = response.data;
 
-            const newMsg: Message = {
-                id: String(res.data.id),
-                from: 'out',
-                text: res.data.message,
-                time: formatTime(res.data.createdAt),
+            const formattedChat: PetChat = {
+                id: newChat.id,
+                name: newChat.animal.name,
+                breed: newChat.animal.breed,
+                emoji: newChat.animal.animalType === 'DOG' ? '🐕' : '🐈',
+                preview: 'Новый чат',
+                time: formatDate(newChat.createdAt),
+                unread: 0,
+                messages: [],
+                animalId: newChat.animal.id,
+                sellerId: newChat.seller.id,
+                buyerId: newChat.buyer.id
             };
 
+            setChats(prev => [formattedChat, ...prev]);
+            setActiveChatId(newChat.id);
+            return newChat.id;
+        } catch (error) {
+            console.error('Ошибка создания чата:', error);
+            throw error;
+        }
+    }, []);
+
+    const selectChat = useCallback(async (id: number) => {
+        setActiveChatId(id);
+        await loadMessages(id);
+    }, [loadMessages]);
+
+    const closeChat = useCallback(() => setActiveChatId(null), []);
+
+    const sendMessageToChat = useCallback(async (text: string) => {
+        if (!activeChatId) return;
+
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        const userMsg: Message = {
+            id: Date.now(),
+            from: 'out',
+            text,
+            time: getTimeFromDate(new Date().toISOString())
+        };
+
+        // Оптимистичное обновление
+        setChats(prev =>
+            prev.map(chat =>
+                chat.id === activeChatId
+                    ? { ...chat, messages: [...chat.messages, userMsg], preview: text, time: getTimeFromDate(new Date().toISOString()) }
+                    : chat
+            )
+        );
+
+        try {
+            const response = await sendMessage(activeChatId, text);
+            const savedMsg = response.data;
+
+            const fromUserId = savedMsg.fromUser?.id;
+            const serverMsg: Message = {
+                id: savedMsg.id,
+                from: fromUserId === user.id ? 'out' : 'in',
+                text: savedMsg.message,
+                time: formatDate(savedMsg.createdAt)
+            };
+
+            // Заменяем оптимистичное сообщение на серверное
             setChats(prev =>
-                prev.map(c =>
-                    c.id === activeChatId
+                prev.map(chat =>
+                    chat.id === activeChatId
                         ? {
-                            ...c,
-                            messages: [...c.messages, newMsg],
-                            preview: newMsg.text,
-                            time: newMsg.time,
+                            ...chat,
+                            messages: [...chat.messages.slice(0, -1), serverMsg],
+                            preview: text,
+                            time: formatDate(savedMsg.createdAt)
                         }
-                        : c
+                        : chat
                 )
             );
-        } catch (e) {
-            console.error('Ошибка отправки сообщения', e);
+        } catch (error) {
+            console.error('Ошибка отправки сообщения:', error);
+            alert('Не удалось отправить сообщение');
+            // Удаляем оптимистичное сообщение при ошибке
+            setChats(prev =>
+                prev.map(chat =>
+                    chat.id === activeChatId
+                        ? { ...chat, messages: chat.messages.slice(0, -1) }
+                        : chat
+                )
+            );
         }
     }, [activeChatId]);
 
-    // 🔁 polling сообщений
-    useEffect(() => {
-        if (!activeChatId) return;
-
-        const interval = setInterval(async () => {
-            try {
-                const res = await getMessages(activeChatId);
-
-                const messages: Message[] = res.data.map((m: any) => ({
-                    id: String(m.id),
-                    from: m.senderType === 'BUYER' ? 'out' : 'in',
-                    text: m.message,
-                    time: formatTime(m.createdAt),
-                }));
-
-                setChats(prev =>
-                    prev.map(c =>
-                        c.id === activeChatId
-                            ? { ...c, messages }
-                            : c
-                    )
-                );
-            } catch (e) {
-                console.error('Polling error', e);
-            }
-        }, 3000);
-
-        return () => clearInterval(interval);
-    }, [activeChatId]);
+    const activeChat = chats.find(c => c.id === activeChatId) ?? null;
 
     return {
         chats,
         activeChat,
         activeChatId,
-
+        isLoading,
         selectChat,
         closeChat,
-        sendMessage,
+        sendMessage: sendMessageToChat,
+        createNewChat,
+        loadChats
     };
 };

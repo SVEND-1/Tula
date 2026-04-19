@@ -1,58 +1,101 @@
 .row {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
 }
 
-.out { flex-direction: row-reverse; }
+@media (max-width: 768px) {
+    .row {
+        gap: 6px;
+    }
+}
+
+.out {
+    flex-direction: row-reverse;
+}
 
 .avatar {
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  background: var(--accent-light);
-  font-size: 14px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  border: 1.5px solid var(--border);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1.5px solid var(--border);
 }
 
-/* Аватарка пользователя — чуть ярче */
+@media (max-width: 768px) {
+    .avatar {
+        width: 26px;
+        height: 26px;
+        font-size: 12px;
+    }
+}
+
 .userAvatar {
-  background: var(--accent);
-  color: white;
-  font-weight: 700;
-  font-size: 12px;
-  border: none;
+    background: var(--accent);
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .userAvatar {
+        font-size: 10px;
+    }
 }
 
 .bubble {
-  max-width: 65%;
-  padding: 10px 14px;
-  border-radius: 18px;
-  font-size: 14px;
-  line-height: 1.5;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+    max-width: 65%;
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+@media (max-width: 768px) {
+    .bubble {
+        max-width: 75%;
+        padding: 8px 12px;
+        font-size: 13px;
+    }
 }
 
 .bubbleIn {
-  background: white;
-  color: var(--text-primary);
-  border-bottom-left-radius: 4px;
-  box-shadow: 0 1px 4px rgba(255, 140, 90, 0.12);
+    background: white;
+    color: var(--text-primary);
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 4px rgba(255, 140, 90, 0.12);
 }
 
 .bubbleOut {
-  background: var(--accent);
-  color: white;
-  border-bottom-right-radius: 4px;
+    background: var(--accent);
+    color: white;
+    border-bottom-right-radius: 4px;
 }
 
 .time {
-  font-size: 10px;
-  align-self: flex-end;
+    font-size: 10px;
+    align-self: flex-end;
 }
 
-.bubbleIn .time  { color: var(--text-muted); }
-.bubbleOut .time { color: rgba(255, 255, 255, 0.7); }
+@media (max-width: 768px) {
+    .time {
+        font-size: 9px;
+    }
+}
+
+.bubbleIn .time {
+    color: var(--text-muted);
+}
+
+.bubbleOut .time {
+    color: rgba(255, 255, 255, 0.7);
+}

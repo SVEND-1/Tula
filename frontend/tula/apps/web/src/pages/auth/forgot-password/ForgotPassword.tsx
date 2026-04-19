@@ -5,7 +5,7 @@ import AuthContainer from "../../../components/auth/global/AuthContainer";
 import AuthTitle from "../../../components/auth/global/AuthTitle";
 import AuthSubtitle from "../../../components/auth/global/AuthSubtitle";
 import ForgotPasswordForm from "../../../components/auth/forgot-password/ForgotPasswordForm";
-import "../../../style/AuthForm.css"
+import "../../../style/AuthForm.scss";
 
 export default function ForgotPassword() {
     const [email, setEmail] = useState<string>("");
@@ -36,7 +36,7 @@ export default function ForgotPassword() {
         <AuthContainer>
             <div className="auth-form-wrapper">
                 <div className="auth-form">
-                    <AuthTitle>AI chats</AuthTitle>
+                    <AuthTitle>Adoptly</AuthTitle>
                     <AuthSubtitle>forgot password</AuthSubtitle>
 
                     <ForgotPasswordForm

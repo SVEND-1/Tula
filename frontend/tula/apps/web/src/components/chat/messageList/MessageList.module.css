@@ -1,31 +1,56 @@
 .area {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+@media (max-width: 768px) {
+    .area {
+        padding: 15px 12px;
+        gap: 6px;
+    }
 }
 
 .dateDivider {
-  text-align: center;
-  font-size: 11px;
-  color: var(--text-muted);
-  font-weight: 600;
-  margin: 8px 0;
-  position: relative;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin: 8px 0;
+    position: relative;
 }
 
-/* Линии по бокам от даты */
+@media (max-width: 768px) {
+    .dateDivider {
+        font-size: 10px;
+        margin: 6px 0;
+    }
+}
+
 .dateDivider::before,
 .dateDivider::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  width: calc(50% - 60px);
-  height: 1px;
-  background: var(--border);
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: calc(50% - 60px);
+    height: 1px;
+    background: var(--border);
 }
 
-.dateDivider::before { left: 0; }
-.dateDivider::after  { right: 0; }
+@media (max-width: 768px) {
+    .dateDivider::before,
+    .dateDivider::after {
+        width: calc(50% - 40px);
+    }
+}
+
+.dateDivider::before {
+    left: 0;
+}
+
+.dateDivider::after {
+    right: 0;
+}

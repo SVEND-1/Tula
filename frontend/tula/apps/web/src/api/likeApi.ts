@@ -8,12 +8,45 @@ const LIKE_API = axios.create({
     }
 });
 
+LIKE_API.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('token');
+        console.log('Токен для запроса:', token);
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        console.log('Полный URL:', config.baseURL + config.url);
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+LIKE_API.interceptors.response.use(
+    (response) => {
+        console.log('Ответ сервера:', response.data);
+        return response;
+    },
+    (error) => {
+        console.error('Ошибка сервера:', error.response?.data);
+        return Promise.reject(error);
+    }
+);
+
 export const sendLike = (animalId: number) => {
-    return LIKE_API.post(`/like/${animalId}`);
+    return LIKE_API.post<string>(`/like/${animalId}`);
 };
 
 export const sendDislike = (animalId: number) => {
-    return LIKE_API.post(`/dislike/${animalId}`);
+    return LIKE_API.post<string>(`/dislike/${animalId}`);
+};
+
+export const getUserLikes = () => {
+    return LIKE_API.get('/user/likes');
+};
+export const deleteLike = (animalId: number) => {
+    return LIKE_API.delete(`/like/${animalId}`);
 };
 
 export default LIKE_API;

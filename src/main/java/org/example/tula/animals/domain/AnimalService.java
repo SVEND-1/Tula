@@ -11,6 +11,7 @@ import org.example.tula.animals.db.*;
 import org.example.tula.animals.domain.mapper.AnimalMapper;
 import org.example.tula.likes.api.dto.response.TakeResponse;
 import org.example.tula.subscriptions.db.Status;
+import org.example.tula.subscriptions.db.SubscriptionEntity;
 import org.example.tula.subscriptions.domain.SubscriptionService;
 import org.example.tula.users.db.UserEntity;
 import org.example.tula.users.domain.UserService;
@@ -148,7 +149,16 @@ public class AnimalService {
                 .filter(el -> el.getStatus() == StatusAnimal.DONT_TAKE ||
                         el.getStatus() == StatusAnimal.RESERVATION)
                 .toList();
-        if(subscriptionService.findByUserEmail(user.getEmail()).getActive() == Status.BLOCKED &&
+        SubscriptionEntity subscriptionEntity = subscriptionService.findByUserEmail(user.getEmail());
+
+        if(subscriptionEntity == null) {
+            if (animalEntities.size() >= 3) {
+                log.warn("Нельзя создать больше 3 активных питомцев сперва создайте подписку");
+                throw new RuntimeException("Нельзя создать больше 3 активных питомцев сперва создайте подписку");
+            }
+            return;
+        }
+        if(subscriptionEntity.getActive() == Status.BLOCKED &&
                 animalEntities.size() >= 3) {
             log.warn("Нельзя создать больше 3 активных питомцев");
             throw new RuntimeException("Нельзя создать больше 3 активных питомцев");
