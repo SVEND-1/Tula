@@ -11,13 +11,12 @@ public record Animal(
         String name,
         Integer age,
         String description,
-        String imageUrl,
         String breed,
         Gender gender,
         AnimalType animalType,
         StatusAnimal status,
         Long personTakeId,
-        String imageURL,
+        String imagePath,
         LocalDateTime createAt
 ) {
 }
