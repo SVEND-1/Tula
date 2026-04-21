@@ -5,6 +5,7 @@ import { getReviewsByOwnerId, addReview } from '../../api/reviewApi';
 import type { OwnerProfileResponse, Animal } from '../../api/ownerApi';
 import type { Review } from '../../api/reviewApi';
 import '../../style/OwnerProfile.scss';
+import QrCode from '../../components/qr/QrCode';
 
 export default function OwnerProfile() {
     const { id } = useParams();
@@ -73,12 +74,12 @@ export default function OwnerProfile() {
                 content: reviewText,
                 ownerId: Number(id)
             });
-            alert('✅ Отзыв успешно добавлен!');
+            alert(' Отзыв успешно добавлен!');
             setReviewText('');
             await loadReviews();
         } catch (error: any) {
             console.error('Ошибка добавления отзыва:', error);
-            alert('❌ Ошибка при добавлении отзыва');
+            alert(' Ошибка при добавлении отзыва');
         } finally {
             setIsSubmitting(false);
         }
@@ -159,7 +160,10 @@ export default function OwnerProfile() {
                 <div className="logo">Adoptly</div>
                 <div className="profile" onClick={() => navigate('/liked')}>Профиль</div>
             </header>
-
+            <div className="owner-section">
+                <h2 className="section-title">Поделиться</h2>
+                <QrCode ownerId={Number(id)} ownerName={profile.name} />
+            </div>
             <main className="owner-container">
                 <div className="owner-card">
                     <h1 className="owner-title">{profile.name}</h1>

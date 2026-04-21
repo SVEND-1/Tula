@@ -14,7 +14,6 @@ OWNER_API.interceptors.request.use((config) => {
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
-    console.log('Owner API запрос:', config.method?.toUpperCase(), config.url);
     return config;
 });
 
@@ -28,6 +27,7 @@ export interface Animal {
     animalType: 'DOG' | 'CAT';
     status: string;
 }
+
 export interface OwnerProfileResponse {
     name: string;
     animals: Animal[];
@@ -48,6 +48,47 @@ export const createOwnerAnimal = (data: CreateAnimalRequest) => {
 
 export const getOwnerProfile = (ownerId: number) => {
     return OWNER_API.get<OwnerProfileResponse>(`/owners/${ownerId}`);
+};
+
+export const uploadAnimalImage = async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const token = localStorage.getItem('token');
+
+    const response = await axios.post(
+        `http://localhost:8080/api/files/upload/pet-images`,
+        formData,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+    );
+
+    return response;
+};
+
+export const getAnimalImageUrl = async (objectPath: string): Promise<string> => {
+    const token = localStorage.getItem('token');
+
+    const response = await axios.get(
+        `http://localhost:8080/api/files/download/${objectPath}`,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            responseType: 'blob'
+        }
+    );
+
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(response.data);
+    });
 };
 
 export default OWNER_API;
