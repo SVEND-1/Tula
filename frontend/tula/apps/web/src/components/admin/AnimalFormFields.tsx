@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Gender, AnimalType, CreateAnimalRequest } from '../../types/animal/animal.types';
+import type { AnimalType, CreateAnimalRequest, Gender} from '../../types/animal/animal.types';
 
 interface Props {
   form: CreateAnimalRequest;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Gender, AnimalType, CreateAnimalRequest } from '../../types/animal/animal.types';
+import type { CreateAnimalRequest /*AnimalType, Gender*/ } from '../../types/animal/animal.types';
 import ImageUpload from './ImageUpload';
 import AnimalFormFields from './AnimalFormFields';
 

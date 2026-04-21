@@ -1,157 +1,51 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { getAnimalProfile } from '../../api/animalApi';
-import type { AnimalProfileResponse } from '../../types/animal/animal.types.ts';
+import { useAnimalDetails } from './useAnimalDetails';
+import AnimalHeader from '../../components/animal/AnimalHeader';
+import AnimalImage from '../../components/animal/AnimalImage';
+import AnimalInfo from '../../components/animal/AnimalInfo';
+import AnimalLoading from '../../components/animal/AnimalLoading';
+import AnimalError from '../../components/animal/AnimalError';
 import '../../style/AnimalDetails.scss';
 
 export default function AnimalDetails() {
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const [animal, setAnimal] = useState<AnimalProfileResponse | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [animalImages, setAnimalImages] = useState<Record<string, string>>({});
+    const {
+        animal,
+        isLoading,
+        navigate,
+        getAnimalImage,
+        getAgeText,
+        getGenderIcon,
+        getGenderText,
+        getTypeText,
+        getTypeIcon,
+        formatDate,
+    } = useAnimalDetails();
 
-    useEffect(() => {
-        loadAnimal();
-        loadImagesFromStorage();
-    }, [id]);
+    if (isLoading) return <AnimalLoading />;
+    if (!animal) return <AnimalError navigate={navigate} />;
 
-    const loadImagesFromStorage = () => {
-        const storedImages = localStorage.getItem('animalImages');
-        if (storedImages) {
-            const parsed = JSON.parse(storedImages);
-            setAnimalImages(parsed);
-        }
-    };
-
-    const loadAnimal = async () => {
-        setIsLoading(true);
-        try {
-            if (id) {
-                const response = await getAnimalProfile(Number(id));
-                setAnimal(response.data);
-                console.log('Загружено животное:', response.data);
-            }
-        } catch (error) {
-            console.error('Ошибка загрузки животного:', error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const getAnimalImage = () => {
-        if (!animal) return null;
-        const uniqueKey = `${animal.name}_${animal.breed}_${animal.age}`;
-        return animalImages[uniqueKey] || null;
-    };
-
-    const getAgeText = (age: number) => {
-        if (age === 1) return `${age} год`;
-        if (age < 5) return `${age} года`;
-        return `${age} лет`;
-    };
-
-    const getGenderIcon = (gender: string) => gender === 'MAN' ? '♂️' : '♀️';
-    const getGenderText = (gender: string) => gender === 'MAN' ? 'Мальчик' : 'Девочка';
-
-    const getTypeText = (type: string) => type === 'DOG' ? 'Собака' : 'Кошка';
-    const getTypeIcon = (type: string) => type === 'DOG' ? '🐕' : '🐈';
-
-    const formatDate = (dateString: string) => {
-        if (!dateString) return 'Не указано';
-        const date = new Date(dateString);
-        return date.toLocaleDateString('ru-RU', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
-    };
-
-    const image = getAnimalImage();
-
-    if (isLoading) {
-        return (
-            <div className="loading-container">
-                <div className="spinner"></div>
-                <p>Загрузка...</p>
-            </div>
-        );
-    }
-
-    if (!animal) {
-        return (
-            <div className="error-container">
-                <h2>Животное не найдено</h2>
-                <button onClick={() => navigate('/main')} className="back-btn">
-                    ← Вернуться
-                </button>
-            </div>
-        );
-    }
+    const image = getAnimalImage(animal);
 
     return (
         <>
-            <header className="animal-header">
-                <button onClick={() => navigate('/main')} className="back-btn">
-                    ← Назад
-                </button>
-                <div className="logo">Adoptly</div>
-                <div className="profile" onClick={() => navigate('/liked')}>Профиль</div>
-            </header>
+            <AnimalHeader navigate={navigate} />
 
             <main className="animal-details-container">
                 <div className="animal-card-details">
-                    <div className="animal-image-section">
-                        {image ? (
-                            <img
-                                src={image}
-                                alt={animal.name}
-                                className="main-image"
-                            />
-                        ) : (
-                            <div className="image-placeholder">
-                                <span className="animal-emoji">
-                                    {getTypeIcon(animal.animalType)}
-                                </span>
-                            </div>
-                        )}
-                    </div>
+                    <AnimalImage
+                        image={image}
+                        name={animal.name}
+                        typeIcon={getTypeIcon(animal.animalType)}
+                    />
 
-                    <div className="animal-info-section">
-                        <h1>
-                            {animal.name}
-                            <span className="gender-icon">{getGenderIcon(animal.gender)}</span>
-                        </h1>
-
-                        <div className="info-row">
-                            <span className="info-tag">{animal.breed}</span>
-                            <span className="info-tag">{getAgeText(animal.age)}</span>
-                            <span className="info-tag">{getGenderText(animal.gender)}</span>
-                            <span className="info-tag">{getTypeText(animal.animalType)}</span>
-                        </div>
-
-                        <div className="description-section">
-                            <p>{animal.description || 'Нет описания'}</p>
-                        </div>
-
-                        <div className="owner-info">
-                            <div className="owner-item">
-                                <span className="owner-label">👤 Хозяин</span>
-                                <span className="owner-value">{animal.ownerName || 'Не указан'}</span>
-                            </div>
-                            <div className="owner-item">
-                                <span className="owner-label">📅 Добавлен</span>
-                                <span className="owner-value">{formatDate(animal.createAt)}</span>
-                            </div>
-                        </div>
-
-                        <button
-                            onClick={() => animal.ownerId && navigate(`/owner/${animal.ownerId}`)}
-                            className="contact-btn"
-                        >
-                            Перейти к владельцу
-                        </button>
-                    </div>
+                    <AnimalInfo
+                        animal={animal}
+                        getAgeText={getAgeText}
+                        getGenderIcon={getGenderIcon}
+                        getGenderText={getGenderText}
+                        getTypeText={getTypeText}
+                        formatDate={formatDate}
+                        navigate={navigate}
+                    />
                 </div>
             </main>
         </>

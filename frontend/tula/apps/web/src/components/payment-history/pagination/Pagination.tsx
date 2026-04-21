@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../style/payment-history/Pagination.css';
+import '../../../style/payment-history/Pagination.css';
 
 interface PaginationProps {
     currentPage: number;

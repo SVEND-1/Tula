@@ -1,8 +1,8 @@
+import {useState} from "react";
 import { createAnimal } from '../../api/animalApi';
-import type { CreateAnimalRequest } from '../../types/animal/animal.types.ts';
+import type { CreateAnimalRequest } from '../../types/animal/animal.types';
 import CreateAnimalForm from '../../components/admin/CreateAnimalForm';
 import '../../style/AdminAnimals.scss';
-import { useState } from "react";
 
 export default function AdminAnimals() {
     const [isLoading, setIsLoading] = useState(false);
@@ -10,20 +10,20 @@ export default function AdminAnimals() {
     const handleCreateAnimal = async (data: CreateAnimalRequest, imageBase64?: string) => {
         setIsLoading(true);
         try {
-            const response = await createAnimal(data);
+            const res = await createAnimal(data);
 
-            if (response.data) {
-                const existingAnimals = localStorage.getItem('animalImages');
-                const images = existingAnimals ? JSON.parse(existingAnimals) : {};
-                images[response.data.id] = imageBase64 || '';
+            if (res.data) {
+                // Сохраняем картинку в localStorage по id животного
+                const stored = localStorage.getItem('animalImages');
+                const images = stored ? JSON.parse(stored) : {};
+                images[res.data.id] = imageBase64 || '';
                 localStorage.setItem('animalImages', JSON.stringify(images));
 
-                alert(`✅ Животное "${response.data.name}" успешно создано!`);
+                alert(`✅ Животное "${res.data.name}" успешно создано!`);
             }
         } catch (error: any) {
-            console.error('Ошибка:', error);
-            const errorMessage = error.response?.data?.message || 'Ошибка создания анкеты';
-            alert(`❌ ${errorMessage}`);
+            console.error('Ошибка создания животного:', error);
+            alert(`❌ ${error.response?.data?.message || 'Ошибка создания анкеты'}`);
         } finally {
             setIsLoading(false);
         }

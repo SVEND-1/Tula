@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
-import './QrCode.scss';
+import React, { useState } from "react";
+import { QrToggleButton } from "./QrToggleButton";
+import { QrModal } from "./QrModal";
+import { QrCodeBlock } from "./QrCodeBlock";
+import { QrActions } from "./QrActions";
+import { QrUrl } from "./QrUrl";
 
 interface QrCodeProps {
     ownerId: number;
     ownerName: string;
 }
 
-const QrCode: React.FC<QrCodeProps> = ({ ownerId, ownerName }) => {
+export const QrCode: React.FC<QrCodeProps> = ({ ownerId, ownerName }) => {
     const [showQr, setShowQr] = useState(false);
     const [copied, setCopied] = useState(false);
 
@@ -24,11 +27,11 @@ const QrCode: React.FC<QrCodeProps> = ({ ownerId, ownerName }) => {
             try {
                 await navigator.share({
                     title: `Приют "${ownerName}" на Adoptly`,
-                    text: 'Посмотрите животных из этого приюта!',
+                    text: "Посмотрите животных из этого приюта!",
                     url: profileUrl,
                 });
             } catch (error) {
-                console.log('Ошибка шаринга:', error);
+                console.log(error);
             }
         } else {
             handleCopyLink();
@@ -37,48 +40,28 @@ const QrCode: React.FC<QrCodeProps> = ({ ownerId, ownerName }) => {
 
     return (
         <div className="qr-container">
-            <button
-                className="qr-toggle-btn"
-                onClick={() => setShowQr(!showQr)}
-            >
-                {showQr ? '🔒 Скрыть QR-код' : '📱 Показать QR-код'}
-            </button>
+            <QrToggleButton
+                show={showQr}
+                onToggle={() => setShowQr(!showQr)}
+            />
 
             {showQr && (
-                <div className="qr-modal">
-                    <div className="qr-content">
-                        <button className="qr-close" onClick={() => setShowQr(false)}>×</button>
+                <QrModal onClose={() => setShowQr(false)}>
+                    <QrCodeBlock url={profileUrl} />
 
-                        <div className="qr-code">
-                            <QRCodeSVG
-                                value={profileUrl}
-                                size={200}
-                                bgColor="#ffffff"
-                                fgColor="#ff8c42"
-                                level="L"
-                                includeMargin={true}
-                            />
-                        </div>
+                    <p className="qr-text">
+                        Сканируйте QR-код, чтобы перейти к профилю приюта
+                    </p>
 
-                        <p className="qr-text">Сканируйте QR-код, чтобы перейти к профилю приюта</p>
+                    <QrActions
+                        copied={copied}
+                        onCopy={handleCopyLink}
+                        onShare={handleShare}
+                    />
 
-                        <div className="qr-actions">
-                            <button className="qr-copy-btn" onClick={handleCopyLink}>
-                                {copied ? ' Скопировано!' : ' Скопировать ссылку'}
-                            </button>
-                            <button className="qr-share-btn" onClick={handleShare}>
-                                 Поделиться
-                            </button>
-                        </div>
-
-                        <div className="qr-url">
-                            <span>{profileUrl}</span>
-                        </div>
-                    </div>
-                </div>
+                    <QrUrl url={profileUrl} />
+                </QrModal>
             )}
         </div>
     );
 };
-
-export default QrCode;

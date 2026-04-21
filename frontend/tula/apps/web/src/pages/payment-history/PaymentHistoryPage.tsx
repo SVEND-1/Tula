@@ -1,8 +1,8 @@
 import React from 'react';
 import { usePaymentHistory } from './usePaymentHistory';
 import PaymentList from '../../components/payment-history/PaymentList';
-import PaymentDetails from '../../components/payment-history/PaymentDetails';
-import Pagination from '../../components/payment-history/Pagination';
+import PaymentDetails from '../../components/payment-history/paymentDetails/PaymentDetails.tsx';
+import Pagination from '../../components/payment-history/pagination/Pagination.tsx';
 import CloseButton from '../../components/subscription/CloseButton';
 import '../../style/payment-history/PaymentHistoryPage.scss';
 

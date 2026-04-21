@@ -1,6 +1,6 @@
 
 import { useOwner } from './useOwner';
-import QrCode from '../../components/qr/QrCode';
+import {QrCode} from '../../components/qr/QrCode';
 import '../../style/OwnerProfile.scss';
 
 export default function OwnerProfile() {
