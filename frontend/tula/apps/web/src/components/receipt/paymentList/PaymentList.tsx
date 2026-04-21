@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Payment } from '../../types/receipt/receipt.types.ts';
+import type { Payment } from '../../../types/receipt/receipt.types.ts';
 import styles from './PaymentList.module.css';
 
 interface Props {

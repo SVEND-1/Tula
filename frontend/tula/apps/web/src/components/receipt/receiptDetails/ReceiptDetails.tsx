@@ -1,7 +1,7 @@
 import React from 'react';
-import type { Receipt } from '../../types/receipt/receipt.types.ts';
-import ReceiptItems from './ReceiptItems';
-import ReceiptFiscal from './ReceiptFiscal';
+import type { Receipt } from '../../../types/receipt/receipt.types.ts';
+import ReceiptItems from '../receiptItems/ReceiptItems.tsx';
+import ReceiptFiscal from '../receiptFiscal/ReceiptFiscal.tsx';
 import styles from './ReceiptDetails.module.css';
 
 interface Props {

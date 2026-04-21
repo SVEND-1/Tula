@@ -1,8 +1,8 @@
 import React from 'react';
 import { useReceipts } from './useReceipts';
-import PaymentList from '../../components/receipt/PaymentList';
-import ReceiptDetails from '../../components/receipt/ReceiptDetails';
-import EmptyReceipt from '../../components/receipt/EmptyReceipt';
+import PaymentList from '../../components/receipt/paymentList/PaymentList.tsx';
+import ReceiptDetails from '../../components/receipt/receiptDetails/ReceiptDetails.tsx';
+import EmptyReceipt from '../../components/receipt/emptyReceipt/EmptyReceipt.tsx';
 import styles from './ReceiptsPage.module.css';
 
 export const ReceiptsPage: React.FC = () => {
