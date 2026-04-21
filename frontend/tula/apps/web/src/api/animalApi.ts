@@ -9,7 +9,6 @@ const ANIMAL_API = axios.create({
     }
 });
 
-// Добавляем токен
 ANIMAL_API.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -17,6 +16,17 @@ ANIMAL_API.interceptors.request.use((config) => {
     }
     return config;
 });
+
+export interface AnimalPageResponse {
+    content: Animal[];
+    number: number;
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    first: boolean;
+    last: boolean;
+    empty: boolean;
+}
 
 export const createAnimal = (data: CreateAnimalRequest) => {
     const cleanData = {
@@ -31,8 +41,7 @@ export const createAnimal = (data: CreateAnimalRequest) => {
 };
 
 export const getAllAnimals = () => {
-    // Используем эндпоинт /api/animals (без /feed)
-    return ANIMAL_API.get<Animal[]>('');
+    return ANIMAL_API.get<AnimalPageResponse>('');
 };
 
 export const getAnimalById = (id: number) =>

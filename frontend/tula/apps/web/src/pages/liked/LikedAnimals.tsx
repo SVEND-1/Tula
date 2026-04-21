@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile, type UserProfileResponse, type Animal } from '../../api/userApi';
-import { createOwner, getOwnerAnimals, createOwnerAnimal } from '../../api/ownerApi';
+import { createOwner, getOwnerAnimals, createOwnerAnimal, uploadAnimalImage, getAnimalImageUrl } from '../../api/ownerApi';
 import type { CreateAnimalRequest } from '../../types/animal/animal.types';
 import CreateAnimalForm from '../../components/admin/CreateAnimalForm';
 import '../../style/LikedAnimals.scss';
@@ -36,7 +36,7 @@ export default function LikedAnimals() {
     const [profile, setProfile] = useState<UserProfileResponse | null>(null);
     const [likedAnimals, setLikedAnimals] = useState<LikedAnimal[]>([]);
     const [myAnimals, setMyAnimals] = useState<MyAnimal[]>([]);
-    const [animalImages, setAnimalImages] = useState<Record<string, string>>({});
+    const [animalImages, setAnimalImages] = useState<Record<number, string>>({});
     const [isLoading, setIsLoading] = useState(true);
     const [activeTab, setActiveTab] = useState<ActiveTab>('profile');
     const [isCreatingAnimal, setIsCreatingAnimal] = useState(false);
@@ -44,7 +44,7 @@ export default function LikedAnimals() {
     const [isCreatingShelter, setIsCreatingShelter] = useState(false);
     const [hasOwner, setHasOwner] = useState(false);
     const [ownerName, setOwnerName] = useState('');
-    const [ownerId] = useState<number | null>(null);
+    const [ownerId, setOwnerId] = useState<number | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -52,7 +52,6 @@ export default function LikedAnimals() {
         document.documentElement.style.overflow = 'auto';
 
         loadProfile();
-        loadImagesFromStorage();
         checkOwner();
         loadMyAnimals();
 
@@ -88,12 +87,14 @@ export default function LikedAnimals() {
         return () => clearInterval(interval);
     }, []);
 
-    const loadImagesFromStorage = () => {
-        const storedImages = localStorage.getItem('animalImages');
-        if (storedImages) {
-            const parsed = JSON.parse(storedImages);
-            setAnimalImages(parsed);
-            console.log('Загружены картинки из localStorage:', Object.keys(parsed));
+    const loadAnimalImage = async (animalId: number, objectPath: string) => {
+        try {
+            const imageUrl = await getAnimalImageUrl(objectPath);
+            if (imageUrl) {
+                setAnimalImages(prev => ({ ...prev, [animalId]: imageUrl }));
+            }
+        } catch (error) {
+            console.log(`Нет картинки для животного ${animalId}`);
         }
     };
 
@@ -102,6 +103,9 @@ export default function LikedAnimals() {
             const response = await getOwnerAnimals();
             if (response.data && response.status === 200) {
                 setHasOwner(true);
+                if (response.data.length > 0 && response.data[0].id) {
+                    setOwnerId(response.data[0].id);
+                }
                 if (profile?.name) {
                     setOwnerName(profile.name);
                 }
@@ -109,6 +113,7 @@ export default function LikedAnimals() {
         } catch (error) {
             setHasOwner(false);
             setOwnerName('');
+            setOwnerId(null);
         }
     };
 
@@ -164,10 +169,7 @@ export default function LikedAnimals() {
             }
         } catch (error: any) {
             console.error('Ошибка загрузки профиля:', error);
-            const storedLikes = localStorage.getItem('likedAnimals');
-            if (storedLikes) {
-                setLikedAnimals(JSON.parse(storedLikes));
-            }
+            setLikedAnimals([]);
         } finally {
             setIsLoading(false);
         }
@@ -179,13 +181,13 @@ export default function LikedAnimals() {
         try {
             await createOwner(shelterName);
             setOwnerName(shelterName);
-            alert(' Приют успешно создан! Теперь вы можете добавлять питомцев');
+            alert('✅ Приют успешно создан! Теперь вы можете добавлять питомцев');
             setShelterName('');
             setHasOwner(true);
             setActiveTab('mypets');
         } catch (error: any) {
             console.error('Ошибка создания приюта:', error);
-            alert(' Ошибка создания приюта');
+            alert('❌ Ошибка создания приюта');
         } finally {
             setIsCreatingShelter(false);
         }
@@ -195,46 +197,41 @@ export default function LikedAnimals() {
         setIsCreatingAnimal(true);
         try {
             const response = await createOwnerAnimal(data);
+            const newAnimal = response.data;
+            console.log('Животное создано:', newAnimal);
 
-            if (response.data) {
-                const existingAnimals = localStorage.getItem('animalImages');
-                const images = existingAnimals ? JSON.parse(existingAnimals) : {};
+            if (imageBase64 && newAnimal.id) {
+                const blob = await fetch(imageBase64).then(res => res.blob());
+                const file = new File([blob], `${newAnimal.name}.jpg`, { type: 'image/jpeg' });
 
-                images[response.data.id] = imageBase64 || '';
-                const uniqueKey = `${response.data.name}_${response.data.breed}_${response.data.age}`;
-                images[uniqueKey] = imageBase64 || '';
+                try {
+                    const uploadResponse = await uploadAnimalImage(file);
+                    const objectPath = uploadResponse.data as string;
+                    console.log('Картинка загружена в MinIO, путь:', objectPath);
 
-                localStorage.setItem('animalImages', JSON.stringify(images));
-                setAnimalImages(images);
-
-                alert(` Животное "${response.data.name}" успешно создано! Оно появится в ленте`);
-                await loadMyAnimals();
-                await loadProfile();
-                setActiveTab('mypets');
+                    await loadAnimalImage(newAnimal.id, objectPath);
+                } catch (imgError) {
+                    console.error('Ошибка загрузки картинки:', imgError);
+                    alert('⚠️ Животное создано, но картинку не удалось загрузить');
+                }
             }
+
+            alert(`✅ Животное "${newAnimal.name}" успешно создано!`);
+
+            await loadMyAnimals();
+            await loadProfile();
+            setActiveTab('mypets');
+
         } catch (error: any) {
             console.error('Ошибка:', error);
             const errorMessage = error.response?.data?.message || 'Ошибка создания анкеты';
-            alert(` ${errorMessage}`);
+            alert(`❌ ${errorMessage}`);
         } finally {
             setIsCreatingAnimal(false);
         }
     };
-
     const getAnimalImage = (animal: LikedAnimal | MyAnimal | Animal) => {
-        if (animalImages[animal.id]) {
-            return animalImages[animal.id];
-        }
-        const uniqueKey = `${animal.name}_${animal.breed}_${animal.age}`;
-        if (animalImages[uniqueKey]) {
-            return animalImages[uniqueKey];
-        }
-        for (const key in animalImages) {
-            if (key.includes(String(animal.id)) || key.includes(animal.name)) {
-                return animalImages[key];
-            }
-        }
-        return null;
+        return animalImages[animal.id] || null;
     };
 
     const uniqueLikedAnimals = useMemo(() => {
@@ -417,9 +414,9 @@ export default function LikedAnimals() {
                                                         <img src={getAnimalImage(animal)!} alt={animal.name} />
                                                     ) : (
                                                         <div className="image-placeholder">
-                                                        <span className="animal-emoji">
-                                                            {animal.animalType === 'DOG' ? '🐕' : '🐈'}
-                                                        </span>
+                                                            <span className="animal-emoji">
+                                                                {animal.animalType === 'DOG' ? '🐕' : '🐈'}
+                                                            </span>
                                                         </div>
                                                     )}
                                                 </div>
@@ -427,8 +424,8 @@ export default function LikedAnimals() {
                                                     <h4>{animal.name}</h4>
                                                     <p>{animal.breed} • {getAgeText(animal.age)}</p>
                                                     <span className={`status-badge ${getStatusClass(animal.status)}`}>
-                                                    {getStatusText(animal.status)}
-                                                </span>
+                                                        {getStatusText(animal.status)}
+                                                    </span>
                                                 </div>
                                             </div>
                                         ))}
@@ -497,14 +494,14 @@ export default function LikedAnimals() {
                                                     <img src={getAnimalImage(animal)!} alt={animal.name} />
                                                 ) : (
                                                     <div className="image-placeholder">
-                                                    <span className="animal-emoji">
-                                                        {animal.animalType === 'DOG' ? '🐕' : '🐈'}
-                                                    </span>
+                                                        <span className="animal-emoji">
+                                                            {animal.animalType === 'DOG' ? '🐕' : '🐈'}
+                                                        </span>
                                                     </div>
                                                 )}
                                                 <span className={`status-badge ${getStatusClass(animal.status)}`}>
-                                                {getStatusText(animal.status)}
-                                            </span>
+                                                    {getStatusText(animal.status)}
+                                                </span>
                                             </div>
                                             <div className="liked-card-info">
                                                 <h3>
@@ -547,7 +544,7 @@ export default function LikedAnimals() {
                                         </button>
 
                                         {ownerName && (
-                                            <QrCode ownerId={ownerId} ownerName={ownerName} />
+                                            <QrCode ownerId={ownerId || 0} ownerName={ownerName} />
                                         )}
                                     </div>
                                 </div>

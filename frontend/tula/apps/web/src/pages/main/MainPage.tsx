@@ -14,14 +14,12 @@ export default function MainPage() {
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [swipeClass, setSwipeClass] = useState('');
-    const [animalImages, setAnimalImages] = useState<Record<string, string>>({});
     const [isProcessing, setIsProcessing] = useState(false);
     const [showHint, setShowHint] = useState(true);
     const { playLikeSound, playDislikeSound } = useSound();
 
     useEffect(() => {
         loadAnimals();
-        loadImagesFromStorage();
 
         const timer = setTimeout(() => {
             setShowHint(false);
@@ -30,21 +28,14 @@ export default function MainPage() {
         return () => clearTimeout(timer);
     }, []);
 
-    const loadImagesFromStorage = () => {
-        const storedImages = localStorage.getItem('animalImages');
-        if (storedImages) {
-            const parsed = JSON.parse(storedImages);
-            setAnimalImages(parsed);
-        }
-    };
-
     const loadAnimals = async () => {
         setIsLoading(true);
         try {
             const response = await getAllAnimals();
+            console.log('Ответ от сервера:', response.data);
 
-            if (response.data && response.data.length > 0) {
-                setAnimals(response.data);
+            if (response.data && response.data.content && response.data.content.length > 0) {
+                setAnimals(response.data.content);
             } else {
                 setAnimals([]);
             }
@@ -75,29 +66,7 @@ export default function MainPage() {
         try {
             if (direction === 'right') {
                 playLikeSound();
-                const response = await sendLike(currentAnimal.id);
-                console.log('Ответ сервера:', response.data);
-
-                const storedLikes = localStorage.getItem('likedAnimals');
-                const likes = storedLikes ? JSON.parse(storedLikes) : [];
-                const alreadyLiked = likes.some((a: any) => a.id === currentAnimal.id);
-
-                if (!alreadyLiked) {
-                    likes.push({
-                        id: currentAnimal.id,
-                        name: currentAnimal.name,
-                        breed: currentAnimal.breed,
-                        age: currentAnimal.age,
-                        description: currentAnimal.description,
-                        gender: currentAnimal.gender,
-                        animalType: currentAnimal.animalType,
-                        status: currentAnimal.status,
-                        likedAt: new Date().toISOString()
-                    });
-                    localStorage.setItem('likedAnimals', JSON.stringify(likes));
-                    console.log('✅ Лайк сохранён в localStorage');
-                }
-
+                await sendLike(currentAnimal.id);
                 setToastMessage(`🐾 Вам понравился ${currentAnimal.name}!`);
                 setShowToast(true);
                 setTimeout(() => setShowToast(false), 2000);
@@ -138,9 +107,7 @@ export default function MainPage() {
     };
 
     const getAnimalImage = (animal: Animal) => {
-        const uniqueKey = `${animal.name}_${animal.breed}_${animal.age}`;
-        const image = animalImages[uniqueKey];
-        return image || null;
+        return animal.imageUrl || null;
     };
 
     if (isLoading) {
@@ -172,7 +139,6 @@ export default function MainPage() {
 
     return (
         <>
-            {/* Фоновые анимации */}
             <div className="bg-animation">
                 <div className="floating-shape shape-1"></div>
                 <div className="floating-shape shape-2"></div>
@@ -239,9 +205,9 @@ export default function MainPage() {
                                             <img src={nextImage} alt={nextAnimal.name} />
                                         ) : (
                                             <div className="image-placeholder">
-                                            <span className="animal-emoji">
-                                                {nextAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
-                                            </span>
+                                                <span className="animal-emoji">
+                                                    {nextAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
+                                                </span>
                                             </div>
                                         );
                                     })()}
@@ -262,17 +228,17 @@ export default function MainPage() {
                                         <img src={currentImage} alt={currentAnimal.name} />
                                     ) : (
                                         <div className="image-placeholder">
-                                        <span className="animal-emoji large">
-                                            {currentAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
-                                        </span>
+                                            <span className="animal-emoji large">
+                                                {currentAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
+                                            </span>
                                         </div>
                                     );
                                 })()}
                                 <span className={`status-badge ${currentAnimal.status?.toLowerCase() || 'available'}`}>
-                                {currentAnimal.status === 'AVAILABLE' ? 'Доступен' :
-                                    currentAnimal.status === 'TAKEN' ? 'Забран' :
-                                        currentAnimal.status === 'VERIFICATION' ? 'На проверке' : 'Доступен'}
-                            </span>
+                                    {currentAnimal.status === 'AVAILABLE' ? 'Доступен' :
+                                        currentAnimal.status === 'TAKEN' ? 'Забран' :
+                                            currentAnimal.status === 'VERIFICATION' ? 'На проверке' : 'Доступен'}
+                                </span>
                             </div>
                             <div className="card-info">
                                 <h2>
