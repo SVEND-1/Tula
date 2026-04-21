@@ -3,10 +3,14 @@ package org.example.tula.owners.api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
+import org.example.tula.animals.api.dto.response.AnimalImageResponse;
 import org.example.tula.animals.domain.AnimalImageService;
 import org.example.tula.animals.domain.AnimalService;
 import org.example.tula.owners.api.dto.response.OwnerProfileResponse;
@@ -40,10 +44,27 @@ public class OwnerController {
         return ResponseEntity.ok(ownerService.profile(id));
     }
 
-    @Operation(summary = "Создание питомца в приют")
-    @PostMapping("/animal")
-    public ResponseEntity<Animal> createAnimal(@RequestBody CreatedAnimalRequest request) {
-        return ResponseEntity.ok(animalService.save(request));
+    @Operation(summary = "Создание питомца в приют",
+            requestBody = @RequestBody(
+                    content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)
+            )
+    )
+    @PostMapping(value = "/animal", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Animal> createAnimal(
+            @RequestPart("animal") @Valid CreatedAnimalRequest request,
+
+            @Parameter(
+                    description = "Файл для загрузки",
+                    content = @Content(
+                            mediaType = MediaType.MULTIPART_FORM_DATA_VALUE,
+                            schema = @Schema(type = "string", format = "binary")
+                    )
+            )
+            @RequestPart(value = "image", required = false) MultipartFile file
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(animalService.save(request, file));
     }
 
     @Operation(summary = "Создание приюта")
@@ -66,7 +87,7 @@ public class OwnerController {
 
     @Operation(summary = "Выгрузка картинки питомца")
     @PatchMapping(value = "/animal-img/{animalId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> uploadAnimalImage(
+    public ResponseEntity<AnimalImageResponse> uploadAnimalImageById(
             @PathVariable("animalId") Long animalId,
             @Parameter(
                     description = "Файл для загрузки",
@@ -75,10 +96,9 @@ public class OwnerController {
             )
             @RequestPart("file") MultipartFile file
     ) {
-        String path = animalImageService.uploadImage(animalId, file);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(path);
+                .body(animalImageService.uploadImageById(animalId, file));
     }
 
     @Operation(summary = "Получить URL картинки питомца")
@@ -86,13 +106,9 @@ public class OwnerController {
     public ResponseEntity<String> getAnimalImageUrl(
             @PathVariable("animalId") Long animalId
     ) {
-        String url = animalImageService.getAnimalImageUrl(animalId);
-
-        if (url == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(url);
+                .body(animalImageService.getAnimalImageUrl(animalId));
     }
 
     @Operation(summary = "Удалить картинку питомца")
