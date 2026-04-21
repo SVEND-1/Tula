@@ -1,0 +1,86 @@
+.page {
+    display: flex;
+    height: 100vh;
+    background: var(--bg);
+    font-family: "Playpen Sans", cursive;
+}
+
+/* LEFT */
+.sidebar {
+    width: 320px;
+    background: var(--card-bg);
+    border-right: 1px solid var(--border);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.title {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item {
+    padding: 12px;
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.item:hover {
+    background: var(--accent-light);
+}
+
+.active {
+    border: 2px solid var(--accent);
+}
+
+.itemTitle {
+    font-weight: 600;
+}
+
+.itemSub {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* RIGHT */
+.main {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.header {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.subheader {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.itemRow {
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.empty {
+    color: var(--text-muted);
+    font-size: 18px;
+}

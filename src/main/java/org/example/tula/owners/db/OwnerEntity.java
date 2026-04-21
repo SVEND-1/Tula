@@ -1,0 +1,37 @@
+package org.example.tula.owners.db;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.example.tula.animals.db.AnimalEntity;
+import org.example.tula.reviews.db.ReviewEntity;
+import org.example.tula.users.db.UserEntity;
+
+import java.util.List;
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity
+@Table(name = "owners", indexes = {
+        @Index(name = "idx_owners_owner_id", columnList = "owner_id")
+})
+public class OwnerEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "name")
+    private String name;
+
+    @OneToOne
+    private UserEntity owner;
+
+    @OneToMany(mappedBy = "owner",cascade = CascadeType.ALL)
+    private List<AnimalEntity> animals;
+
+    @OneToMany(mappedBy = "reviewedBy",cascade = CascadeType.ALL)
+    private List<ReviewEntity> reviews;
+}

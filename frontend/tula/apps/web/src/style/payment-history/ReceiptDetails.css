@@ -1,0 +1,273 @@
+.receipt-details {
+    background: #ffffff;
+    border: 1px solid #ffe2cf;
+    border-radius: 14px;
+    padding: 24px;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+@media (max-width: 768px) {
+    .receipt-details {
+        padding: 18px;
+        border-radius: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .receipt-details {
+        padding: 15px;
+        border-radius: 10px;
+    }
+}
+
+.receipt-details--empty {
+    background: #ffffff;
+    border: 1px solid #ffe2cf;
+    text-align: center;
+}
+
+.receipt-details__empty-text {
+    color: #999;
+    margin-bottom: 16px;
+    font-family: "Playpen Sans", cursive;
+}
+
+@media (max-width: 768px) {
+    .receipt-details__empty-text {
+        font-size: 13px;
+        margin-bottom: 12px;
+    }
+}
+
+.receipt-details__create-button {
+    padding: 10px 24px;
+    background: linear-gradient(135deg, #ff7a3d, #ffd2b3);
+    border: none;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+    font-family: "Playpen Sans", cursive;
+    transition: all 0.2s;
+}
+
+@media (max-width: 768px) {
+    .receipt-details__create-button {
+        padding: 8px 20px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .receipt-details__create-button {
+        padding: 6px 16px;
+        font-size: 12px;
+    }
+}
+
+.receipt-details__create-button:hover {
+    transform: scale(1.02);
+}
+
+.receipt-details__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #ffe2cf;
+}
+
+@media (max-width: 768px) {
+    .receipt-details__header {
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+    }
+}
+
+.receipt-details__id {
+    font-weight: 600;
+    color: #333;
+    font-family: "Playpen Sans", cursive;
+}
+
+@media (max-width: 768px) {
+    .receipt-details__id {
+        font-size: 13px;
+    }
+}
+
+.receipt-details__status {
+    color: #ff7a3d;
+    font-family: "Playpen Sans", cursive;
+}
+
+@media (max-width: 768px) {
+    .receipt-details__status {
+        font-size: 13px;
+    }
+}
+
+.receipt-details__section {
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .receipt-details__section {
+        margin-bottom: 15px;
+    }
+}
+
+.receipt-details__section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 12px;
+    font-family: "Playpen Sans", cursive;
+}
+
+@media (max-width: 768px) {
+    .receipt-details__section-title {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+}
+
+.receipt-details__row {
+    display: flex;
+    padding: 8px 0;
+    border-bottom: 1px dashed #ffe2cf;
+}
+
+@media (max-width: 768px) {
+    .receipt-details__row {
+        padding: 6px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .receipt-details__row {
+        flex-direction: column;
+        gap: 4px;
+    }
+}
+
+.receipt-details__row:last-child {
+    border-bottom: none;
+}
+
+.receipt-details__label {
+    width: 160px;
+    font-size: 13px;
+    color: #888;
+    font-family: "Playpen Sans", cursive;
+}
+
+@media (max-width: 768px) {
+    .receipt-details__label {
+        width: 140px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .receipt-details__label {
+        width: 100%;
+    }
+}
+
+.receipt-details__value {
+    flex: 1;
+    font-size: 13px;
+    color: #333;
+    font-family: "Playpen Sans", cursive;
+}
+
+@media (max-width: 768px) {
+    .receipt-details__value {
+        font-size: 12px;
+    }
+}
+
+.receipt-details__item {
+    background: #fff3eb;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ffe2cf;
+}
+
+@media (max-width: 768px) {
+    .receipt-details__item {
+        padding: 10px;
+    }
+}
+
+.receipt-details__item:hover {
+    border-color: #ff7a3d;
+}
+
+.receipt-details__item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media (max-width: 480px) {
+    .receipt-details__item-row {
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
+}
+
+.receipt-details__item-row--details {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #888;
+}
+
+.receipt-details__item-name {
+    font-weight: 500;
+    color: #333;
+    font-family: "Playpen Sans", cursive;
+}
+
+.receipt-details__item-price {
+    font-weight: 600;
+    background: linear-gradient(135deg, #ff7a3d, #ffd2b3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: "Playpen Sans", cursive;
+}
+
+.receipt-details__settlement {
+    background: #fff3eb;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ffe2cf;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 480px) {
+    .receipt-details__settlement {
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
+}
+
+.receipt-details__settlement-type {
+    color: #666;
+    font-family: "Playpen Sans", cursive;
+}
+
+.receipt-details__settlement-amount {
+    font-weight: 500;
+    color: #333;
+    font-family: "Playpen Sans", cursive;
+}
