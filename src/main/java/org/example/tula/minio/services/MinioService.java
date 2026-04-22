@@ -87,13 +87,20 @@ public class MinioService {
     /**
      * Generates presigned url.
      *
-     * @param moduleKey     key from properties (e.g., "user-avatars")
-     * @param objectPath    full path of the object in the bucket
-     * @param expirySeconds how much url will be live
+     * @param moduleKey  key from properties (e.g., "user-avatars")
+     * @param objectPath full path of the object in the bucket
      * @return String URL of the file
      */
-    public String generatePresignedUrl(String moduleKey, String objectPath, int expirySeconds) {
+    public String generatePresignedUrl(String moduleKey, String objectPath) {
         String bucketName = minioConfig.getBuckets().get(moduleKey);
+        if (bucketName == null) {
+            throw new MinioServiceException("Unknown module key: " + moduleKey);
+        }
+
+        Integer expirySeconds = minioConfig.getExpiry().get(moduleKey);
+        if (expirySeconds == null) {
+            expirySeconds = minioConfig.getDefaultExpirySeconds();
+        }
 
         try {
             return minioClient.getPresignedObjectUrl(
