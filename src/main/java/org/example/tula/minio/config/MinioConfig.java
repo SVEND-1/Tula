@@ -17,8 +17,10 @@ public class MinioConfig {
     private String accessKey;
     private String secretKey;
     private boolean secure;
+    private Integer defaultExpirySeconds = 3600;
 
     private Map<String, String> buckets = new HashMap<>();
+    private Map<String, Integer> expiry = new HashMap<>();
 
     @Bean
     public MinioClient minioClient() {

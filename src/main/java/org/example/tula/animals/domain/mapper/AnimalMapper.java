@@ -1,6 +1,7 @@
 package org.example.tula.animals.domain.mapper;
 
 import org.example.tula.animals.api.dto.Animal;
+import org.example.tula.animals.api.dto.response.AnimalImageResponse;
 import org.example.tula.animals.api.dto.response.AnimalPageResponse;
 import org.example.tula.animals.api.dto.response.AnimalProfileResponse;
 import org.example.tula.animals.db.AnimalEntity;
@@ -20,6 +21,8 @@ public interface AnimalMapper {
     @Mapping(source = "owner.name", target = "ownerName")
     @Mapping(source = "owner.id", target = "ownerId")
     AnimalProfileResponse convertEntityToProfile(AnimalEntity animal);
+
+    AnimalImageResponse convertImageEntityToResponse(AnimalEntity entity);
 
     default AnimalPageResponse toPageResponse(Page<Animal> animalPage) {
         return new AnimalPageResponse(
