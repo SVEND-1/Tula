@@ -1,6 +1,9 @@
 
 import { useOwner } from './useOwner';
-import {QrCode} from '../../components/qr/QrCode';
+import { QrCode } from '../../components/qr/QrCode';
+import AnimalsSlider from '../../components/owner/AnimalsSlider';
+import ReviewForm from '../../components/owner/ReviewForm';
+import ReviewList from '../../components/owner/ReviewList';
 import '../../style/OwnerProfile.scss';
 
 export default function OwnerProfile() {
@@ -59,81 +62,30 @@ export default function OwnerProfile() {
                 <div className="owner-card">
                     <h1 className="owner-title">{profile.name}</h1>
 
-                    {/* Слайдер животных */}
-                    <div className="owner-section">
-                        <h2 className="section-title">Животные</h2>
-                        <div className="animals-slider">
-                            <button
-                                className={`slider-arrow left ${showLeftArrow ? 'visible' : ''}`}
-                                onClick={scrollLeft}
-                            >‹</button>
+                    <AnimalsSlider
+                        animals={profile.animals ?? []}
+                        showLeftArrow={showLeftArrow}
+                        showRightArrow={showRightArrow}
+                        getAnimalImage={getAnimalImage}
+                        onAnimalClick={(id) => navigate(`/animal/${id}`)}
+                        onScrollLeft={scrollLeft}
+                        onScrollRight={scrollRight}
+                    />
 
-                            <div className="animals-track" id="animals-track">
-                                {profile.animals?.map((animal) => (
-                                    <div
-                                        key={animal.id}
-                                        className="animal-item"
-                                        onClick={() => navigate(`/animal/${animal.id}`)}
-                                    >
-                                        <div className="animal-image">
-                                            {getAnimalImage(animal) ? (
-                                                <img src={getAnimalImage(animal)!} alt={animal.name} />
-                                            ) : (
-                                                <div className="image-placeholder">
-                                                    <span className="animal-emoji">
-                                                        {animal.animalType === 'DOG' ? '🐕' : '🐈'}
-                                                    </span>
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="animal-name">{animal.name}</div>
-                                        <div className="animal-breed">{animal.breed}</div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <button
-                                className={`slider-arrow right ${showRightArrow ? 'visible' : ''}`}
-                                onClick={scrollRight}
-                            >›</button>
-                        </div>
-                    </div>
-
-                    {/* Отзывы */}
                     <div className="owner-section">
                         <h2 className="section-title">Отзывы</h2>
 
-                        <div className="add-review-form">
-                            <h3>Оставить отзыв</h3>
-                            <form onSubmit={handleAddReview}>
-                                <textarea
-                                    value={reviewText}
-                                    onChange={(e) => setReviewText(e.target.value)}
-                                    placeholder="Поделитесь своим опытом общения с приютом..."
-                                    rows={4}
-                                    disabled={isSubmitting}
-                                />
-                                <button type="submit" className="submit-review-btn" disabled={isSubmitting}>
-                                    {isSubmitting ? 'Отправка...' : '✍️ Оставить отзыв'}
-                                </button>
-                            </form>
-                        </div>
+                        <ReviewForm
+                            value={reviewText}
+                            isSubmitting={isSubmitting}
+                            onChange={setReviewText}
+                            onSubmit={handleAddReview}
+                        />
 
-                        <div className="reviews-list">
-                            {reviews.length > 0 ? (
-                                reviews.map((review) => (
-                                    <div key={review.id} className="review-item">
-                                        <div className="review-content">{review.content}</div>
-                                        <div className="review-date">{formatDate(review.createdAt)}</div>
-                                    </div>
-                                ))
-                            ) : (
-                                <div className="empty-reviews">
-                                    <p>Нет отзывов</p>
-                                    <span>Будьте первым, кто оставит отзыв!</span>
-                                </div>
-                            )}
-                        </div>
+                        <ReviewList
+                            reviews={reviews}
+                            formatDate={formatDate}
+                        />
                     </div>
                 </div>
             </main>

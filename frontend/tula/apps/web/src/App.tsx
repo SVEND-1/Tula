@@ -12,9 +12,9 @@ import Chat from "./pages/chat/Chat.tsx";
 import AnimalDetails from "./pages/animal/AnimalDetails";
 import OwnerProfile from "./pages/owner/OwnerProfile";
 import PaymentHistoryPage from "./pages/payment-history/PaymentHistoryPage";
-import SubscriptionPage from "./pages/subscription/SubscriptionPage";
+import SubscriptionPage from "./pages/subscription/subscription/SubscriptionPage.tsx";
 import {ReceiptsPage} from "./pages/receipt/ReceiptsPage.tsx";
-import SuccessSubscriptionPage from "./components/subscription/SuccessSubscriptionPage.tsx";
+import SuccessSubscriptionPage from "./pages/subscription/succesSubscription/SuccessSubscriptionPage.tsx";
 
 function App() {
     return (

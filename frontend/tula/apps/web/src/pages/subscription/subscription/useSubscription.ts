@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createPayment, getPayments, getSubscription } from '../../api/paymentApi';
-import { createSubscription } from '../../api/subscriptionApi';
-import type { SubscriptionDetailResponse } from '../../api/paymentApi';
+import { createPayment, getPayments, getSubscription } from '../../../api/paymentApi.ts';
+import { createSubscription } from '../../../api/subscriptionApi.ts';
+import type { SubscriptionDetailResponse } from '../../../api/paymentApi.ts';
 
 const PAYMENT_CHECK_INTERVAL = 3000;
 const PAYMENT_CHECK_TIMEOUT = 300000;
