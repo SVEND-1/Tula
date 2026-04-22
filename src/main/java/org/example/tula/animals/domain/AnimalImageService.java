@@ -101,6 +101,10 @@ public class AnimalImageService {
 
     public String uploadImageForNewForm(MultipartFile file) {
         log.info("New avatar for animal");
+        if (file.isEmpty()) {
+            return null;
+        }
+
         return minioService.uploadFile(MODULE_KEY, file);
     }
 }

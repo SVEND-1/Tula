@@ -3,7 +3,7 @@ package org.example.tula.owners.api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Encoding;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -44,26 +44,22 @@ public class OwnerController {
         return ResponseEntity.ok(ownerService.profile(id));
     }
 
-    @Operation(summary = "Создание питомца в приют",
-            requestBody = @RequestBody(
-                    content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)
-            )
-    )
+    @Operation(summary = "Создание питомца в приют")
     @PostMapping(value = "/animal", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequestBody(content = @Content(
+            mediaType = MediaType.MULTIPART_FORM_DATA_VALUE,
+            encoding = {
+                    @Encoding(name = "animal", contentType = MediaType.APPLICATION_JSON_VALUE),
+                    @Encoding(name = "image", contentType = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+            }
+    ))
     public ResponseEntity<Animal> createAnimal(
+            @Parameter(description = "Данные питомца в JSON", required = true)
             @RequestPart("animal") @Valid CreatedAnimalRequest request,
-
-            @Parameter(
-                    description = "Файл для загрузки",
-                    content = @Content(
-                            mediaType = MediaType.MULTIPART_FORM_DATA_VALUE,
-                            schema = @Schema(type = "string", format = "binary")
-                    )
-            )
+            @Parameter(description = "Изображение питомца", required = false)
             @RequestPart(value = "image", required = false) MultipartFile file
     ) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .body(animalService.save(request, file));
     }
 
