@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getAnimalProfile } from '../../api/animalApi';
+import { getAnimalProfile, getAnimalImageUrl } from '../../api/animalApi';
 import type { AnimalProfileResponse } from '../../types/animal/animal.types.ts';
 import '../../style/AnimalDetails.scss';
 
@@ -9,20 +9,11 @@ export default function AnimalDetails() {
     const navigate = useNavigate();
     const [animal, setAnimal] = useState<AnimalProfileResponse | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [animalImages, setAnimalImages] = useState<Record<string, string>>({});
+    const [animalImage, setAnimalImage] = useState<string | null>(null);
 
     useEffect(() => {
         loadAnimal();
-        loadImagesFromStorage();
     }, [id]);
-
-    const loadImagesFromStorage = () => {
-        const storedImages = localStorage.getItem('animalImages');
-        if (storedImages) {
-            const parsed = JSON.parse(storedImages);
-            setAnimalImages(parsed);
-        }
-    };
 
     const loadAnimal = async () => {
         setIsLoading(true);
@@ -30,6 +21,13 @@ export default function AnimalDetails() {
             if (id) {
                 const response = await getAnimalProfile(Number(id));
                 setAnimal(response.data);
+
+                // Загружаем картинку
+                const imageUrl = await getAnimalImageUrl(Number(id));
+                if (imageUrl) {
+                    setAnimalImage(imageUrl);
+                }
+
                 console.log('Загружено животное:', response.data);
             }
         } catch (error) {
@@ -37,12 +35,6 @@ export default function AnimalDetails() {
         } finally {
             setIsLoading(false);
         }
-    };
-
-    const getAnimalImage = () => {
-        if (!animal) return null;
-        const uniqueKey = `${animal.name}_${animal.breed}_${animal.age}`;
-        return animalImages[uniqueKey] || null;
     };
 
     const getAgeText = (age: number) => {
@@ -66,8 +58,6 @@ export default function AnimalDetails() {
             year: 'numeric'
         });
     };
-
-    const image = getAnimalImage();
 
     if (isLoading) {
         return (
@@ -102,9 +92,9 @@ export default function AnimalDetails() {
             <main className="animal-details-container">
                 <div className="animal-card-details">
                     <div className="animal-image-section">
-                        {image ? (
+                        {animalImage ? (
                             <img
-                                src={image}
+                                src={animalImage}
                                 alt={animal.name}
                                 className="main-image"
                             />

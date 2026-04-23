@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllAnimals } from '../../api/animalApi';
+import { getAllAnimals, getAnimalImageUrl } from '../../api/animalApi';
 import { sendLike, sendDislike } from '../../api/likeApi';
 import type { Animal } from '../../types/animal/animal.types.ts';
 import '../../style/MainPage.scss';
@@ -9,6 +9,7 @@ import { useSound } from '../../hooks/useSound';
 export default function MainPage() {
     const navigate = useNavigate();
     const [animals, setAnimals] = useState<Animal[]>([]);
+    const [animalImages, setAnimalImages] = useState<Record<number, string>>({});
     const [isLoading, setIsLoading] = useState(true);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [showToast, setShowToast] = useState(false);
@@ -35,7 +36,11 @@ export default function MainPage() {
             console.log('Ответ от сервера:', response.data);
 
             if (response.data && response.data.content && response.data.content.length > 0) {
-                setAnimals(response.data.content);
+                const animalsList = response.data.content;
+                setAnimals(animalsList);
+
+                // Загружаем картинки для всех животных
+                await loadAnimalImages(animalsList);
             } else {
                 setAnimals([]);
             }
@@ -46,6 +51,20 @@ export default function MainPage() {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    // Загрузка картинок для всех животных
+    const loadAnimalImages = async (animalsList: Animal[]) => {
+        const imagesMap: Record<number, string> = {};
+
+        for (const animal of animalsList) {
+            const imageUrl = await getAnimalImageUrl(animal.id);
+            if (imageUrl) {
+                imagesMap[animal.id] = imageUrl;
+            }
+        }
+
+        setAnimalImages(imagesMap);
     };
 
     const getGenderIcon = (gender: string) => gender === 'MAN' ? '♂️' : '♀️';
@@ -107,7 +126,7 @@ export default function MainPage() {
     };
 
     const getAnimalImage = (animal: Animal) => {
-        return animal.imageUrl || null;
+        return animalImages[animal.id] || null;
     };
 
     if (isLoading) {
