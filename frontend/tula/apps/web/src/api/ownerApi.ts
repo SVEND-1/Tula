@@ -70,25 +70,25 @@ export const uploadAnimalImage = async (file: File) => {
     return response;
 };
 
-export const getAnimalImageUrl = async (objectPath: string): Promise<string> => {
-    const token = localStorage.getItem('token');
-
-    const response = await axios.get(
-        `http://localhost:8080/api/files/download/${objectPath}`,
-        {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
-            responseType: 'blob'
+export const getAnimalImageUrl = async (animalId: number): Promise<string | null> => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(
+            `http://localhost:8080/api/owners/animal-img/${animalId}`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        );
+        return response.data;
+    } catch (error: any) {
+        if (error.response?.status === 500) {
+            console.log(`Картинка не найдена для животного ${animalId}`);
+            return null;
         }
-    );
-
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.onerror = reject;
-        reader.readAsDataURL(response.data);
-    });
+        console.error(`Ошибка при получении картинки:`, error);
+        return null;
+    }
 };
-
 export default OWNER_API;

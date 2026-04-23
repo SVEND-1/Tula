@@ -1,11 +1,12 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile, type UserProfileResponse, type Animal } from '../../api/userApi';
-import { createOwner, getOwnerAnimals, createOwnerAnimal, uploadAnimalImage, getAnimalImageUrl } from '../../api/ownerApi';
+import { createOwner, getOwnerAnimals } from '../../api/ownerApi';
 import type { CreateAnimalRequest } from '../../types/animal/animal.types';
 import CreateAnimalForm from '../../components/admin/CreateAnimalForm';
 import '../../style/LikedAnimals.scss';
 import QrCode from '../../components/qr/QrCode';
+import { createAnimalWithImage, getAnimalImageUrl } from "../../api/animalApi";
 
 interface LikedAnimal {
     id: number;
@@ -87,23 +88,12 @@ export default function LikedAnimals() {
         return () => clearInterval(interval);
     }, []);
 
-    const loadAnimalImage = async (animalId: number, objectPath: string) => {
-        try {
-            const imageUrl = await getAnimalImageUrl(objectPath);
-            if (imageUrl) {
-                setAnimalImages(prev => ({ ...prev, [animalId]: imageUrl }));
-            }
-        } catch (error) {
-            console.log(`Нет картинки для животного ${animalId}`);
-        }
-    };
-
     const checkOwner = async () => {
         try {
             const response = await getOwnerAnimals();
             if (response.data && response.status === 200) {
                 setHasOwner(true);
-                if (response.data.length > 0 && response.data[0].id) {
+                if (response.data.length > 0 && response.data[0]?.id) {
                     setOwnerId(response.data[0].id);
                 }
                 if (profile?.name) {
@@ -132,7 +122,14 @@ export default function LikedAnimals() {
                     status: animal.status
                 }));
                 setMyAnimals(animals);
-                console.log('Загружены мои животные:', animals);
+
+                // Загружаем картинки для каждого животного
+                for (const animal of animals) {
+                    const imageUrl = await getAnimalImageUrl(animal.id);
+                    if (imageUrl) {
+                        setAnimalImages(prev => ({ ...prev, [animal.id]: imageUrl }));
+                    }
+                }
             } else {
                 setMyAnimals([]);
             }
@@ -193,43 +190,60 @@ export default function LikedAnimals() {
         }
     };
 
-    const handleCreateAnimal = async (data: CreateAnimalRequest, imageBase64?: string) => {
+    const handleCreateAnimal = async (data: CreateAnimalRequest, imageFile?: File) => {
         setIsCreatingAnimal(true);
         try {
-            const response = await createOwnerAnimal(data);
+            console.log('=== ОТПРАВКА ДАННЫХ ===');
+            console.log('Данные животного:', data);
+            console.log('Файл картинки:', imageFile?.name);
+
+            const response = await createAnimalWithImage(data, imageFile);
+
+            console.log('=== ОТВЕТ СЕРВЕРА ===');
+            console.log('Статус:', response.status);
+            console.log('Данные:', response.data);
+
             const newAnimal = response.data;
-            console.log('Животное создано:', newAnimal);
 
-            if (imageBase64 && newAnimal.id) {
-                const blob = await fetch(imageBase64).then(res => res.blob());
-                const file = new File([blob], `${newAnimal.name}.jpg`, { type: 'image/jpeg' });
+            if (newAnimal && newAnimal.id) {
+                console.log(`Животное создано с ID: ${newAnimal.id}`);
 
-                try {
-                    const uploadResponse = await uploadAnimalImage(file);
-                    const objectPath = uploadResponse.data as string;
-                    console.log('Картинка загружена в MinIO, путь:', objectPath);
-
-                    await loadAnimalImage(newAnimal.id, objectPath);
-                } catch (imgError) {
-                    console.error('Ошибка загрузки картинки:', imgError);
-                    alert('⚠️ Животное создано, но картинку не удалось загрузить');
+                if (imageFile) {
+                    const imageUrl = await getAnimalImageUrl(newAnimal.id);
+                    if (imageUrl) {
+                        console.log('URL картинки получен:', imageUrl);
+                        setAnimalImages(prev => ({ ...prev, [newAnimal.id]: imageUrl }));
+                    }
                 }
+
+                alert(`✅ Животное "${newAnimal.name}" успешно создано!`);
+
+                await loadMyAnimals();
+                await loadProfile();
+                setActiveTab('mypets');
+            } else {
+                console.error('Некорректный ответ от сервера:', newAnimal);
+                alert('❌ Сервер вернул некорректный ответ');
             }
 
-            alert(`✅ Животное "${newAnimal.name}" успешно создано!`);
-
-            await loadMyAnimals();
-            await loadProfile();
-            setActiveTab('mypets');
-
         } catch (error: any) {
-            console.error('Ошибка:', error);
-            const errorMessage = error.response?.data?.message || 'Ошибка создания анкеты';
+            console.error('=== ОШИБКА ===');
+            console.error('Статус ошибки:', error.response?.status);
+            console.error('Тело ошибки:', error.response?.data);
+
+            let errorMessage = 'Ошибка создания анкеты';
+            if (error.response?.data?.message) {
+                errorMessage = error.response.data.message;
+            } else if (error.response?.data?.errorMessage) {
+                errorMessage = error.response.data.errorMessage;
+            }
+
             alert(`❌ ${errorMessage}`);
         } finally {
             setIsCreatingAnimal(false);
         }
     };
+
     const getAnimalImage = (animal: LikedAnimal | MyAnimal | Animal) => {
         return animalImages[animal.id] || null;
     };

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import type { Gender, AnimalType, CreateAnimalRequest } from '../../types/animal/animal.types.ts';
 
 interface CreateAnimalFormProps {
-    onSubmit: (data: CreateAnimalRequest, imageBase64?: string) => Promise<void>;
+    onSubmit: (data: CreateAnimalRequest, imageFile?: File) => Promise<void>;
     isLoading: boolean;
 }
 
@@ -16,7 +16,7 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
         animalType: 'DOG',
     });
     const [imagePreview, setImagePreview] = useState<string>('');
-    const [imageBase64, setImageBase64] = useState<string>('');
+    const [imageFile, setImageFile] = useState<File | null>(null);
     const [fileName, setFileName] = useState<string>('');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -26,11 +26,11 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
         const file = e.target.files?.[0];
         if (file) {
             setFileName(file.name);
+            setImageFile(file);
+
             const reader = new FileReader();
             reader.onloadend = () => {
-                const base64String = reader.result as string;
-                setImagePreview(base64String);
-                setImageBase64(base64String);
+                setImagePreview(reader.result as string);
             };
             reader.readAsDataURL(file);
         }
@@ -38,7 +38,7 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        await onSubmit(form, imageBase64);
+        await onSubmit(form, imageFile || undefined);
 
         setForm({
             name: '',
@@ -49,7 +49,7 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
             animalType: 'DOG',
         });
         setImagePreview('');
-        setImageBase64('');
+        setImageFile(null);
         setFileName('');
         if (fileInputRef.current) {
             fileInputRef.current.value = '';
