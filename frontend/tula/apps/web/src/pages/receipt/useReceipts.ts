@@ -1,40 +1,65 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from 'react';
+import type { Payment, Receipt } from '../../types/receipt/receipt.types';
+import { getPayments, createPayment } from '../../api/paymentApi';
+import { getReceipt } from '../../api/receiptApi';
 
 export function useReceipts(page = 0, size = 10) {
-    const [receipts, setReceipts] = useState([]);
-    const [selectedReceipt, setSelectedReceipt] = useState(null);
+    const [payments, setPayments] = useState<Payment[]>([]);
+    const [selectedReceipt, setSelectedReceipt] = useState<Receipt | null>(null);
     const [loading, setLoading] = useState(false);
+    const [receiptLoading, setReceiptLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const fetchReceipts = async () => {
-        setLoading(true);
-        const res = await axios.get("/api/payments", {
-            params: { page, size },
-        });
-        setReceipts(res.data.content); // зависит от PaymentPageResponse
-        setLoading(false);
+    // Загружаем список платежей при монтировании / смене страницы
+    const fetchPayments = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            const res = await getPayments(page, size);
+            setPayments(res.data.content ?? []);
+        } catch {
+            setError('Не удалось загрузить историю платежей');
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const fetchReceiptById = async (id: string) => {
-        const res = await axios.get(`/api/payments/${id}`);
-        setSelectedReceipt(res.data);
+    // Загружаем чек по paymentId при клике на платёж в списке
+    const fetchReceiptById = async (paymentId: string) => {
+        try {
+            setReceiptLoading(true);
+            setError(null);
+            const res = await getReceipt(paymentId);
+            setSelectedReceipt(res.data);
+        } catch {
+            setError('Не удалось загрузить чек');
+        } finally {
+            setReceiptLoading(false);
+        }
     };
 
-    const createPayment = async () => {
-        const res = await axios.post("/api/payments");
-        return res.data; // PaymentCreateResponse
+    // Создать платёж — редиректит на ЮКассу
+    const handleCreatePayment = async () => {
+        try {
+            const res = await createPayment();
+            window.location.href = res.data.urlPay;
+        } catch {
+            setError('Не удалось создать платёж');
+        }
     };
 
     useEffect(() => {
-        fetchReceipts();
+        fetchPayments();
     }, [page, size]);
 
     return {
-        receipts,
+        payments,           // список платежей — именно payments, не receipts
         selectedReceipt,
         loading,
+        receiptLoading,
+        error,
         fetchReceiptById,
-        createPayment,
-        refetch: fetchReceipts,
+        createPayment: handleCreatePayment,
+        refetch: fetchPayments,
     };
 }
