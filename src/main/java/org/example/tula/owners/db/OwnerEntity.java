@@ -3,9 +3,11 @@ package org.example.tula.owners.db;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.tula.animals.db.AnimalEntity;
+import org.example.tula.follow.db.FollowEntity;
 import org.example.tula.reviews.db.ReviewEntity;
 import org.example.tula.users.db.UserEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -23,8 +25,8 @@ public class OwnerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "owner_name")
+    private String ownerName;
 
     @OneToOne
     private UserEntity owner;
@@ -34,4 +36,7 @@ public class OwnerEntity {
 
     @OneToMany(mappedBy = "reviewedBy",cascade = CascadeType.ALL)
     private List<ReviewEntity> reviews;
+
+    @OneToMany(mappedBy = "owner")
+    private List<FollowEntity> follows = new ArrayList<>();
 }

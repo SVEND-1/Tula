@@ -18,7 +18,7 @@ public interface AnimalMapper {
 
     List<Animal> convertEntityListToDTO(List<AnimalEntity> entityList);
 
-    @Mapping(source = "owner.name", target = "ownerName")
+    @Mapping(source = "owner.ownerName", target = "ownerName")
     @Mapping(source = "owner.id", target = "ownerId")
     AnimalProfileResponse convertEntityToProfile(AnimalEntity animal);
 

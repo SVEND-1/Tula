@@ -2,6 +2,7 @@ package org.example.tula.users.db;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.tula.follow.db.FollowEntity;
 import org.example.tula.likes.db.LikeEntity;
 import org.example.tula.owners.db.OwnerEntity;
 import org.example.tula.payments.db.PaymentEntity;
@@ -42,15 +43,18 @@ public class UserEntity {
     private OwnerEntity owner;
 
     @OneToMany(mappedBy = "reviewer")
-    private List<ReviewEntity> reviews;
+    private List<ReviewEntity> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<LikeEntity> likes;
+    private List<LikeEntity> likes = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<PaymentEntity> payments = new ArrayList<>();
 
     @OneToOne(mappedBy = "user")
     private SubscriptionEntity subscription;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<FollowEntity> follows = new ArrayList<>();
 
 }

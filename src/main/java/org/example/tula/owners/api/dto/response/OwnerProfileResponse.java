@@ -6,7 +6,7 @@ import org.example.tula.reviews.api.dto.Review;
 import java.util.List;
 
 public record OwnerProfileResponse(
-        String name,
+        String ownerName,
         List<Animal> animals,
         List<Review> reviews
 ) {
