@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.api.dto.request.AnimalFeedFilter;
+import org.example.tula.animals.api.dto.request.AnimalUpdateRequest;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
 import org.example.tula.animals.api.dto.response.AnimalPageResponse;
 import org.example.tula.animals.api.dto.response.AnimalProfileResponse;
@@ -13,17 +14,16 @@ import org.example.tula.animals.db.AnimalRepository;
 import org.example.tula.animals.db.StatusAnimal;
 import org.example.tula.animals.domain.mapper.AnimalMapper;
 import org.example.tula.likes.api.dto.response.TakeResponse;
-import org.example.tula.minio.services.MinioService;
 import org.example.tula.subscriptions.db.Status;
 import org.example.tula.subscriptions.domain.SubscriptionService;
 import org.example.tula.users.db.UserEntity;
 import org.example.tula.users.domain.UserService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,13 +36,15 @@ public class AnimalService {
     private final AnimalMapper animalMapper;
     private final UserService userService;
     private final SubscriptionService subscriptionService;
+    private final AnimalImageService animalImageService;
 
     public AnimalService(AnimalRepository animalRepository, AnimalMapper animalMapper,
-                         @Lazy UserService userService, SubscriptionService subscriptionService) {
+                         @Lazy UserService userService, SubscriptionService subscriptionService, AnimalImageService animalImageService) {
         this.animalRepository = animalRepository;
         this.animalMapper = animalMapper;
         this.userService = userService;
         this.subscriptionService = subscriptionService;
+        this.animalImageService = animalImageService;
     }
 
     public AnimalPageResponse petFeed(AnimalFeedFilter filter) {
@@ -102,7 +104,7 @@ public class AnimalService {
     }
 
     @Transactional
-    public Animal save(CreatedAnimalRequest request) {
+    public Animal save(CreatedAnimalRequest request, MultipartFile file) {
         try {
             UserEntity user = userService.getCurrentUser();
             if (user.getOwner() == null) {
@@ -110,7 +112,7 @@ public class AnimalService {
                 throw new RuntimeException("Для начало создайте питомник");
             }
 
-//            isValid(user);
+            String imagePath = animalImageService.uploadImageForNewForm(file);
 
             AnimalEntity animalEntity = animalRepository.save(
                     AnimalEntity.builder()
@@ -122,6 +124,7 @@ public class AnimalService {
                             .animalType(request.animalType())
                             .status(StatusAnimal.DONT_TAKE)
                             .owner(userService.getCurrentUser().getOwner())
+                            .imagePath(imagePath)
                             .createAt(LocalDateTime.now())
                             .build()
             );
@@ -132,25 +135,40 @@ public class AnimalService {
         }
     }
 
-    public Animal update(Long id, AnimalEntity updatedEntity) {
+    @Transactional
+    public Animal update(Long id, AnimalUpdateRequest request) {
         try {
             AnimalEntity animal = findAnimalEntityById(id);
             AnimalEntity animalEntity = animalRepository.save(
                     AnimalEntity.builder()
                             .id(animal.getId())
-                            .name(animal.getName())
-                            .age(updatedEntity.getAge())
-                            .description(updatedEntity.getDescription())
+                            .name(request.name())
+                            .age(request.age())
+                            .description(request.description())
                             .breed(animal.getBreed())
                             .gender(animal.getGender())
                             .animalType(animal.getAnimalType())
-                            .status(updatedEntity.getStatus())
-                            .personTakeId(updatedEntity.getPersonTakeId())
+                            .status(animal.getStatus())
+                            .personTakeId(animal.getPersonTakeId())
                             .owner(animal.getOwner())
                             .createAt(animal.getCreateAt())
                             .build()
             );
             return animalMapper.convertEntityToDTO(animalEntity);
+        } catch (Exception e) {
+            log.error("Не удалось обновить питомца");
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public Animal updateTake(Long id,StatusAnimal status,Long userId) {
+        try {
+            AnimalEntity animal = findAnimalEntityById(id);
+            if (userId != null)
+                animal.setPersonTakeId(userId);
+            animal.setStatus(status);
+
+            return animalMapper.convertEntityToDTO(animal);
         } catch (Exception e) {
             log.error("Не удалось обновить питомца");
             throw new RuntimeException(e.getMessage());
@@ -180,6 +198,15 @@ public class AnimalService {
         }
     }
 
+    public String deleteAnimal(Long id) {
+        try {//TODO ДОБАВИТЬ УДАЛЕНИЕ КАРТИНОК АВТО и в ТРАНЗАКЦИЮ ДОДЕЛАТЬ
+            animalRepository.deleteById(id);
+            return "Успешно";
+        }catch (Exception e) {
+            log.error("Не получилось удалить питомца с id={}", id, e);
+            throw new RuntimeException(e);
+        }
+    }
 
     private void isValid(UserEntity user) {
         List<AnimalEntity> animalEntities = user.getOwner().getAnimals()

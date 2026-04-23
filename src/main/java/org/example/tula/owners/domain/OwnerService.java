@@ -108,8 +108,7 @@ public class OwnerService {
 
             likeService.setStatusAnswer(like.id(), StatusAnswer.REJECT);
 
-            animal.setStatus(StatusAnimal.DONT_TAKE);
-            animalService.update(like.animal().id(), animal);
+            animalService.updateTake(like.animal().id(), StatusAnimal.DONT_TAKE,null);
 
             notifyStatus(like.user().id(), animal.getName(), NotifyType.REJECT);
 
@@ -133,9 +132,7 @@ public class OwnerService {
 
             likeService.setStatusAnswer(like.id(), StatusAnswer.CONFIRM);
 
-            animal.setPersonTakeId(like.user().id());
-            animal.setStatus(StatusAnimal.TAKE);
-            animalService.update(like.animal().id(), animal);
+            animalService.updateTake(like.animal().id(), StatusAnimal.TAKE,like.user().id());
 
             notifyStatus(like.user().id(), animal.getName(),NotifyType.CONFIRM);
 
