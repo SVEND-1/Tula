@@ -66,7 +66,7 @@ public class OwnerService {
             List<Animal> animals = animalMapper.convertEntityListToDTO(owner.getAnimals());
             List<Review> reviews = reviewMapper.convertEntityListToDTO(owner.getReviews());
             return new OwnerProfileResponse(
-                    owner.getName(),
+                    owner.getOwnerName(),
                     animals,
                     reviews
             );
@@ -82,13 +82,25 @@ public class OwnerService {
             UserEntity user = userService.getCurrentUser();
 
             ownerRepository.save(OwnerEntity.builder()
-                    .name(name)
+                    .ownerName(name)
                     .owner(user)
                     .build());
 
             return "Успешно";
         }catch (Exception e) {
             log.error("Не удалось создать приют ,ex={}" ,e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String setOwnerName(Long ownerId, String ownerName){
+        try {
+            OwnerEntity updated = findByIdEntity(ownerId);
+            updated.setOwnerName(ownerName);
+            ownerRepository.save(updated);
+            return "Успешно";
+        }catch (Exception e){
+            log.error("Не получилось обновить имя приюта ,ex={}",e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -119,6 +131,7 @@ public class OwnerService {
         }
     }
 
+    @Transactional
     public String confirmTakenAnimal(Long likeId) {
         try {
             isValidCreatedOwner();

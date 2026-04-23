@@ -98,6 +98,16 @@ public class LikeService {
         }
     }
 
+    public String deleted(Long id) {
+        try {
+            likeRepository.deleteById(id);
+            return "Успешно";
+        }catch (Exception e){
+            log.error("Не получилось удалить лайк ,ex={}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
     private void notify(TakeResponse takeResponse) {
         Map<String, String> params = Map.of(
                 "animalName", takeResponse.animalName(),

@@ -65,8 +65,8 @@ public class OwnerController {
     }
 
     @Operation(summary = "Обновление данных питомца")
-    @PutMapping("/{id}")
-    public ResponseEntity<Animal> updateAnimal(Long id, @RequestBody AnimalUpdateRequest request) {
+    @PutMapping("/animal/{id}")
+    public ResponseEntity<Animal> updateAnimal(@PathVariable Long id, @RequestBody AnimalUpdateRequest request) {
         return ResponseEntity.ok(animalService.update(id,request));
     }
 
@@ -74,6 +74,15 @@ public class OwnerController {
     @PostMapping()
     public ResponseEntity<String> createOwner(@RequestParam String name) {
         return ResponseEntity.ok(ownerService.createOwner(name));
+    }
+
+    @Operation(summary = "Обновление название приюта")
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateOwner(
+            @PathVariable Long id,
+            @RequestParam String name
+    ) {
+        return ResponseEntity.ok(ownerService.setOwnerName(id,name));
     }
 
     @Operation(summary = "Отклонить заявку на взятие питомца")

@@ -23,8 +23,8 @@ public class OwnerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "owner_name")
+    private String ownerName;
 
     @OneToOne
     private UserEntity owner;
