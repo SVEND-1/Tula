@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.tula.animals.api.dto.Animal;
+import org.example.tula.animals.api.dto.request.AnimalUpdateRequest;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
 import org.example.tula.animals.api.dto.response.AnimalImageResponse;
 import org.example.tula.animals.domain.AnimalImageService;
@@ -63,10 +64,25 @@ public class OwnerController {
                 .body(animalService.save(request, file));
     }
 
+    @Operation(summary = "Обновление данных питомца")
+    @PutMapping("/animal/{id}")
+    public ResponseEntity<Animal> updateAnimal(@PathVariable Long id, @RequestBody AnimalUpdateRequest request) {
+        return ResponseEntity.ok(animalService.update(id,request));
+    }
+
     @Operation(summary = "Создание приюта")
     @PostMapping()
     public ResponseEntity<String> createOwner(@RequestParam String name) {
         return ResponseEntity.ok(ownerService.createOwner(name));
+    }
+
+    @Operation(summary = "Обновление название приюта")
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateOwner(
+            @PathVariable Long id,
+            @RequestParam String name
+    ) {
+        return ResponseEntity.ok(ownerService.setOwnerName(id,name));
     }
 
     @Operation(summary = "Отклонить заявку на взятие питомца")
@@ -118,4 +134,9 @@ public class OwnerController {
                 .build();
     }
 
+    @Operation(summary = "Удаление питомца")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAnimal(@PathVariable Long id) {
+        return ResponseEntity.ok(animalService.deleteAnimal(id));
+    }
 }

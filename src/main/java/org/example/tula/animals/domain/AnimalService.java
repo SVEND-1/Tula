@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.api.dto.request.AnimalFeedFilter;
+import org.example.tula.animals.api.dto.request.AnimalUpdateRequest;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
 import org.example.tula.animals.api.dto.response.AnimalPageResponse;
 import org.example.tula.animals.api.dto.response.AnimalProfileResponse;
@@ -134,25 +135,40 @@ public class AnimalService {
         }
     }
 
-    public Animal update(Long id, AnimalEntity updatedEntity) {
+    @Transactional
+    public Animal update(Long id, AnimalUpdateRequest request) {
         try {
             AnimalEntity animal = findAnimalEntityById(id);
             AnimalEntity animalEntity = animalRepository.save(
                     AnimalEntity.builder()
                             .id(animal.getId())
-                            .name(animal.getName())
-                            .age(updatedEntity.getAge())
-                            .description(updatedEntity.getDescription())
+                            .name(request.name())
+                            .age(request.age())
+                            .description(request.description())
                             .breed(animal.getBreed())
                             .gender(animal.getGender())
                             .animalType(animal.getAnimalType())
-                            .status(updatedEntity.getStatus())
-                            .personTakeId(updatedEntity.getPersonTakeId())
+                            .status(animal.getStatus())
+                            .personTakeId(animal.getPersonTakeId())
                             .owner(animal.getOwner())
                             .createAt(animal.getCreateAt())
                             .build()
             );
             return animalMapper.convertEntityToDTO(animalEntity);
+        } catch (Exception e) {
+            log.error("Не удалось обновить питомца");
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public Animal updateTake(Long id,StatusAnimal status,Long userId) {
+        try {
+            AnimalEntity animal = findAnimalEntityById(id);
+            if (userId != null)
+                animal.setPersonTakeId(userId);
+            animal.setStatus(status);
+
+            return animalMapper.convertEntityToDTO(animal);
         } catch (Exception e) {
             log.error("Не удалось обновить питомца");
             throw new RuntimeException(e.getMessage());
@@ -182,6 +198,15 @@ public class AnimalService {
         }
     }
 
+    public String deleteAnimal(Long id) {
+        try {//TODO ДОБАВИТЬ УДАЛЕНИЕ КАРТИНОК АВТО и в ТРАНЗАКЦИЮ ДОДЕЛАТЬ
+            animalRepository.deleteById(id);
+            return "Успешно";
+        }catch (Exception e) {
+            log.error("Не получилось удалить питомца с id={}", id, e);
+            throw new RuntimeException(e);
+        }
+    }
 
     private void isValid(UserEntity user) {
         List<AnimalEntity> animalEntities = user.getOwner().getAnimals()
