@@ -6,8 +6,13 @@ import lombok.RequiredArgsConstructor;
 import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.api.dto.request.AnimalFeedFilter;
 import org.example.tula.animals.api.dto.request.CreatedAnimalRequest;
+import org.example.tula.animals.api.dto.response.AnimalPageResponse;
 import org.example.tula.animals.api.dto.response.AnimalProfileResponse;
 import org.example.tula.animals.domain.AnimalService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +28,7 @@ public class AnimalController {
 
     @Operation(summary = "Получение питомцев с фильтром")
     @GetMapping
-    public ResponseEntity<List<Animal>> getAllAnimalsFiltered(@ModelAttribute AnimalFeedFilter filter) {
+    public ResponseEntity<AnimalPageResponse> getAllAnimalsFiltered(@ModelAttribute AnimalFeedFilter filter) {
         return ResponseEntity.ok(animalService.petFeed(filter));
     }
 

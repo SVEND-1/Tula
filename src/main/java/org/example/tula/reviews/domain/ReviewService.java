@@ -31,7 +31,7 @@ public class ReviewService {
     }
 
     public ReviewEntity findByIdEntity(Long id) {
-        return reviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
+        return reviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Отзыв не найден"));
 
     }
 
