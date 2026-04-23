@@ -6,7 +6,7 @@ import type { CreateAnimalRequest } from '../../types/animal/animal.types';
 import CreateAnimalForm from '../../components/admin/CreateAnimalForm';
 import '../../style/LikedAnimals.scss';
 import QrCode from '../../components/qr/QrCode';
-import { createAnimalWithImage, getAnimalImageUrl } from "../../api/animalApi";
+import { createAnimalWithImage, getAnimalImageUrl, deleteAnimal } from "../../api/animalApi";
 
 interface LikedAnimal {
     id: number;
@@ -123,7 +123,6 @@ export default function LikedAnimals() {
                 }));
                 setMyAnimals(animals);
 
-                // Загружаем картинки для каждого животного
                 for (const animal of animals) {
                     const imageUrl = await getAnimalImageUrl(animal.id);
                     if (imageUrl) {
@@ -241,6 +240,27 @@ export default function LikedAnimals() {
             alert(`❌ ${errorMessage}`);
         } finally {
             setIsCreatingAnimal(false);
+        }
+    };
+
+    const handleDeleteAnimal = async (animalId: number, animalName: string) => {
+        if (confirm(`Вы уверены, что хотите удалить животное "${animalName}"?`)) {
+            try {
+                await deleteAnimal(animalId);
+                alert('✅ Животное удалено!');
+
+                setAnimalImages(prev => {
+                    const newState = { ...prev };
+                    delete newState[animalId];
+                    return newState;
+                });
+
+                await loadMyAnimals();
+                await loadProfile();
+            } catch (error: any) {
+                console.error('Ошибка удаления:', error);
+                alert('❌ Ошибка при удалении');
+            }
         }
     };
 
@@ -440,6 +460,15 @@ export default function LikedAnimals() {
                                                     <span className={`status-badge ${getStatusClass(animal.status)}`}>
                                                         {getStatusText(animal.status)}
                                                     </span>
+                                                    <div className="pet-card-actions">
+                                                        <button
+                                                            onClick={() => handleDeleteAnimal(animal.id, animal.name)}
+                                                            className="delete-btn"
+                                                            title="Удалить"
+                                                        >
+                                                            🗑️
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         ))}

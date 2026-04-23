@@ -38,18 +38,8 @@ export const getAnimalById = (id: number) =>
 export const getAnimalProfile = (id: number) =>
     ANIMAL_API.get(`/profile/${id}`);
 
-// ========== СОЗДАНИЕ ЖИВОТНОГО С КАРТИНКОЙ ==========
 export const createAnimalWithImage = async (data: CreateAnimalRequest, imageFile?: File) => {
     const token = localStorage.getItem('token');
-
-    console.log('=== ДИАГНОСТИКА ТОКЕНА ===');
-    console.log('Токен существует:', !!token);
-    console.log('Токен (первые 30 символов):', token ? token.substring(0, 30) + '...' : 'ОТСУТСТВУЕТ');
-
-    if (!token) {
-        alert('Сессия истекла. Пожалуйста, войдите заново.');
-        throw new Error('Нет токена авторизации');
-    }
 
     const formData = new FormData();
 
@@ -62,57 +52,28 @@ export const createAnimalWithImage = async (data: CreateAnimalRequest, imageFile
         animalType: data.animalType
     };
 
-    const animalBlob = new Blob([JSON.stringify(animalData)], { type: 'application/json' });
-    formData.append('animal', animalBlob);
+    formData.append('animal', JSON.stringify(animalData));
 
     if (imageFile) {
-        const imageBlob = new Blob([imageFile], { type: imageFile.type });
-        formData.append('image', imageBlob);
+        formData.append('image', imageFile);
     }
 
-    // Для отладки: посмотрим содержимое FormData
-    for (let pair of formData.entries()) {
-        console.log('FormData entry:', pair[0], pair[1] instanceof Blob ? `Blob (${pair[1].size} bytes, type: ${pair[1].type})` : pair[1]);
-    }
-
-    console.log('=== ОТПРАВКА ЗАПРОСА ===');
-    console.log('URL:', 'http://localhost:8080/api/owners/animal');
-    console.log('Authorization header:', `Bearer ${token.substring(0, 30)}...`);
-
-    try {
-        const response = await axios({
-            method: 'post',
-            url: 'http://localhost:8080/api/owners/animal',
-            data: formData,
+    const response = await axios.post(
+        'http://localhost:8080/api/owners/animal',
+        formData,
+        {
             headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'multipart/form-data'
-            },
-            withCredentials: true
-        });
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
 
-        console.log('=== ОТВЕТ ===');
-        console.log('Статус:', response.status);
-        console.log('Данные:', response.data);
-
-        return response;
-    } catch (error: any) {
-        console.error('=== ОШИБКА ЗАПРОСА ===');
-        console.error('Статус:', error.response?.status);
-        console.error('Данные ошибки:', error.response?.data);
-        console.error('Заголовки запроса:', error.config?.headers);
-        throw error;
-    }
+    return response;
 };
 
-// Получение URL картинки животного
 export const getAnimalImageUrl = async (animalId: number): Promise<string | null> => {
     try {
         const token = localStorage.getItem('token');
-        if (!token) {
-            return null;
-        }
-
         const response = await axios.get(
             `http://localhost:8080/api/owners/animal-img/${animalId}`,
             {
@@ -130,6 +91,21 @@ export const getAnimalImageUrl = async (animalId: number): Promise<string | null
         console.error(`Ошибка при получении картинки:`, error);
         return null;
     }
+};
+
+export const deleteAnimal = async (id: number) => {
+    const token = localStorage.getItem('token');
+
+    const response = await axios.delete(
+        `http://localhost:8080/api/owners/${id}`,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+
+    return response;
 };
 
 export default ANIMAL_API;
