@@ -50,4 +50,5 @@ export const deleteLike = (animalId: number) => {
     return LIKE_API.delete(`/${animalId}`);
 };
 
+
 export default LIKE_API;

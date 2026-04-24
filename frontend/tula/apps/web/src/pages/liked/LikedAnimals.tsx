@@ -7,7 +7,8 @@ import CreateAnimalForm from '../../components/admin/CreateAnimalForm';
 import '../../style/LikedAnimals.scss';
 import QrCode from '../../components/qr/QrCode';
 import { createAnimalWithImage, getAnimalImageUrl, deleteAnimal } from "../../api/animalApi";
-import { deleteLike } from "../../api/likeApi";
+import { deleteLike, getUserLikes } from "../../api/likeApi";
+import { getFollowersCount } from "../../api/followApi";
 
 interface LikedAnimal {
     id: number;
@@ -49,7 +50,9 @@ export default function LikedAnimals() {
     const [hasOwner, setHasOwner] = useState(false);
     const [ownerName, setOwnerName] = useState('');
     const [ownerId, setOwnerId] = useState<number | null>(null);
+    const [followersCount, setFollowersCount] = useState<number | null>(null);
     const [currentFact, setCurrentFact] = useState(0);
+    const [isDeleting, setIsDeleting] = useState<number | null>(null);
 
     const facts = [
         { text: "🐱 Кошки спят около 16 часов в день", emoji: "😴" },
@@ -77,8 +80,6 @@ export default function LikedAnimals() {
         }, 8000);
 
         loadProfile();
-        checkOwner();
-        loadMyAnimals();
 
         return () => {
             document.body.style.overflow = '';
@@ -87,17 +88,39 @@ export default function LikedAnimals() {
         };
     }, []);
 
+    useEffect(() => {
+        if (ownerId) {
+            loadFollowersCount();
+        }
+    }, [ownerId]);
+
+    const loadFollowersCount = async () => {
+        if (!ownerId) return;
+        try {
+            const response = await getFollowersCount(ownerId);
+            console.log('Количество подписчиков:', response.data);
+            setFollowersCount(response.data);
+        } catch (error) {
+            console.error('Ошибка загрузки подписчиков:', error);
+            setFollowersCount(null);
+        }
+    };
+
     const checkOwner = async () => {
         try {
             const response = await getOwnerAnimals();
-            if (response.data && response.status === 200) {
+            if (response.data && response.status === 200 && response.data.length > 0) {
                 setHasOwner(true);
-                if (response.data.length > 0 && response.data[0]?.id) {
+                if (response.data[0]?.id) {
                     setOwnerId(response.data[0].id);
                 }
                 if (profile?.name) {
                     setOwnerName(profile.name);
                 }
+            } else {
+                setHasOwner(false);
+                setOwnerName('');
+                setOwnerId(null);
             }
         } catch (error) {
             setHasOwner(false);
@@ -145,7 +168,7 @@ export default function LikedAnimals() {
             console.log('Профиль из бэкенда:', response.data);
 
             if (response.data.likeAnimals && response.data.likeAnimals.length > 0) {
-                const likes = response.data.likeAnimals.map(animal => ({
+                const likes = response.data.likeAnimals.map((animal: any) => ({
                     id: animal.id,
                     name: animal.name,
                     breed: animal.breed,
@@ -171,6 +194,10 @@ export default function LikedAnimals() {
             if (response.data.name) {
                 setOwnerName(response.data.name);
             }
+
+            await checkOwner();
+            await loadMyAnimals();
+
         } catch (error: any) {
             console.error('Ошибка загрузки профиля:', error);
             setLikedAnimals([]);
@@ -189,6 +216,8 @@ export default function LikedAnimals() {
             setShelterName('');
             setHasOwner(true);
             setActiveTab('mypets');
+            await loadMyAnimals();
+            await loadProfile();
         } catch (error: any) {
             console.error('Ошибка создания приюта:', error);
             alert('❌ Ошибка создания приюта');
@@ -200,25 +229,13 @@ export default function LikedAnimals() {
     const handleCreateAnimal = async (data: CreateAnimalRequest, imageFile?: File) => {
         setIsCreatingAnimal(true);
         try {
-            console.log('=== ОТПРАВКА ДАННЫХ ===');
-            console.log('Данные животного:', data);
-            console.log('Файл картинки:', imageFile?.name);
-
             const response = await createAnimalWithImage(data, imageFile);
-
-            console.log('=== ОТВЕТ СЕРВЕРА ===');
-            console.log('Статус:', response.status);
-            console.log('Данные:', response.data);
-
             const newAnimal = response.data;
 
             if (newAnimal && newAnimal.id) {
-                console.log(`Животное создано с ID: ${newAnimal.id}`);
-
                 if (imageFile) {
                     const imageUrl = await getAnimalImageUrl(newAnimal.id);
                     if (imageUrl) {
-                        console.log('URL картинки получен:', imageUrl);
                         setAnimalImages(prev => ({ ...prev, [newAnimal.id]: imageUrl }));
                     }
                 }
@@ -229,31 +246,39 @@ export default function LikedAnimals() {
                 await loadProfile();
                 setActiveTab('mypets');
             } else {
-                console.error('Некорректный ответ от сервера:', newAnimal);
                 alert('❌ Сервер вернул некорректный ответ');
             }
 
         } catch (error: any) {
-            console.error('=== ОШИБКА ===');
-            console.error('Статус ошибки:', error.response?.status);
-            console.error('Тело ошибки:', error.response?.data);
-
+            console.error('Ошибка создания:', error);
             let errorMessage = 'Ошибка создания анкеты';
             if (error.response?.data?.message) {
                 errorMessage = error.response.data.message;
-            } else if (error.response?.data?.errorMessage) {
-                errorMessage = error.response.data.errorMessage;
             }
-
             alert(`❌ ${errorMessage}`);
         } finally {
             setIsCreatingAnimal(false);
         }
     };
 
+    // Удаление питомца с предварительным удалением всех лайков
     const handleDeleteAnimal = async (animalId: number, animalName: string) => {
         if (confirm(`Вы уверены, что хотите удалить животное "${animalName}"?`)) {
+            setIsDeleting(animalId);
             try {
+                // Сначала удаляем все лайки пользователя на это животное
+                try {
+                    const userLikes = await getUserLikes();
+                    const likeToDelete = userLikes.data.find(like => like.animalId === animalId);
+                    if (likeToDelete) {
+                        await deleteLike(animalId);
+                        console.log(`Лайк на животное ${animalId} удалён`);
+                    }
+                } catch (likeError) {
+                    console.log('Не удалось удалить лайк, продолжаем удаление животного');
+                }
+
+                // Теперь удаляем животное
                 await deleteAnimal(animalId);
                 alert('✅ Животное удалено!');
 
@@ -267,12 +292,17 @@ export default function LikedAnimals() {
                 await loadProfile();
             } catch (error: any) {
                 console.error('Ошибка удаления:', error);
-                alert('❌ Ошибка при удалении');
+                if (error.response?.status === 500) {
+                    alert('❌ Невозможно удалить питомца. Возможно, есть связанные данные. Попробуйте позже или обратитесь к администратору.');
+                } else {
+                    alert(`❌ Ошибка при удалении: ${error.response?.data?.message || error.message}`);
+                }
+            } finally {
+                setIsDeleting(null);
             }
         }
     };
 
-    // ========== УДАЛЕНИЕ ЛАЙКА ==========
     const handleDeleteLike = async (animalId: number, animalName: string) => {
         if (confirm(`Вы уверены, что хотите удалить лайк у "${animalName}"?`)) {
             try {
@@ -327,20 +357,27 @@ export default function LikedAnimals() {
 
     const getStatusText = (status: string) => {
         switch(status) {
-            case 'AVAILABLE': return 'Доступен';
-            case 'TAKEN': return 'Забран';
-            case 'VERIFICATION': return 'На проверке';
+            case 'DONT_TAKE': return 'Доступен';
+            case 'TAKE': return 'Забран';
+            case 'RESERVATION': return 'Резерв';
             default: return status;
         }
     };
 
     const getStatusClass = (status: string) => {
         switch(status) {
-            case 'AVAILABLE': return 'available';
-            case 'TAKEN': return 'taken';
-            case 'VERIFICATION': return 'verification';
+            case 'DONT_TAKE': return 'available';
+            case 'TAKE': return 'taken';
+            case 'RESERVATION': return 'reservation';
             default: return '';
         }
+    };
+
+    const getFollowersText = (count: number | null) => {
+        if (count === null) return '-- подписчиков';
+        if (count === 1) return `${count} подписчик`;
+        if (count >= 2 && count <= 4) return `${count} подписчика`;
+        return `${count} подписчиков`;
     };
 
     if (isLoading) {
@@ -380,6 +417,12 @@ export default function LikedAnimals() {
                         </div>
                         <h3>{profile?.name || 'Пользователь'}</h3>
                         <p>{profile?.email || 'email@example.com'}</p>
+                        {hasOwner && ownerId && (
+                            <div className="followers-info">
+                                <span className="followers-icon">👥</span>
+                                <span className="followers-count-display">{getFollowersText(followersCount)}</span>
+                            </div>
+                        )}
                     </div>
 
                     <nav className="sidebar-nav">
@@ -425,6 +468,12 @@ export default function LikedAnimals() {
                                     <div className="stat-number">{profile?.myReview?.length || 0}</div>
                                     <div className="stat-label">Моих отзывов</div>
                                 </div>
+                                {hasOwner && (
+                                    <div className="stat-card">
+                                        <div className="stat-number">{followersCount !== null ? followersCount : '--'}</div>
+                                        <div className="stat-label">Подписчиков</div>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="fun-facts-section">
@@ -490,8 +539,9 @@ export default function LikedAnimals() {
                                                             onClick={() => handleDeleteAnimal(animal.id, animal.name)}
                                                             className="delete-btn"
                                                             title="Удалить"
+                                                            disabled={isDeleting === animal.id}
                                                         >
-                                                            🗑️
+                                                            {isDeleting === animal.id ? '⏳' : '🗑️'}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -521,7 +571,7 @@ export default function LikedAnimals() {
                             <h2>Мои отзывы</h2>
                             {profile?.myReview && profile.myReview.length > 0 ? (
                                 <div className="reviews-list">
-                                    {profile.myReview.map((review) => (
+                                    {profile.myReview.map((review: any) => (
                                         <div key={review.id} className="review-card">
                                             <div className="review-header">
                                                 <span className="review-author">{profile.name}</span>
@@ -614,6 +664,12 @@ export default function LikedAnimals() {
                                         <p className="shelter-name">
                                             <strong>Название:</strong> {ownerName || profile?.name || 'Название не указано'}
                                         </p>
+                                        {followersCount !== null && followersCount > 0 && (
+                                            <div className="followers-stats">
+                                                <span className="followers-icon">👥</span>
+                                                <span>{getFollowersText(followersCount)}</span>
+                                            </div>
+                                        )}
                                         <button onClick={() => setActiveTab('mypets')} className="my-pets-btn">
                                             🐕 Мои питомцы ({myAnimals.length})
                                         </button>
