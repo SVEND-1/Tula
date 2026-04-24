@@ -7,6 +7,7 @@ import CreateAnimalForm from '../../components/admin/CreateAnimalForm';
 import '../../style/LikedAnimals.scss';
 import QrCode from '../../components/qr/QrCode';
 import { createAnimalWithImage, getAnimalImageUrl, deleteAnimal } from "../../api/animalApi";
+import { deleteLike } from "../../api/likeApi";
 
 interface LikedAnimal {
     id: number;
@@ -34,6 +35,8 @@ interface MyAnimal {
 type ActiveTab = 'profile' | 'mypets' | 'reviews' | 'liked' | 'createShelter';
 
 export default function LikedAnimals() {
+    const navigate = useNavigate();
+
     const [profile, setProfile] = useState<UserProfileResponse | null>(null);
     const [likedAnimals, setLikedAnimals] = useState<LikedAnimal[]>([]);
     const [myAnimals, setMyAnimals] = useState<MyAnimal[]>([]);
@@ -46,22 +49,6 @@ export default function LikedAnimals() {
     const [hasOwner, setHasOwner] = useState(false);
     const [ownerName, setOwnerName] = useState('');
     const [ownerId, setOwnerId] = useState<number | null>(null);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        document.body.style.overflow = 'auto';
-        document.documentElement.style.overflow = 'auto';
-
-        loadProfile();
-        checkOwner();
-        loadMyAnimals();
-
-        return () => {
-            document.body.style.overflow = '';
-            document.documentElement.style.overflow = '';
-        };
-    }, []);
-
     const [currentFact, setCurrentFact] = useState(0);
 
     const facts = [
@@ -82,10 +69,22 @@ export default function LikedAnimals() {
     ];
 
     useEffect(() => {
+        document.body.style.overflow = 'auto';
+        document.documentElement.style.overflow = 'auto';
+
         const interval = setInterval(() => {
             setCurrentFact((prev) => (prev + 1) % facts.length);
         }, 8000);
-        return () => clearInterval(interval);
+
+        loadProfile();
+        checkOwner();
+        loadMyAnimals();
+
+        return () => {
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+            clearInterval(interval);
+        };
     }, []);
 
     const checkOwner = async () => {
@@ -116,7 +115,7 @@ export default function LikedAnimals() {
                     name: animal.name,
                     breed: animal.breed,
                     age: animal.age,
-                    description: animal.description,
+                    description: animal.description || '',
                     gender: animal.gender,
                     animalType: animal.animalType,
                     status: animal.status
@@ -145,7 +144,7 @@ export default function LikedAnimals() {
             setProfile(response.data);
             console.log('Профиль из бэкенда:', response.data);
 
-            if (response.data.likeAnimals) {
+            if (response.data.likeAnimals && response.data.likeAnimals.length > 0) {
                 const likes = response.data.likeAnimals.map(animal => ({
                     id: animal.id,
                     name: animal.name,
@@ -158,6 +157,15 @@ export default function LikedAnimals() {
                     likedAt: animal.createAt
                 }));
                 setLikedAnimals(likes);
+
+                for (const animal of likes) {
+                    const imageUrl = await getAnimalImageUrl(animal.id);
+                    if (imageUrl) {
+                        setAnimalImages(prev => ({ ...prev, [animal.id]: imageUrl }));
+                    }
+                }
+            } else {
+                setLikedAnimals([]);
             }
 
             if (response.data.name) {
@@ -260,6 +268,23 @@ export default function LikedAnimals() {
             } catch (error: any) {
                 console.error('Ошибка удаления:', error);
                 alert('❌ Ошибка при удалении');
+            }
+        }
+    };
+
+    // ========== УДАЛЕНИЕ ЛАЙКА ==========
+    const handleDeleteLike = async (animalId: number, animalName: string) => {
+        if (confirm(`Вы уверены, что хотите удалить лайк у "${animalName}"?`)) {
+            try {
+                await deleteLike(animalId);
+                alert('✅ Лайк удалён!');
+
+                setLikedAnimals(prev => prev.filter(animal => animal.id !== animalId));
+                await loadProfile();
+
+            } catch (error: any) {
+                console.error('Ошибка удаления лайка:', error);
+                alert('❌ Ошибка при удалении лайка');
             }
         }
     };
@@ -545,6 +570,13 @@ export default function LikedAnimals() {
                                                 <span className={`status-badge ${getStatusClass(animal.status)}`}>
                                                     {getStatusText(animal.status)}
                                                 </span>
+                                                <button
+                                                    onClick={() => handleDeleteLike(animal.id, animal.name)}
+                                                    className="delete-like-btn"
+                                                    title="Удалить лайк"
+                                                >
+                                                    ❌
+                                                </button>
                                             </div>
                                             <div className="liked-card-info">
                                                 <h3>

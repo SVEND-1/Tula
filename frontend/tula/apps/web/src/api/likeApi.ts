@@ -1,4 +1,5 @@
 import axios from "axios";
+import type {Like} from "../types/likes/like.types.ts";
 
 const LIKE_API = axios.create({
     baseURL: "http://localhost:8080/api/likes",
@@ -35,18 +36,18 @@ LIKE_API.interceptors.response.use(
 );
 
 export const sendLike = (animalId: number) => {
-    return LIKE_API.post<string>(`/like/${animalId}`);
+    return LIKE_API.post<Like>(`/like/${animalId}`);
 };
 
 export const sendDislike = (animalId: number) => {
-    return LIKE_API.post<string>(`/dislike/${animalId}`);
+    return LIKE_API.post<Like>(`/dislike/${animalId}`);
 };
 
 export const getUserLikes = () => {
     return LIKE_API.get('/user/likes');
 };
 export const deleteLike = (animalId: number) => {
-    return LIKE_API.delete(`/like/${animalId}`);
+    return LIKE_API.delete(`/${animalId}`);
 };
 
 export default LIKE_API;
