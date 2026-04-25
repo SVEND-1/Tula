@@ -1,47 +1,48 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createPayment, getPayments, getSubscription } from '../../../api/paymentApi.ts';
-import { createSubscription } from '../../../api/subscriptionApi.ts';
-import type { SubscriptionDetailResponse } from '../../../api/paymentApi.ts';
+import { createPayment } from '../../../api/paymentApi';
 
-const PAYMENT_CHECK_INTERVAL = 3000;
-const PAYMENT_CHECK_TIMEOUT = 300000;
+export interface SubscriptionInfo {
+    status: string;
+    endDate: string;
+}
 
 export function useSubscription() {
     const navigate = useNavigate();
 
-    const [subscription, setSubscription] = useState<SubscriptionDetailResponse | null>(null);
+    const [subscription, setSubscription] = useState<SubscriptionInfo | null>(null);
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        checkSubscription();
+        checkSubscriptionFromStorage();
     }, []);
 
-    // Проверяем есть ли активная подписка в localStorage
-    const checkSubscription = async () => {
+    const checkSubscriptionFromStorage = () => {
+        const stored = localStorage.getItem('subscriptionData');
+        if (!stored) return;
         try {
-            const subscriptionId = localStorage.getItem('subscriptionId');
-            if (!subscriptionId) return;
-
-            const res = await getSubscription(Number(subscriptionId));
-            setSubscription(res.data);
-            if (res.data.status === 'ACTIVE') setIsSubscribed(true);
-        } catch (error) {
-            console.error('Ошибка проверки подписки:', error);
+            const data: SubscriptionInfo = JSON.parse(stored);
+            if (data.status === 'ACTIVE') {
+                setSubscription(data);
+                setIsSubscribed(true);
+            }
+        } catch {
+            localStorage.removeItem('subscriptionData');
         }
     };
 
-    // Создаём платёж → открываем ЮКассу → начинаем polling
     const handleSubscribe = async () => {
         setIsLoading(true);
         try {
             const res = await createPayment();
             const { paymentId, urlPay } = res.data;
 
+            // Сохраняем paymentId — /succeeded-payment прочитает его после редиректа
             localStorage.setItem('currentPaymentId', paymentId);
-            window.open(urlPay, '_blank');
-            startPaymentStatusPolling(paymentId);
+
+            // Редиректим в ту же вкладку чтобы ЮКасса вернула нас на /succeeded-payment
+            window.location.href = urlPay;
         } catch (error) {
             console.error('Ошибка создания подписки:', error);
             alert('Ошибка при создании подписки');
@@ -50,37 +51,9 @@ export function useSubscription() {
         }
     };
 
-    // Polling — ждём succeeded и активируем подписку
-    const startPaymentStatusPolling = (paymentId: string) => {
-        const interval = setInterval(async () => {
-            try {
-                const res = await getPayments(0, 10);
-                const found = res.data.content.find(p => p.id === paymentId);
-
-                if (found?.status === 'succeeded') {
-                    clearInterval(interval);
-
-                    const subRes = await createSubscription(paymentId);
-                    localStorage.removeItem('currentPaymentId');
-                    localStorage.setItem('subscriptionId', subRes.data);
-
-                    alert('✅ Подписка успешно оформлена!');
-                    setIsSubscribed(true);
-                    checkSubscription();
-                }
-            } catch (error) {
-                console.error('Ошибка проверки статуса:', error);
-            }
-        }, PAYMENT_CHECK_INTERVAL);
-
-        setTimeout(() => clearInterval(interval), PAYMENT_CHECK_TIMEOUT);
-    };
-
     const formatDate = (dateString: string): string => {
         if (!dateString) return 'Не указано';
-        return new Date(dateString).toLocaleDateString('ru-RU', {
-            day: 'numeric', month: 'long', year: 'numeric',
-        });
+        return dateString;
     };
 
     return {

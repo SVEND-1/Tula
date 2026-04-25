@@ -1,14 +1,14 @@
 import React from 'react';
-import type { SubscriptionDetailResponse } from '../../../api/paymentApi.ts';
+import type { SubscriptionInfo } from '../../../pages/subscription/subscription/useSubscription.ts';
+
 
 interface Props {
-    subscription: SubscriptionDetailResponse;
+    subscription: SubscriptionInfo;
     isLoading: boolean;
     formatDate: (date: string) => string;
     onExtend: () => void;
 }
 
-// Показывается когда у пользователя уже есть активная подписка
 const ActiveSubscription: React.FC<Props> = ({ subscription, isLoading, formatDate, onExtend }) => (
     <div className="subscription-active">
         <div className="active-icon">✅</div>
@@ -18,10 +18,6 @@ const ActiveSubscription: React.FC<Props> = ({ subscription, isLoading, formatDa
             <div className="info-row">
                 <span>Статус:</span>
                 <span className="status-active">Активна</span>
-            </div>
-            <div className="info-row">
-                <span>Дата начала:</span>
-                <span>{formatDate(subscription.startDate)}</span>
             </div>
             <div className="info-row">
                 <span>Дата окончания:</span>

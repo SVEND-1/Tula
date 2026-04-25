@@ -2,7 +2,7 @@ import React from 'react';
 import type { PaymentResponse, ReceiptResponse } from '../../../api/paymentApi';
 import ReceiptDetails from '../receipt/ReceiptDetails';
 import { PaymentInfo } from './PaymentInfo';
-import '../../style/payment-history/PaymentDetails.css';
+import '../../../style/payment-history/PaymentDetails.css';
 
 interface PaymentDetailsProps {
     payment: PaymentResponse;

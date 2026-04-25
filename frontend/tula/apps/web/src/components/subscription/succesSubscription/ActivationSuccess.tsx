@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../pages/subscription/SuccessSubscriptionPage.module.css';
+import styles from '../../../pages/subscription/succesSubscription/SuccessSubscriptionPage.module.css';
 
 interface Props {
     onGoToReceipts: () => void;

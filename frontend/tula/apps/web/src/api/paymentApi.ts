@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const PAYMENT_API = axios.create({
-    baseURL: "http://localhost:8080/api/payments",
+    // ФИКС: убран trailing slash — запрос должен идти на /api/payments, не /api/payments/
+    baseURL: "/api/payments",
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json'
@@ -82,8 +83,9 @@ export const createPayment = () => {
     return PAYMENT_API.post<PaymentCreateResponse>('');
 };
 
+// ФИКС: параметры передаём через params чтобы не получился /api/payments/?page=0
 export const getPayments = (page: number = 0, size: number = 10) => {
-    return PAYMENT_API.get<PaymentPageResponse>(`?page=${page}&size=${size}`);
+    return PAYMENT_API.get<PaymentPageResponse>('', { params: { page, size } });
 };
 
 export const getPaymentById = (paymentId: string) => {
