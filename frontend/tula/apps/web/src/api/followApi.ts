@@ -17,10 +17,12 @@ FOLLOW_API.interceptors.request.use((config) => {
 });
 
 export interface Follow {
-    id: number;
-    ownerId: number;
-    userId: number;
-    createAt: string;
+    id?: number;
+    ownerName?: string;
+    ownerId?: number;
+    userId?: number;
+    createAt?: string;
+    [key: string]: any;
 }
 
 export const getFollowersCount = (ownerId: number) => {

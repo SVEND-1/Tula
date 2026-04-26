@@ -6,6 +6,7 @@ import org.example.tula.users.api.dto.users.User;
 import java.time.LocalDateTime;
 
 public record Follow(
+        Long id,
         Owner owner,
         User user,
         LocalDateTime createAt
