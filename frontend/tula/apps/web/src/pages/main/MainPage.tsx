@@ -17,6 +17,13 @@ export default function MainPage() {
     const [swipeClass, setSwipeClass] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
     const [showHint, setShowHint] = useState(true);
+
+    // Состояния для модального окна
+    const [showModal, setShowModal] = useState(false);
+    const [selectedAnimal, setSelectedAnimal] = useState<Animal | null>(null);
+    const [modalImages, setModalImages] = useState<string[]>([]);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
     const { playLikeSound, playDislikeSound } = useSound();
 
     useEffect(() => {
@@ -39,7 +46,6 @@ export default function MainPage() {
                 const animalsList = response.data.content;
                 setAnimals(animalsList);
 
-                // Загружаем картинки для всех животных
                 await loadAnimalImages(animalsList);
             } else {
                 setAnimals([]);
@@ -53,7 +59,6 @@ export default function MainPage() {
         }
     };
 
-    // Загрузка картинок для всех животных
     const loadAnimalImages = async (animalsList: Animal[]) => {
         const imagesMap: Record<number, string> = {};
 
@@ -68,9 +73,45 @@ export default function MainPage() {
     };
 
     const getGenderIcon = (gender: string) => gender === 'MAN' ? '♂️' : '♀️';
+    const getAnimalTypeText = (type: string) => type === 'DOG' ? 'Собака' : 'Кот';
 
     const currentAnimal = animals[currentIndex];
     const nextAnimal = animals[currentIndex + 1];
+
+    // Функция открытия модального окна
+    const handleOpenModal = async (animal: Animal) => {
+        setSelectedAnimal(animal);
+        setShowModal(true);
+        setCurrentImageIndex(0);
+
+        // Получаем основное фото и создаем массив из одного элемента
+        const imageUrl = await getAnimalImageUrl(animal.id);
+        if (imageUrl) {
+            setModalImages([imageUrl]);
+        } else {
+            setModalImages([]);
+        }
+    };
+
+    // Функция закрытия модального окна
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setSelectedAnimal(null);
+        setModalImages([]);
+    };
+
+    // Навигация по изображениям в модальном окне
+    const handleNextImage = () => {
+        setCurrentImageIndex((prev) =>
+            prev < modalImages.length - 1 ? prev + 1 : 0
+        );
+    };
+
+    const handlePrevImage = () => {
+        setCurrentImageIndex((prev) =>
+            prev > 0 ? prev - 1 : modalImages.length - 1
+        );
+    };
 
     const handleSwipe = async (direction: 'left' | 'right') => {
         if (!currentAnimal || isProcessing) return;
@@ -267,7 +308,7 @@ export default function MainPage() {
                                 <span>{currentAnimal.breed} • {getAgeText(currentAnimal.age)}</span>
                                 <p className="description">{truncateText(currentAnimal.description)}</p>
                                 <button
-                                    onClick={() => navigate(`/animal/${currentAnimal.id}`)}
+                                    onClick={() => handleOpenModal(currentAnimal)}
                                     className="details-btn"
                                 >
                                     Подробнее
@@ -275,6 +316,12 @@ export default function MainPage() {
                             </div>
                         </div>
                     </div>
+
+                    {showHint && currentIndex === 0 && (
+                        <div className="swipe-hint">
+                            <span>👈 Свайпайте для выбора</span>
+                        </div>
+                    )}
 
                     <div className="buttons">
                         <button
@@ -301,8 +348,107 @@ export default function MainPage() {
                             </svg>
                         </button>
                     </div>
+
+                    <div className="counter">
+                        {currentIndex + 1} / {animals.length}
+                    </div>
                 </div>
             </main>
+
+            {/* Модальное окно */}
+            {showModal && selectedAnimal && (
+                <div className="modal-overlay" onClick={handleCloseModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <button className="modal-close" onClick={handleCloseModal}>
+                            ✕
+                        </button>
+
+                        <div className="modal-body">
+                            <div className="modal-image-section">
+                                <div className="modal-image-container">
+                                    {modalImages.length > 0 ? (
+                                        <>
+                                            <img
+                                                src={modalImages[currentImageIndex]}
+                                                alt={selectedAnimal.name}
+                                            />
+                                            {modalImages.length > 1 && (
+                                                <>
+                                                    <button
+                                                        className="modal-image-nav prev"
+                                                        onClick={handlePrevImage}
+                                                    >
+                                                        ‹
+                                                    </button>
+                                                    <button
+                                                        className="modal-image-nav next"
+                                                        onClick={handleNextImage}
+                                                    >
+                                                        ›
+                                                    </button>
+                                                    <div className="modal-image-counter">
+                                                        {currentImageIndex + 1} / {modalImages.length}
+                                                    </div>
+                                                </>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <div className="image-placeholder">
+                                            <span className="animal-emoji">
+                                                {selectedAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="modal-info-section">
+                                <h2>
+                                    {selectedAnimal.name}
+                                    <span className="gender-icon">
+                                        {getGenderIcon(selectedAnimal.gender)}
+                                    </span>
+                                </h2>
+
+                                <div className="modal-details">
+                                    <div className="modal-detail-row">
+                                        <span className="detail-label">Тип:</span>
+                                        <span className="detail-value">
+                                            {getAnimalTypeText(selectedAnimal.animalType)}
+                                        </span>
+                                    </div>
+
+                                    <div className="modal-detail-row">
+                                        <span className="detail-label">Порода:</span>
+                                        <span className="detail-value">
+                                            {selectedAnimal.breed}
+                                        </span>
+                                    </div>
+
+                                    <div className="modal-detail-row">
+                                        <span className="detail-label">Пол:</span>
+                                        <span className="detail-value">
+                                            {selectedAnimal.gender === 'MAN' ? 'Мальчик' : 'Девочка'}
+                                        </span>
+                                    </div>
+
+                                    <div className="modal-detail-row">
+                                        <span className="detail-label">Возраст:</span>
+                                        <span className="detail-value">
+                                            {getAgeText(selectedAnimal.age)}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="modal-description">
+                                    <h3>Описание</h3>
+                                    <p>{selectedAnimal.description}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

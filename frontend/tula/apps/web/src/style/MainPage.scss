@@ -365,17 +365,14 @@ html, body {
   overflow: hidden;
   background: white;
   z-index: 10;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); // Уменьшена тень
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   @media (max-width: 768px) {
     border-radius: 16px;
   }
 
-  &:hover {
-    box-shadow: 0 30px 60px rgba(0,0,0,0.25);
-  }
-
+  // Убран hover эффект
   &.next {
     z-index: 5;
   }
@@ -414,11 +411,7 @@ html, body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
-
-    &:hover {
-      transform: scale(1.05);
-    }
+    // Убран hover эффект на картинке
   }
 
   .image-placeholder {
@@ -430,7 +423,7 @@ html, body {
 
     .animal-emoji {
       font-size: 120px;
-      transition: transform 0.3s ease;
+      // Убран hover эффект
 
       @media (max-width: 768px) {
         font-size: 80px;
@@ -438,10 +431,6 @@ html, body {
 
       @media (max-width: 480px) {
         font-size: 60px;
-      }
-
-      &:hover {
-        transform: scale(1.1);
       }
 
       &.large {
@@ -466,7 +455,6 @@ html, body {
     border-radius: 20px;
     font-size: 12px;
     font-weight: 600;
-    background: white;
     z-index: 10;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 
@@ -478,8 +466,8 @@ html, body {
     }
 
     &.available {
-      background: #4caf50;
-      color: white;
+      background: #ffcdb0; // Изменен на цвет страницы
+      color: #333; // Темный текст для читаемости
     }
 
     &.taken {
@@ -605,6 +593,7 @@ html, body {
     cursor: pointer;
     font-family: "Playpen Sans", cursive;
     transition: all 0.2s;
+    color: #333; // Темный текст на кнопке
 
     @media (max-width: 768px) {
       width: 100px;
@@ -830,6 +819,288 @@ html, body {
       &:hover {
         background: #ffdbc5;
       }
+    }
+  }
+}
+
+/* Новое модальное окно */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background: white;
+  border-radius: 20px;
+  width: min(800px, 90vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+  position: relative;
+
+  @media (max-width: 768px) {
+    width: 95vw;
+    max-height: 90vh;
+    border-radius: 15px;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.1); // ИЗМЕНИТЬ с white на это
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+  color: #333; // ДОБАВИТЬ эту строку
+  font-weight: bold; // ДОБАВИТЬ эту строку
+
+  @media (max-width: 768px) {
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+    top: 10px;
+    right: 10px;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    background: rgba(0, 0, 0, 0.2); // ДОБАВИТЬ эту строку
+  }
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  padding: 30px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+  }
+}
+
+.modal-image-section {
+  flex: 0 0 45%;
+  position: relative;
+
+  @media (max-width: 768px) {
+    flex: 0 0 auto;
+    width: 100%;
+    max-height: 300px;
+  }
+}
+
+.modal-image-container {
+  width: 100%;
+  height: 350px;
+  border-radius: 15px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffcdb0, #ffdbc5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  @media (max-width: 768px) {
+    height: 250px;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .image-placeholder {
+    .animal-emoji {
+      font-size: 80px;
+
+      @media (max-width: 768px) {
+        font-size: 60px;
+      }
+    }
+  }
+}
+
+.modal-image-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.15); // ИЗМЕНИТЬ с rgba(255, 255, 255, 0.9) на это
+  border: none;
+  font-size: 24px; // ИЗМЕНИТЬ с 20px на 24px
+  cursor: pointer;
+  z-index: 5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, background 0.2s;
+  color: #333; // ДОБАВИТЬ эту строку
+  font-weight: bold; // ДОБАВИТЬ эту строку
+
+  &:hover {
+    transform: translateY(-50%) scale(1.1);
+    background: rgba(0, 0, 0, 0.25); // ИЗМЕНИТЬ с white на это
+  }
+
+  &.prev {
+    left: 10px;
+  }
+
+  &.next {
+    right: 10px;
+  }
+}
+
+.modal-image-counter {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-info-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  h2 {
+    margin: 0;
+    font-size: 32px;
+    font-family: "Playpen Sans", cursive;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #333333; // ДОБАВИТЬ эту строку
+
+    @media (max-width: 768px) {
+      font-size: 24px;
+    }
+
+    .gender-icon {
+      font-size: 24px;
+
+      @media (max-width: 768px) {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.modal-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-family: "Playpen Sans", cursive;
+  color: #555;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+
+  .detail-label {
+    font-weight: 600;
+    color: #333;
+    min-width: 80px;
+  }
+
+  .detail-value {
+    background: #ffdbc5;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 16px;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+      padding: 4px 10px;
+    }
+  }
+}
+
+.modal-description {
+  margin-top: 10px;
+
+  h3 {
+    font-size: 20px;
+    margin: 0 0 10px 0;
+    font-family: "Playpen Sans", cursive;
+    color: #333;
+
+    @media (max-width: 768px) {
+      font-size: 18px;
+    }
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    font-family: "Playpen Sans", cursive;
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+      line-height: 1.5;
     }
   }
 }
