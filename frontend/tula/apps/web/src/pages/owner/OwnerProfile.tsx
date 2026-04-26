@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getOwnerProfile } from '../../api/ownerApi';
 import { getReviewsByOwnerId, addReview } from '../../api/reviewApi';
 import { getAnimalImageUrl } from '../../api/animalApi';
-import { createFollow, getFollowersCount, deleteFollow } from '../../api/followApi.ts';
+import { createFollow, getFollowersCount, deleteFollow, getUserFollows } from '../../api/followApi';
 import type { OwnerProfileResponse, Animal } from '../../api/ownerApi';
 import type { Review } from '../../api/reviewApi';
 import '../../style/OwnerProfile.scss';
@@ -23,23 +23,33 @@ export default function OwnerProfile() {
     const [followersCount, setFollowersCount] = useState(0);
     const [isFollowing, setIsFollowing] = useState(false);
     const [isFollowLoading, setIsFollowLoading] = useState(false);
+    const [currentFollowId, setCurrentFollowId] = useState<number | null>(null);
 
     useEffect(() => {
-        loadProfile();
-        loadReviews();
-        loadFollowersCount();
-        checkFollowStatus();
+        loadAllData();
     }, [id]);
 
-    const loadProfile = async () => {
+    const loadAllData = async () => {
         setIsLoading(true);
+        try {
+            await loadProfile();
+            await loadReviews();
+            await loadFollowersCount();
+            await checkFollowStatus();
+        } catch (error) {
+            console.error('Ошибка загрузки данных:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const loadProfile = async () => {
         try {
             if (id) {
                 const response = await getOwnerProfile(Number(id));
                 setProfile(response.data);
                 console.log('Профиль приюта:', response.data);
 
-                // Загружаем картинки для животных
                 if (response.data.animals) {
                     for (const animal of response.data.animals) {
                         const imageUrl = await getAnimalImageUrl(animal.id);
@@ -51,8 +61,6 @@ export default function OwnerProfile() {
             }
         } catch (error) {
             console.error('Ошибка загрузки профиля приюта:', error);
-        } finally {
-            setIsLoading(false);
         }
     };
 
@@ -74,6 +82,7 @@ export default function OwnerProfile() {
             if (id) {
                 const response = await getFollowersCount(Number(id));
                 setFollowersCount(response.data);
+                console.log('Количество подписчиков:', response.data);
             }
         } catch (error) {
             console.error('Ошибка загрузки количества подписчиков:', error);
@@ -83,12 +92,39 @@ export default function OwnerProfile() {
 
     const checkFollowStatus = async () => {
         try {
-            if (id) {
-                await getFollowersCount(Number(id));
+            if (!id) return;
+
+            console.log('Проверяем подписку на приют:', id);
+
+            const response = await getUserFollows();
+            const follows = response.data;
+            console.log('Все подписки пользователя:', follows);
+
+            if (!follows || follows.length === 0) {
+                console.log('Нет подписок');
                 setIsFollowing(false);
+                setCurrentFollowId(null);
+                return;
             }
+
+            // Ищем подписку по имени приюта (используем profile?.name)
+            const currentOwnerName = profile?.name;
+            const foundFollow = follows.find((follow: any) => follow.ownerName === currentOwnerName);
+
+            if (foundFollow) {
+                setIsFollowing(true);
+                setCurrentFollowId(Number(id));
+                console.log('Пользователь подписан');
+            } else {
+                setIsFollowing(false);
+                setCurrentFollowId(null);
+                console.log('Пользователь не подписан');
+            }
+
         } catch (error) {
             console.error('Ошибка проверки подписки:', error);
+            setIsFollowing(false);
+            setCurrentFollowId(null);
         }
     };
 
@@ -96,13 +132,13 @@ export default function OwnerProfile() {
         if (!id) return;
         setIsFollowLoading(true);
         try {
+            console.log('Подписываемся на приют:', id);
             await createFollow(Number(id));
             alert('✅ Вы подписались на приют!');
 
-            // Обновляем счетчик подписчиков
-            const newCount = await getFollowersCount(Number(id));
-            setFollowersCount(newCount.data);
+            await loadFollowersCount();
             setIsFollowing(true);
+            setCurrentFollowId(Number(id));
         } catch (error: any) {
             console.error('Ошибка подписки:', error);
             const errorMessage = error.response?.data?.message || 'Ошибка при подписке';
@@ -113,19 +149,26 @@ export default function OwnerProfile() {
     };
 
     const handleUnfollow = async () => {
-        if (!id) return;
+        if (!currentFollowId) {
+            console.error('Не найден ID подписки');
+            alert('❌ Не удалось определить подписку');
+            return;
+        }
+
         setIsFollowLoading(true);
         try {
-            await deleteFollow(Number(id));
+            console.log('Отписываемся от приюта с ID:', currentFollowId);
+
+            await deleteFollow(currentFollowId);
             alert('✅ Вы отписались от приюта');
 
-            // Обновляем счетчик подписчиков
-            const newCount = await getFollowersCount(Number(id));
-            setFollowersCount(newCount.data);
+            await loadFollowersCount();
             setIsFollowing(false);
+            setCurrentFollowId(null);
+
         } catch (error: any) {
             console.error('Ошибка отписки:', error);
-            alert('❌ Ошибка при отписке');
+            alert(`❌ Ошибка при отписке: ${error.response?.data?.message || error.message}`);
         } finally {
             setIsFollowLoading(false);
         }
@@ -233,7 +276,6 @@ export default function OwnerProfile() {
                     <div className="owner-header-info">
                         <h1 className="owner-title">{profile.name}</h1>
 
-                        {/* Кнопка подписки и счетчик */}
                         <div className="follow-section">
                             <div className="followers-count">
                                 <span className="followers-icon">👥</span>
@@ -251,7 +293,7 @@ export default function OwnerProfile() {
                                 {isFollowLoading ? (
                                     <span className="loading-spinner-small"></span>
                                 ) : isFollowing ? (
-                                    '✓ Подписаны'
+                                    '✓ Отписаться'
                                 ) : (
                                     '+ Подписаться'
                                 )}
