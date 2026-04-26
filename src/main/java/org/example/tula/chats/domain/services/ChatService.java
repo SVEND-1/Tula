@@ -122,4 +122,14 @@ public class ChatService {
 
         return chatEntity;
     }
+
+    public String deletedAll(List<ChatEntity> chatEntities) {
+        try {
+            chatRepository.deleteAll(chatEntities);
+            return "Успешно";
+        }catch (Exception e) {
+            log.error("Не удалось удалить все чаты,ex={}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
 }
