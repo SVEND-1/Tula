@@ -2,7 +2,7 @@ import axios from "axios";
 import type { Animal, CreateAnimalRequest } from "../types/animal/animal.types.ts";
 
 const ANIMAL_API = axios.create({
-    baseURL: "http://localhost:8080/api/animals",
+    baseURL: "/api/animals",
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json'

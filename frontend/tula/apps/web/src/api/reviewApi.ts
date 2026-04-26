@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const REVIEW_API = axios.create({
-    baseURL: "http://localhost:8080/api/reviews",
+    baseURL: "/api/reviews",
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json'
