@@ -129,10 +129,9 @@ public class AuthService {
                 return new SimpleResponse(false, "Пользователь с таким email уже существует");
             }
 
-//            String verificationCode = emailSenderService.generateVerificationCode();
+            String verificationCode = emailSenderService.generateVerificationCode();
             String registrationId = UUID.randomUUID().toString();
-//
-//            log.debug("Code: {}",verificationCode);
+            log.debug("Code: {}",verificationCode);
 
             UserEntity tempUser = new UserEntity();
             tempUser.setEmail(email);
@@ -142,14 +141,14 @@ public class AuthService {
             }
 
             pendingRegistrations.put(registrationId,
-                    new RegistrationData(tempUser, "123456"));
+                    new RegistrationData(tempUser, verificationCode));
 
-//            NotifyEvent notifyEvent = new NotifyEvent(
-//                    email,
-//                    Map.of("code",verificationCode),
-//                    NotifyType.REGISTER
-//            );
-//            kafkaProducer.sendMessageToKafka(notifyEvent);
+            NotifyEvent notifyEvent = new NotifyEvent(
+                    email,
+                    Map.of("code",verificationCode),
+                    NotifyType.REGISTER
+            );
+            kafkaProducer.sendMessageToKafka(notifyEvent);
 
             cleanupExpiredData();
 

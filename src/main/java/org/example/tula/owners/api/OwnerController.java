@@ -66,7 +66,8 @@ public class OwnerController {
 
     @Operation(summary = "Обновление данных питомца")
     @PutMapping("/animal/{id}")
-    public ResponseEntity<Animal> updateAnimal(@PathVariable Long id, @RequestBody AnimalUpdateRequest request) {
+    public ResponseEntity<Animal> updateAnimal(@PathVariable Long id,
+                                               @RequestBody AnimalUpdateRequest request) {
         return ResponseEntity.ok(animalService.update(id,request));
     }
 
