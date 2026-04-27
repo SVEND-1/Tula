@@ -93,4 +93,35 @@ export const deleteAnimal = async (id: number) => {
     return await ANIMAL_API.delete(`/owners/${id}`);
 };
 
+
+export interface UpdateAnimalRequest {
+    name: string;
+    description: string;
+    age: number;
+}
+
+export const updateAnimal = async (id: number, data: UpdateAnimalRequest) => {
+    const token = localStorage.getItem('token');
+    return await ANIMAL_API.put<Animal>(`/owners/animal/${id}`, data, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+};
+
+export const updateAnimalImage = async (animalId: number, imageFile: File) => {
+    const formData = new FormData();
+    formData.append('file', imageFile);  // ВАЖНО: ключ должен быть "file", а не "image"
+
+    const token = localStorage.getItem('token');
+
+    return await ANIMAL_API.patch(`/owners/animal-img/${animalId}`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
+        }
+    });
+};
+
 export default ANIMAL_API;

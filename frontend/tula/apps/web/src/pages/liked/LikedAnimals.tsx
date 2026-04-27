@@ -6,7 +6,7 @@ import type { CreateAnimalRequest } from '../../types/animal/animal.types';
 import CreateAnimalForm from '../../components/admin/CreateAnimalForm';
 import '../../style/LikedAnimals.scss';
 import QrCode from '../../components/qr/QrCode';
-import { createAnimalWithImage, getAnimalImageUrl, deleteAnimal } from "../../api/animalApi";
+import { createAnimalWithImage, getAnimalImageUrl, deleteAnimal, updateAnimal } from "../../api/animalApi";
 import { deleteLike, getUserLikes } from "../../api/likeApi";
 import { getFollowersCount } from "../../api/followApi";
 
@@ -72,6 +72,15 @@ export default function LikedAnimals() {
     const [isDeleting, setIsDeleting] = useState<number | null>(null);
     const [progress, setProgress] = useState(0);
 
+    // Состояния для редактирования
+    const [editingAnimal, setEditingAnimal] = useState<MyAnimal | null>(null);
+    const [editFormData, setEditFormData] = useState({
+        name: '',
+        description: '',
+        age: 0
+    });
+    const [isUpdating, setIsUpdating] = useState(false);
+
     const facts = [
         { text: "Кошки спят около 16 часов в день" },
         { text: "Собаки понимают до 250 слов и жестов" },
@@ -93,7 +102,6 @@ export default function LikedAnimals() {
         document.body.style.overflow = 'auto';
         document.documentElement.style.overflow = 'auto';
 
-        // Синхронизированный таймер для фактов и прогресс-бара
         const factInterval = setInterval(() => {
             setCurrentFact((prev) => (prev + 1) % facts.length);
             setProgress(0);
@@ -295,7 +303,7 @@ export default function LikedAnimals() {
             try {
                 try {
                     const userLikes = await getUserLikes();
-                    const likeToDelete = userLikes.data.find(like => like.animalId === animalId);
+                    const likeToDelete = userLikes.data.find((like: any) => like.animalId === animalId);
                     if (likeToDelete) {
                         await deleteLike(animalId);
                         console.log(`Лайк на животное ${animalId} удалён`);
@@ -325,6 +333,47 @@ export default function LikedAnimals() {
             } finally {
                 setIsDeleting(null);
             }
+        }
+    };
+
+    // ========== ФУНКЦИИ РЕДАКТИРОВАНИЯ (ТОЛЬКО ДАННЫЕ, БЕЗ КАРТИНКИ) ==========
+    const handleEditAnimal = (animal: MyAnimal) => {
+        setEditingAnimal(animal);
+        setEditFormData({
+            name: animal.name,
+            description: animal.description || '',
+            age: animal.age
+        });
+    };
+
+    const handleCloseModal = () => {
+        setEditingAnimal(null);
+        setIsUpdating(false);
+    };
+
+    const handleSaveEdit = async () => {
+        if (!editingAnimal) return;
+
+        setIsUpdating(true);
+        try {
+            console.log('Отправляем данные для обновления:', editFormData);
+
+            // Обновляем только данные животного (имя, возраст, описание)
+            await updateAnimal(editingAnimal.id, editFormData);
+
+            alert('✅ Данные животного успешно обновлены!');
+            handleCloseModal();
+
+            // Обновляем список
+            await loadMyAnimals();
+            await loadProfile();
+
+        } catch (error: any) {
+            console.error('Ошибка обновления:', error);
+            console.error('Детали ошибки:', error.response?.data);
+            alert(`❌ Ошибка при обновлении: ${error.response?.data?.message || error.message}`);
+        } finally {
+            setIsUpdating(false);
         }
     };
 
@@ -434,8 +483,6 @@ export default function LikedAnimals() {
                     ← Назад
                 </button>
                 <div className="logo">Adoptly</div>
-
-
             </header>
 
             <main className="liked-container">
@@ -487,28 +534,20 @@ export default function LikedAnimals() {
                             <div className="stats-grid">
                                 <div className="stat-card">
                                     <div className="stat-number">{uniqueLikedAnimals.length}</div>
-                                    <div className="stat-label">
-                                         Понравилось животных
-                                    </div>
+                                    <div className="stat-label">Понравилось животных</div>
                                 </div>
                                 <div className="stat-card">
                                     <div className="stat-number">{myAnimals.length}</div>
-                                    <div className="stat-label">
-                                         Моих питомцев
-                                    </div>
+                                    <div className="stat-label">Моих питомцев</div>
                                 </div>
                                 <div className="stat-card">
                                     <div className="stat-number">{profile?.myReview?.length || 0}</div>
-                                    <div className="stat-label">
-                                         Моих отзывов
-                                    </div>
+                                    <div className="stat-label">Моих отзывов</div>
                                 </div>
                                 {hasOwner && (
                                     <div className="stat-card">
                                         <div className="stat-number">{followersCount !== null ? followersCount : '--'}</div>
-                                        <div className="stat-label">
-                                            <img src={personIcon} alt="Подписчики" className="stat-icon" /> Подписчиков
-                                        </div>
+                                        <div className="stat-label">Подписчиков</div>
                                     </div>
                                 )}
                             </div>
@@ -569,6 +608,13 @@ export default function LikedAnimals() {
                                                         {getStatusText(animal.status)}
                                                     </span>
                                                     <div className="pet-card-actions">
+                                                        <button
+                                                            onClick={() => handleEditAnimal(animal)}
+                                                            className="edit-btn"
+                                                            title="Редактировать"
+                                                        >
+                                                            ✏️
+                                                        </button>
                                                         <button
                                                             onClick={() => handleDeleteAnimal(animal.id, animal.name)}
                                                             className="delete-btn"
@@ -744,11 +790,79 @@ export default function LikedAnimals() {
                                 </div>
                                 <p>Заполните форму чтобы добавить питомца в ленту</p>
                                 <CreateAnimalForm onSubmit={handleCreateAnimal} isLoading={isCreatingAnimal} />
-                            </div>h
+                            </div>
                         </div>
                     )}
                 </div>
             </main>
+
+            {/* Модальное окно редактирования (только данные, без картинки) */}
+            {editingAnimal && (
+                <div className="modal-overlay" onClick={handleCloseModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3>✏️ Редактировать питомца</h3>
+                            <button className="modal-close" onClick={handleCloseModal}>×</button>
+                        </div>
+
+                        <div className="modal-body">
+                            <div className="form-group">
+                                <label>🐾 Имя питомца</label>
+                                <input
+                                    type="text"
+                                    value={editFormData.name}
+                                    onChange={(e) => setEditFormData(prev => ({ ...prev, name: e.target.value }))}
+                                    placeholder="Введите имя"
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>📅 Возраст (лет)</label>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    value={editFormData.age}
+                                    onChange={(e) => setEditFormData(prev => ({ ...prev, age: parseInt(e.target.value) || 0 }))}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>📝 Описание</label>
+                                <textarea
+                                    value={editFormData.description || ''}
+                                    onChange={(e) => setEditFormData(prev => ({ ...prev, description: e.target.value }))}
+                                    placeholder="Расскажите о характере и особенностях питомца"
+                                    rows={4}
+                                />
+                            </div>
+
+                            <div className="current-image">
+                                <p>Текущее фото:</p>
+                                {getAnimalImage(editingAnimal) ? (
+                                    <img src={getAnimalImage(editingAnimal)!} alt={editingAnimal.name} />
+                                ) : (
+                                    <div className="image-placeholder">
+                                        <img src={editingAnimal.animalType === 'DOG' ? dogIcon : catIcon} alt={editingAnimal.animalType} className="placeholder-icon" />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="modal-footer">
+                            <button
+                                className="cancel-btn"
+                                onClick={handleCloseModal}
+                                disabled={isUpdating}
+                            >
+                                Отмена
+                            </button>
+                            <button className="save-btn" onClick={handleSaveEdit} disabled={isUpdating}>
+                                {isUpdating ? '💫 Сохранение...' : '💾 Сохранить'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }
