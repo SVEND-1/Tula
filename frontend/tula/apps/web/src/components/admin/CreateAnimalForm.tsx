@@ -58,12 +58,12 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
 
     return (
         <form onSubmit={handleSubmit} className="create-animal-form">
-            <h2>📝 Создать анкету животного</h2>
+            <h2>Создать анкету животного</h2>
 
             <div className="form-with-preview">
                 <div className="form-fields">
                     <div className="form-group">
-                        <label>🖼️ Фото животного</label>
+                        <label>Фото животного</label>
                         <div className="file-input-wrapper">
                             <input
                                 ref={fileInputRef}
@@ -81,7 +81,7 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
                     </div>
 
                     <div className="form-group">
-                        <label>🐕 Имя животного *</label>
+                        <label>Имя животного *</label>
                         <input
                             type="text"
                             value={form.name}
@@ -92,7 +92,7 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
                     </div>
 
                     <div className="form-group">
-                        <label>📅 Возраст (лет) *</label>
+                        <label>Возраст (лет) *</label>
                         <input
                             type="number"
                             value={form.age}
@@ -104,7 +104,7 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
                     </div>
 
                     <div className="form-group">
-                        <label>🐾 Порода *</label>
+                        <label>Порода *</label>
                         <input
                             type="text"
                             value={form.breed}
@@ -127,7 +127,7 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
                         </div>
 
                         <div className="form-group">
-                            <label>🐶 Тип животного</label>
+                            <label>Тип животного</label>
                             <select
                                 value={form.animalType}
                                 onChange={(e) => setForm({ ...form, animalType: e.target.value as AnimalType })}
@@ -139,7 +139,7 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
                     </div>
 
                     <div className="form-group">
-                        <label>📝 Описание</label>
+                        <label>Описание</label>
                         <textarea
                             value={form.description}
                             onChange={(e) => setForm({ ...form, description: e.target.value })}
@@ -159,7 +159,7 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
 
                 {imagePreview && (
                     <div className="image-preview-side">
-                        <div className="preview-label">📸 Предпросмотр</div>
+                        <div className="preview-label">Предпросмотр</div>
                         <img src={imagePreview} alt="Предпросмотр" />
                     </div>
                 )}
