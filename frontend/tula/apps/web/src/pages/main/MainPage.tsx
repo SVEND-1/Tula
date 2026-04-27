@@ -18,6 +18,10 @@ export default function MainPage() {
     const [isProcessing, setIsProcessing] = useState(false);
     const [showHint, setShowHint] = useState(true);
 
+    // Состояния для анимации перехода
+    const [isTransitioning, setIsTransitioning] = useState(false);
+    const [oldAnimal, setOldAnimal] = useState<Animal | null>(null);
+
     // Состояния для модального окна
     const [showModal, setShowModal] = useState(false);
     const [selectedAnimal, setSelectedAnimal] = useState<Animal | null>(null);
@@ -28,12 +32,6 @@ export default function MainPage() {
 
     useEffect(() => {
         loadAnimals();
-
-        const timer = setTimeout(() => {
-            setShowHint(false);
-        }, 5000);
-
-        return () => clearTimeout(timer);
     }, []);
 
     const loadAnimals = async () => {
@@ -78,13 +76,11 @@ export default function MainPage() {
     const currentAnimal = animals[currentIndex];
     const nextAnimal = animals[currentIndex + 1];
 
-    // Функция открытия модального окна
     const handleOpenModal = async (animal: Animal) => {
         setSelectedAnimal(animal);
         setShowModal(true);
         setCurrentImageIndex(0);
 
-        // Получаем основное фото и создаем массив из одного элемента
         const imageUrl = await getAnimalImageUrl(animal.id);
         if (imageUrl) {
             setModalImages([imageUrl]);
@@ -93,14 +89,12 @@ export default function MainPage() {
         }
     };
 
-    // Функция закрытия модального окна
     const handleCloseModal = () => {
         setShowModal(false);
         setSelectedAnimal(null);
         setModalImages([]);
     };
 
-    // Навигация по изображениям в модальном окне
     const handleNextImage = () => {
         setCurrentImageIndex((prev) =>
             prev < modalImages.length - 1 ? prev + 1 : 0
@@ -114,14 +108,11 @@ export default function MainPage() {
     };
 
     const handleSwipe = async (direction: 'left' | 'right') => {
-        if (!currentAnimal || isProcessing) return;
+        if (!currentAnimal || isProcessing || isTransitioning) return;
 
         setIsProcessing(true);
+        setIsTransitioning(true);
         setSwipeClass(direction);
-
-        if (showHint) {
-            setShowHint(false);
-        }
 
         try {
             if (direction === 'right') {
@@ -138,11 +129,15 @@ export default function MainPage() {
                 setTimeout(() => setShowToast(false), 1500);
             }
 
+            setOldAnimal(currentAnimal);
+
             setTimeout(() => {
                 setCurrentIndex(prev => prev + 1);
                 setSwipeClass('');
+                setOldAnimal(null);
+                setIsTransitioning(false);
                 setIsProcessing(false);
-            }, 900);
+            }, 500);
         } catch (error: any) {
             console.error('Ошибка при отправке реакции:', error);
             const errorMessage = error.response?.data?.message || 'Ошибка при отправке';
@@ -150,6 +145,8 @@ export default function MainPage() {
             setShowToast(true);
             setTimeout(() => setShowToast(false), 2000);
             setSwipeClass('');
+            setOldAnimal(null);
+            setIsTransitioning(false);
             setIsProcessing(false);
         }
     };
@@ -179,7 +176,7 @@ export default function MainPage() {
         );
     }
 
-    if (!currentAnimal) {
+    if (!currentAnimal && !oldAnimal) {
         return (
             <div className="empty-container">
                 <div className="empty-card">
@@ -254,9 +251,25 @@ export default function MainPage() {
             </div>
 
             <main className="home">
+                {showHint && (
+                    <div className="hint">
+                        <div className="hint-text">Выбери своего питомца</div>
+                        <svg className="arrow" viewBox="0 0 300 200">
+                            <defs>
+                                <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+                                    <path d="M0,0 L10,5 L0,10 Z" fill="#333"/>
+                                </marker>
+                            </defs>
+                            <path className="arrow-path"
+                                  d="M 20 120 C 60 20, 160 20, 160 90 C 160 160, 220 160, 260 110"
+                                  marker-end="url(#arrowHead)"/>
+                        </svg>
+                    </div>
+                )}
+
                 <div className="card-wrapper">
                     <div className="card-stack">
-                        {nextAnimal && (
+                        {nextAnimal && !isTransitioning && (
                             <div className="card next">
                                 <div className="card-image">
                                     {(() => {
@@ -280,48 +293,44 @@ export default function MainPage() {
                             </div>
                         )}
 
-                        <div className={`card current ${swipeClass}`}>
-                            <div className="card-image">
-                                {(() => {
-                                    const currentImage = getAnimalImage(currentAnimal);
-                                    return currentImage ? (
-                                        <img src={currentImage} alt={currentAnimal.name} />
-                                    ) : (
-                                        <div className="image-placeholder">
-                                            <span className="animal-emoji large">
-                                                {currentAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
-                                            </span>
-                                        </div>
-                                    );
-                                })()}
-                                <span className={`status-badge ${currentAnimal.status?.toLowerCase() || 'available'}`}>
-                                    {currentAnimal.status === 'AVAILABLE' ? 'Доступен' :
-                                        currentAnimal.status === 'TAKEN' ? 'Забран' :
-                                            currentAnimal.status === 'VERIFICATION' ? 'На проверке' : 'Доступен'}
-                                </span>
+                        {currentAnimal && (
+                            <div className={`card current ${swipeClass}`}>
+                                <div className="card-image">
+                                    {(() => {
+                                        const currentImage = getAnimalImage(currentAnimal);
+                                        return currentImage ? (
+                                            <img src={currentImage} alt={currentAnimal.name} />
+                                        ) : (
+                                            <div className="image-placeholder">
+                                                <span className="animal-emoji large">
+                                                    {currentAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
+                                                </span>
+                                            </div>
+                                        );
+                                    })()}
+                                    <span className={`status-badge ${currentAnimal.status?.toLowerCase() || 'available'}`}>
+                                        {currentAnimal.status === 'AVAILABLE' ? 'Доступен' :
+                                            currentAnimal.status === 'TAKEN' ? 'Забран' :
+                                                currentAnimal.status === 'VERIFICATION' ? 'На проверке' : 'Доступен'}
+                                    </span>
+                                </div>
+                                <div className="card-info">
+                                    <h2>
+                                        {currentAnimal.name}
+                                        <span className="gender-icon">{getGenderIcon(currentAnimal.gender)}</span>
+                                    </h2>
+                                    <span>{currentAnimal.breed} • {getAgeText(currentAnimal.age)}</span>
+                                    <p className="description">{truncateText(currentAnimal.description)}</p>
+                                    <button
+                                        onClick={() => handleOpenModal(currentAnimal)}
+                                        className="details-btn"
+                                    >
+                                        Подробнее
+                                    </button>
+                                </div>
                             </div>
-                            <div className="card-info">
-                                <h2>
-                                    {currentAnimal.name}
-                                    <span className="gender-icon">{getGenderIcon(currentAnimal.gender)}</span>
-                                </h2>
-                                <span>{currentAnimal.breed} • {getAgeText(currentAnimal.age)}</span>
-                                <p className="description">{truncateText(currentAnimal.description)}</p>
-                                <button
-                                    onClick={() => handleOpenModal(currentAnimal)}
-                                    className="details-btn"
-                                >
-                                    Подробнее
-                                </button>
-                            </div>
-                        </div>
+                        )}
                     </div>
-
-                    {showHint && currentIndex === 0 && (
-                        <div className="swipe-hint">
-                            <span>👈 Свайпайте для выбора</span>
-                        </div>
-                    )}
 
                     <div className="buttons">
                         <button
@@ -355,7 +364,6 @@ export default function MainPage() {
                 </div>
             </main>
 
-            {/* Модальное окно */}
             {showModal && selectedAnimal && (
                 <div className="modal-overlay" onClick={handleCloseModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -444,6 +452,16 @@ export default function MainPage() {
                                     <h3>Описание</h3>
                                     <p>{selectedAnimal.description}</p>
                                 </div>
+
+                                <button
+                                    className="owner-btn"
+                                    onClick={() => {
+                                        handleCloseModal();
+                                        navigate(`/owner/${selectedAnimal.shelterId}`);
+                                    }}
+                                >
+                                    Перейти к владельцу
+                                </button>
                             </div>
                         </div>
                     </div>

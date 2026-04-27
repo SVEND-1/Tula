@@ -364,33 +364,46 @@ html, body {
   border-radius: 20px;
   overflow: hidden;
   background: white;
-  z-index: 10;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1); // Уменьшена тень
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 
   @media (max-width: 768px) {
     border-radius: 16px;
   }
 
-  // Убран hover эффект
   &.next {
     z-index: 5;
+    transform: scale(0.95);
+    opacity: 0.7;
   }
 
   &.current {
+    z-index: 10;
+    animation: cardAppear 0.3s ease;
+
     &.left {
-      transform: translateX(-90vw) rotate(-6deg);
+      transform: translateX(-120vw) rotate(-15deg);
       opacity: 0;
-      transition: 0.9s ease;
-      z-index: 999;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      animation: none;
     }
 
     &.right {
-      transform: translateX(90vw) rotate(6deg);
+      transform: translateX(120vw) rotate(15deg);
       opacity: 0;
-      transition: 0.9s ease;
-      z-index: 999;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      animation: none;
     }
+  }
+}
+
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -1102,5 +1115,72 @@ html, body {
       font-size: 14px;
       line-height: 1.5;
     }
+  }
+}
+
+
+
+
+/* Подсказка со стрелкой */
+.hint {
+  position: absolute;
+  top: 300px;
+  left: 200px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 1;
+
+  @media (max-width: 1200px) {
+    left: 100px;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.hint-text {
+  font-size: 32px;
+  font-weight: 600;
+  color: #333;
+  max-width: 240px;
+  line-height: 1.1;
+  font-family: "Playpen Sans", cursive;
+}
+
+.arrow {
+  width: 240px;
+  height: 150px;
+}
+
+.arrow-path {
+  fill: none;
+  stroke: #333;
+  stroke-width: 4;
+}
+
+/* Кнопка владельца в модальном окне */
+.owner-btn {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #ffcdb0, #ff8c42);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: "Playpen Sans", cursive;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  width: 100%;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(255, 140, 66, 0.3);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding: 10px 20px;
   }
 }

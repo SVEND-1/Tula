@@ -121,7 +121,7 @@ const PaymentHistoryPage: React.FC = () => {
     };
 
     const handleClose = () => {
-        navigate('/profile');
+        navigate('/liked');
     };
 
     const handleManualActivateSubscription = async () => {
@@ -152,7 +152,7 @@ const PaymentHistoryPage: React.FC = () => {
                         onClick={handleCreatePayment}
                         disabled={isCreatingPayment}
                     >
-                        {isCreatingPayment ? 'Создание...' : '💳 Сделать пожертвование'}
+                        {isCreatingPayment ? 'Создание...' : 'Сделать пожертвование'}
                     </button>
                 </div>
 

@@ -94,7 +94,7 @@ const SubscriptionPage: React.FC = () => {
         <div className="subscription-page">
             <div className="subscription-container">
                 <div className="subscription-header">
-                    <button onClick={() => navigate('/main')} className="back-btn">
+                    <button onClick={() => navigate('/liked')} className="back-btn">
                         ← Назад
                     </button>
                     <h1>Подписка Adoptly</h1>
@@ -142,7 +142,7 @@ const SubscriptionPage: React.FC = () => {
                                 onClick={handleSubscribe}
                                 disabled={isLoading}
                             >
-                                {isLoading ? 'Обработка...' : '💳 Оформить подписку'}
+                                {isLoading ? 'Обработка...' : 'Оформить подписку'}
                             </button>
                         </div>
                     </div>

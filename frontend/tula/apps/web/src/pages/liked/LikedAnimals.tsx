@@ -10,6 +10,23 @@ import { createAnimalWithImage, getAnimalImageUrl, deleteAnimal } from "../../ap
 import { deleteLike, getUserLikes } from "../../api/likeApi";
 import { getFollowersCount } from "../../api/followApi";
 
+// Импорт всех SVG иконок
+import dogIcon from '../../assets/dog.svg';
+import catIcon from '../../assets/cat.png';
+import pawIcon from '../../assets/paw.svg';
+import personIcon from '../../assets/person.svg';
+import starIcon from '../../assets/star.svg';
+import favoriteIcon from '../../assets/favorite.svg';
+import chatIcon from '../../assets/chat.svg';
+import adoptlyHouseIcon from '../../assets/adoptly-house.svg';
+import createIcon from '../../assets/create.svg';
+import creditCardIcon from '../../assets/credit-card.svg';
+import maleIcon from '../../assets/male.svg';
+import femaleIcon from '../../assets/female.svg';
+import calendarIcon from '../../assets/calendar.svg';
+import editDocumentIcon from '../../assets/edit-document.svg';
+import flashUseIcon from '../../assets/flash-use.svg';
+
 interface LikedAnimal {
     id: number;
     name: string;
@@ -53,38 +70,49 @@ export default function LikedAnimals() {
     const [followersCount, setFollowersCount] = useState<number | null>(null);
     const [currentFact, setCurrentFact] = useState(0);
     const [isDeleting, setIsDeleting] = useState<number | null>(null);
+    const [progress, setProgress] = useState(0);
 
     const facts = [
-        { text: "🐱 Кошки спят около 16 часов в день", emoji: "😴" },
-        { text: "🐶 Собаки понимают до 250 слов и жестов", emoji: "🧠" },
-        { text: "🐱 Коты могут издавать около 100 различных звуков", emoji: "🎵" },
-        { text: "🐶 Нос собаки уникален, как отпечаток пальца", emoji: "👃" },
-        { text: "🐱 Кошки не чувствуют сладкий вкус", emoji: "🍬" },
-        { text: "🐶 Собаки видят сны так же, как люди", emoji: "💭" },
-        { text: "🐱 У кошек 32 мышцы в каждом ухе", emoji: "👂" },
-        { text: "🐶 Хвост собаки показывает её настроение", emoji: "🐕" },
-        { text: "🐱 Кошки мурлыкают на частоте, которая помогает заживлению костей", emoji: "💚" },
-        { text: "🐶 Собаки могут чувствовать магнитное поле Земли", emoji: "🧲" },
-        { text: "🐱 Кошка может прыгнуть в 6 раз выше своего роста", emoji: "🦘" },
-        { text: "🐶 Собаки понимают человеческие эмоции по голосу", emoji: "❤️" },
-        { text: "🐱 Усы помогают кошкам ориентироваться в темноте", emoji: "🌙" },
-        { text: "🐶 Собаки бегают зигзагами, чтобы сбросить напряжение", emoji: "⚡" }
+        { text: "Кошки спят около 16 часов в день" },
+        { text: "Собаки понимают до 250 слов и жестов" },
+        { text: "Коты могут издавать около 100 различных звуков" },
+        { text: "Нос собаки уникален, как отпечаток пальца" },
+        { text: "Кошки не чувствуют сладкий вкус" },
+        { text: "Собаки видят сны так же, как люди" },
+        { text: "У кошек 32 мышцы в каждом ухе" },
+        { text: "Хвост собаки показывает её настроение" },
+        { text: "Кошки мурлыкают на частоте, которая помогает заживлению костей" },
+        { text: "Собаки могут чувствовать магнитное поле Земли" },
+        { text: "Кошка может прыгнуть в 6 раз выше своего роста" },
+        { text: "Собаки понимают человеческие эмоции по голосу" },
+        { text: "Усы помогают кошкам ориентироваться в темноте" },
+        { text: "Собаки бегают зигзагами, чтобы сбросить напряжение" }
     ];
 
     useEffect(() => {
         document.body.style.overflow = 'auto';
         document.documentElement.style.overflow = 'auto';
 
-        const interval = setInterval(() => {
+        // Синхронизированный таймер для фактов и прогресс-бара
+        const factInterval = setInterval(() => {
             setCurrentFact((prev) => (prev + 1) % facts.length);
+            setProgress(0);
         }, 8000);
+
+        const progressInterval = setInterval(() => {
+            setProgress((prev) => {
+                if (prev >= 100) return 0;
+                return prev + (100 / (8000 / 100));
+            });
+        }, 100);
 
         loadProfile();
 
         return () => {
             document.body.style.overflow = '';
             document.documentElement.style.overflow = '';
-            clearInterval(interval);
+            clearInterval(factInterval);
+            clearInterval(progressInterval);
         };
     }, []);
 
@@ -261,12 +289,10 @@ export default function LikedAnimals() {
         }
     };
 
-    // Удаление питомца с предварительным удалением всех лайков
     const handleDeleteAnimal = async (animalId: number, animalName: string) => {
         if (confirm(`Вы уверены, что хотите удалить животное "${animalName}"?`)) {
             setIsDeleting(animalId);
             try {
-                // Сначала удаляем все лайки пользователя на это животное
                 try {
                     const userLikes = await getUserLikes();
                     const likeToDelete = userLikes.data.find(like => like.animalId === animalId);
@@ -278,7 +304,6 @@ export default function LikedAnimals() {
                     console.log('Не удалось удалить лайк, продолжаем удаление животного');
                 }
 
-                // Теперь удаляем животное
                 await deleteAnimal(animalId);
                 alert('✅ Животное удалено!');
 
@@ -341,7 +366,12 @@ export default function LikedAnimals() {
         return `${age} лет`;
     };
 
-    const getGenderIcon = (gender: string) => gender === 'MAN' ? '♂️' : '♀️';
+    const getGenderIcon = (gender: string) => {
+        return gender === 'MAN' ?
+            <img src={maleIcon} alt="Мужской" className="gender-svg-icon" /> :
+            <img src={femaleIcon} alt="Женский" className="gender-svg-icon" />;
+    };
+
     const getGenderText = (gender: string) => gender === 'MAN' ? 'Мальчик' : 'Девочка';
 
     const formatDate = (dateString: string) => {
@@ -404,22 +434,21 @@ export default function LikedAnimals() {
                     ← Назад
                 </button>
                 <div className="logo">Adoptly</div>
-                <div className="profile-avatar-small" onClick={() => setActiveTab('profile')}>
-                    {profile?.name?.charAt(0) || '👤'}
-                </div>
+
+
             </header>
 
             <main className="liked-container">
                 <aside className="sidebar">
                     <div className="user-info-sidebar">
                         <div className="user-avatar">
-                            {profile?.name?.charAt(0) || '👤'}
+                            {profile?.name?.charAt(0) || <img src={personIcon} alt="Профиль" className="person-icon" />}
                         </div>
                         <h3>{profile?.name || 'Пользователь'}</h3>
                         <p>{profile?.email || 'email@example.com'}</p>
                         {hasOwner && ownerId && (
                             <div className="followers-info">
-                                <span className="followers-icon">👥</span>
+                                <img src={personIcon} alt="Подписчики" className="small-icon" />
                                 <span className="followers-count-display">{getFollowersText(followersCount)}</span>
                             </div>
                         )}
@@ -427,22 +456,22 @@ export default function LikedAnimals() {
 
                     <nav className="sidebar-nav">
                         <button className={`nav-item ${activeTab === 'profile' ? 'active' : ''}`} onClick={() => setActiveTab('profile')}>
-                            <span className="nav-icon">👤</span> Главная
+                            <img src={personIcon} alt="Главная" className="nav-icon-img" /> Главная
                         </button>
                         <button className={`nav-item ${activeTab === 'mypets' ? 'active' : ''}`} onClick={() => setActiveTab('mypets')}>
-                            <span className="nav-icon">🐕</span> Мои питомцы
+                            <img src={pawIcon} alt="Питомцы" className="nav-icon-img" /> Мои питомцы
                         </button>
                         <button className={`nav-item ${activeTab === 'reviews' ? 'active' : ''}`} onClick={() => setActiveTab('reviews')}>
-                            <span className="nav-icon">⭐</span> Отзывы
+                            <img src={starIcon} alt="Отзывы" className="nav-icon-img" /> Отзывы
                         </button>
                         <button className={`nav-item ${activeTab === 'liked' ? 'active' : ''}`} onClick={() => setActiveTab('liked')}>
-                            <span className="nav-icon">❤️</span> Понравившиеся
+                            <img src={favoriteIcon} alt="Понравившиеся" className="nav-icon-img" /> Понравившиеся
                         </button>
                         <button className={`nav-item ${activeTab === 'createShelter' ? 'active' : ''}`} onClick={() => setActiveTab('createShelter')}>
-                            <span className="nav-icon">🏠</span> Приют
+                            <img src={adoptlyHouseIcon} alt="Приют" className="nav-icon-img" /> Приют
                         </button>
                         <button className="nav-item" onClick={() => navigate('/chat')}>
-                            <span className="nav-icon">💬</span> Чат
+                            <img src={chatIcon} alt="Чат" className="nav-icon-img" /> Чат
                         </button>
                     </nav>
                 </aside>
@@ -458,41 +487,48 @@ export default function LikedAnimals() {
                             <div className="stats-grid">
                                 <div className="stat-card">
                                     <div className="stat-number">{uniqueLikedAnimals.length}</div>
-                                    <div className="stat-label">Понравилось животных</div>
+                                    <div className="stat-label">
+                                         Понравилось животных
+                                    </div>
                                 </div>
                                 <div className="stat-card">
                                     <div className="stat-number">{myAnimals.length}</div>
-                                    <div className="stat-label">Моих питомцев</div>
+                                    <div className="stat-label">
+                                         Моих питомцев
+                                    </div>
                                 </div>
                                 <div className="stat-card">
                                     <div className="stat-number">{profile?.myReview?.length || 0}</div>
-                                    <div className="stat-label">Моих отзывов</div>
+                                    <div className="stat-label">
+                                         Моих отзывов
+                                    </div>
                                 </div>
                                 {hasOwner && (
                                     <div className="stat-card">
                                         <div className="stat-number">{followersCount !== null ? followersCount : '--'}</div>
-                                        <div className="stat-label">Подписчиков</div>
+                                        <div className="stat-label">
+                                            <img src={personIcon} alt="Подписчики" className="stat-icon" /> Подписчиков
+                                        </div>
                                     </div>
                                 )}
                             </div>
 
                             <div className="fun-facts-section">
                                 <div className="facts-header">
-                                    <span className="facts-icon">📖</span>
+                                    <img src={flashUseIcon} alt="Факты" className="facts-icon-img" />
                                     <h3>Интересные факты о животных</h3>
                                 </div>
                                 <div className="fact-card">
-                                    <div className="fact-emoji">{facts[currentFact].emoji}</div>
                                     <p className="fact-text">{facts[currentFact].text}</p>
                                     <div className="fact-progress">
-                                        <div className="fact-progress-bar" style={{ width: '100%', animation: 'progress 8s linear infinite' }}></div>
+                                        <div className="fact-progress-bar" style={{ width: `${progress}%` }}></div>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="quote-section">
                                 <div className="quote-card">
-                                    <span className="quote-icon">🐾</span>
+                                    <img src={pawIcon} alt="Лапка" className="quote-icon-img" />
                                     <p className="quote-text">"Собака — единственное существо на земле, которое любит тебя больше, чем себя"</p>
                                     <span className="quote-author">— Джош Биллингс</span>
                                 </div>
@@ -500,10 +536,10 @@ export default function LikedAnimals() {
 
                             <div className="action-buttons">
                                 <button onClick={() => navigate('/payments')} className="action-btn payments-btn">
-                                    💳 История платежей
+                                    <img src={creditCardIcon} alt="Платежи" className="action-icon" /> История платежей
                                 </button>
                                 <button onClick={() => navigate('/subscription')} className="action-btn subscription-btn">
-                                    ⭐ Оформить подписку
+                                    <img src={starIcon} alt="Подписка" className="action-icon" /> Оформить подписку
                                 </button>
                             </div>
                         </div>
@@ -522,9 +558,7 @@ export default function LikedAnimals() {
                                                         <img src={getAnimalImage(animal)!} alt={animal.name} />
                                                     ) : (
                                                         <div className="image-placeholder">
-                                                            <span className="animal-emoji">
-                                                                {animal.animalType === 'DOG' ? '🐕' : '🐈'}
-                                                            </span>
+                                                            <img src={animal.animalType === 'DOG' ? dogIcon : catIcon} alt={animal.animalType} className="placeholder-icon" />
                                                         </div>
                                                     )}
                                                 </div>
@@ -556,7 +590,7 @@ export default function LikedAnimals() {
                                 </>
                             ) : (
                                 <div className="empty-state">
-                                    <span>🏠</span>
+                                    <img src={adoptlyHouseIcon} alt="Приют" className="empty-icon" />
                                     <p>У вас пока нет приюта</p>
                                     <button onClick={() => setActiveTab('createShelter')} className="add-btn">
                                         + Создать приют
@@ -584,9 +618,9 @@ export default function LikedAnimals() {
                                 </div>
                             ) : (
                                 <div className="empty-state">
-                                    <span>⭐</span>
+                                    <img src={starIcon} alt="Отзывы" className="empty-icon" />
                                     <p>У вас пока нет отзывов</p>
-                                    <button className="add-btn">✍️ Оставить отзыв</button>
+                                    <button className="add-btn">Оставить отзыв</button>
                                 </div>
                             )}
                         </div>
@@ -597,10 +631,10 @@ export default function LikedAnimals() {
                             <h2>Понравившиеся животные</h2>
                             {uniqueLikedAnimals.length === 0 ? (
                                 <div className="empty-state">
-                                    <span>❤️</span>
+                                    <img src={favoriteIcon} alt="Понравившиеся" className="empty-icon" />
                                     <p>Нет понравившихся животных</p>
                                     <button onClick={() => navigate('/main')} className="add-btn">
-                                        🐾 Перейти к животным
+                                        <img src={pawIcon} alt="Лапка" className="btn-icon" /> Перейти к животным
                                     </button>
                                 </div>
                             ) : (
@@ -612,9 +646,7 @@ export default function LikedAnimals() {
                                                     <img src={getAnimalImage(animal)!} alt={animal.name} />
                                                 ) : (
                                                     <div className="image-placeholder">
-                                                        <span className="animal-emoji">
-                                                            {animal.animalType === 'DOG' ? '🐕' : '🐈'}
-                                                        </span>
+                                                        <img src={animal.animalType === 'DOG' ? dogIcon : catIcon} alt={animal.animalType} className="placeholder-icon" />
                                                     </div>
                                                 )}
                                                 <span className={`status-badge ${getStatusClass(animal.status)}`}>
@@ -625,7 +657,7 @@ export default function LikedAnimals() {
                                                     className="delete-like-btn"
                                                     title="Удалить лайк"
                                                 >
-                                                    ❌
+                                                    ✕
                                                 </button>
                                             </div>
                                             <div className="liked-card-info">
@@ -642,7 +674,7 @@ export default function LikedAnimals() {
                                                 </div>
                                                 <p className="description">{animal.description}</p>
                                                 <div className="liked-date">
-                                                    ❤️ Лайк: {formatDate(animal.likedAt)}
+                                                    <img src={calendarIcon} alt="Дата" className="date-icon" /> Лайк: {formatDate(animal.likedAt)}
                                                 </div>
                                             </div>
                                         </div>
@@ -657,7 +689,7 @@ export default function LikedAnimals() {
                             {hasOwner ? (
                                 <div className="shelter-info-card">
                                     <div className="shelter-header">
-                                        <span className="shelter-icon">🏠</span>
+                                        <img src={adoptlyHouseIcon} alt="Приют" className="shelter-icon-img" />
                                         <h2>Мой приют</h2>
                                     </div>
                                     <div className="shelter-details">
@@ -666,12 +698,12 @@ export default function LikedAnimals() {
                                         </p>
                                         {followersCount !== null && followersCount > 0 && (
                                             <div className="followers-stats">
-                                                <span className="followers-icon">👥</span>
+                                                <img src={personIcon} alt="Подписчики" className="small-icon" />
                                                 <span>{getFollowersText(followersCount)}</span>
                                             </div>
                                         )}
                                         <button onClick={() => setActiveTab('mypets')} className="my-pets-btn">
-                                            🐕 Мои питомцы ({myAnimals.length})
+                                            <img src={pawIcon} alt="Питомцы" className="btn-icon" /> Мои питомцы ({myAnimals.length})
                                         </button>
 
                                         {ownerName && (
@@ -682,12 +714,12 @@ export default function LikedAnimals() {
                             ) : (
                                 <div className="shelter-form-card">
                                     <div className="shelter-header">
-                                        <span className="shelter-icon">🏠</span>
+                                        <img src={adoptlyHouseIcon} alt="Приют" className="shelter-icon-img" />
                                         <h2>Создать приют</h2>
                                     </div>
                                     <form onSubmit={handleCreateShelter} className="shelter-form">
                                         <div className="form-group">
-                                            <label>🏷️ Название приюта</label>
+                                            <label><img src={editDocumentIcon} alt="Название" className="label-icon" /> Название приюта</label>
                                             <input
                                                 type="text"
                                                 placeholder="Например: Добрые лапы"
@@ -697,7 +729,7 @@ export default function LikedAnimals() {
                                             />
                                         </div>
                                         <button type="submit" className="submit-btn" disabled={isCreatingShelter}>
-                                            {isCreatingShelter ? 'Создание...' : '✨ Создать приют'}
+                                            {isCreatingShelter ? 'Создание...' : 'Создать приют'}
                                         </button>
                                     </form>
                                 </div>
@@ -707,12 +739,12 @@ export default function LikedAnimals() {
 
                             <div className="create-animal-section">
                                 <div className="create-animal-header">
-                                    <span className="animal-icon">📝</span>
+                                    <img src={createIcon} alt="Добавить" className="animal-icon-img" />
                                     <h3>Добавить питомца</h3>
                                 </div>
                                 <p>Заполните форму чтобы добавить питомца в ленту</p>
                                 <CreateAnimalForm onSubmit={handleCreateAnimal} isLoading={isCreatingAnimal} />
-                            </div>
+                            </div>h
                         </div>
                     )}
                 </div>

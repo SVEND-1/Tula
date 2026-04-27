@@ -8,7 +8,7 @@ const AppHeader: React.FC = () => {
     return (
         <header className={styles.header}>
             <div className={styles.logo}>
-                <div className={styles.logoPaw}>🐾</div>
+                <div className={styles.logoPaw}></div>
                 Adoptly
             </div>
             <button
