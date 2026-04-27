@@ -1,10 +1,13 @@
 import axios from "axios";
 import type { Animal, CreateAnimalRequest } from "../types/animal/animal.types.ts";
 
+const API_BASE_URL = window.location.origin;
+
 const ANIMAL_API = axios.create({
-    baseURL: "http://localhost:8080/api",
+    baseURL: `${API_BASE_URL}/api`,
     withCredentials: true
 });
+
 
 ANIMAL_API.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');

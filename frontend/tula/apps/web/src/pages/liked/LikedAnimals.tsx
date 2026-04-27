@@ -358,13 +358,11 @@ export default function LikedAnimals() {
         try {
             console.log('Отправляем данные для обновления:', editFormData);
 
-            // Обновляем только данные животного (имя, возраст, описание)
             await updateAnimal(editingAnimal.id, editFormData);
 
             alert('✅ Данные животного успешно обновлены!');
             handleCloseModal();
 
-            // Обновляем список
             await loadMyAnimals();
             await loadProfile();
 
@@ -834,17 +832,6 @@ export default function LikedAnimals() {
                                     placeholder="Расскажите о характере и особенностях питомца"
                                     rows={4}
                                 />
-                            </div>
-
-                            <div className="current-image">
-                                <p>Текущее фото:</p>
-                                {getAnimalImage(editingAnimal) ? (
-                                    <img src={getAnimalImage(editingAnimal)!} alt={editingAnimal.name} />
-                                ) : (
-                                    <div className="image-placeholder">
-                                        <img src={editingAnimal.animalType === 'DOG' ? dogIcon : catIcon} alt={editingAnimal.animalType} className="placeholder-icon" />
-                                    </div>
-                                )}
                             </div>
                         </div>
 

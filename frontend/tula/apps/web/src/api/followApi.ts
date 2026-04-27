@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const API_BASE_URL = window.location.origin;
+
 const FOLLOW_API = axios.create({
-    baseURL: "http://localhost:8080/api/follows",
+    baseURL: `${API_BASE_URL}/api/follows`,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json'
