@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllAnimals, getAnimalImageUrl } from '../../api/animalApi';
+import { getAllAnimals, getAnimalImageUrl, getAnimalProfile } from '../../api/animalApi';
 import { sendLike, sendDislike } from '../../api/likeApi';
 import type { Animal } from '../../types/animal/animal.types.ts';
 import '../../style/MainPage.scss';
@@ -17,21 +17,23 @@ export default function MainPage() {
     const [swipeClass, setSwipeClass] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
     const [showHint, setShowHint] = useState(true);
-
-    // Состояния для анимации перехода
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [oldAnimal, setOldAnimal] = useState<Animal | null>(null);
-
-    // Состояния для модального окна
     const [showModal, setShowModal] = useState(false);
     const [selectedAnimal, setSelectedAnimal] = useState<Animal | null>(null);
     const [modalImages, setModalImages] = useState<string[]>([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+    const [isLoadingOwner, setIsLoadingOwner] = useState(false);
     const { playLikeSound, playDislikeSound } = useSound();
 
     useEffect(() => {
         loadAnimals();
+
+        const timer = setTimeout(() => {
+            setShowHint(false);
+        }, 8000);
+
+        return () => clearTimeout(timer);
     }, []);
 
     const loadAnimals = async () => {
@@ -43,7 +45,6 @@ export default function MainPage() {
             if (response.data && response.data.content && response.data.content.length > 0) {
                 const animalsList = response.data.content;
                 setAnimals(animalsList);
-
                 await loadAnimalImages(animalsList);
             } else {
                 setAnimals([]);
@@ -107,12 +108,36 @@ export default function MainPage() {
         );
     };
 
+    const handleGoToOwner = async (animal: Animal) => {
+        setIsLoadingOwner(true);
+        try {
+            const profileResponse = await getAnimalProfile(animal.id);
+            const ownerId = profileResponse.data.ownerId;
+
+            if (ownerId) {
+                handleCloseModal();
+                navigate(`/owner/${ownerId}`);
+            } else {
+                alert('Не удалось определить владельца питомца');
+            }
+        } catch (error) {
+            console.error('Ошибка получения профиля животного:', error);
+            alert('Ошибка при получении информации о владельце');
+        } finally {
+            setIsLoadingOwner(false);
+        }
+    };
+
     const handleSwipe = async (direction: 'left' | 'right') => {
         if (!currentAnimal || isProcessing || isTransitioning) return;
 
         setIsProcessing(true);
         setIsTransitioning(true);
         setSwipeClass(direction);
+
+        if (showHint) {
+            setShowHint(false);
+        }
 
         try {
             if (direction === 'right') {
@@ -450,17 +475,15 @@ export default function MainPage() {
 
                                 <div className="modal-description">
                                     <h3>Описание</h3>
-                                    <p>{selectedAnimal.description}</p>
+                                    <p>{selectedAnimal.description || 'Нет описания'}</p>
                                 </div>
 
                                 <button
                                     className="owner-btn"
-                                    onClick={() => {
-                                        handleCloseModal();
-                                        navigate(`/owner/${selectedAnimal.shelterId}`);
-                                    }}
+                                    onClick={() => handleGoToOwner(selectedAnimal)}
+                                    disabled={isLoadingOwner}
                                 >
-                                    Перейти к владельцу
+                                    {isLoadingOwner ? 'Загрузка...' : 'Перейти к владельцу'}
                                 </button>
                             </div>
                         </div>
