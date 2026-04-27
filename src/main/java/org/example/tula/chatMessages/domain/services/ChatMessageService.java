@@ -39,6 +39,8 @@ public class ChatMessageService {
         ChatEntity chatEntity =
                 chatService.getChatByIdWithCheckUser(chatId, currentUser);
 
+        chatService.checkChatStatus(chatEntity);
+
         ChatMessageEntity messageEntity = ChatMessageEntity.builder()
                 .chat(chatEntity)
                 .sender(currentUser)

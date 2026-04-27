@@ -43,7 +43,7 @@ public class AnimalService {
 
     public AnimalService(AnimalRepository animalRepository, AnimalMapper animalMapper,
                          @Lazy UserService userService, SubscriptionService subscriptionService,
-                         AnimalImageService animalImageService, LikeService likeService) {
+                         AnimalImageService animalImageService, @Lazy LikeService likeService) {
         this.animalRepository = animalRepository;
         this.animalMapper = animalMapper;
         this.userService = userService;

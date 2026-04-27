@@ -3457,3 +3457,911 @@ org.apache.kafka.common.errors.DisconnectException: null
 2026-04-18T16:21:59.405+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-3, groupId=notify-group] Adding newly assigned partitions: notifyUser-0
 2026-04-18T16:21:59.432+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-3, groupId=notify-group] Setting offset for partition notifyUser-0 to the committed offset FetchPosition{offset=30, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9092 (id: 1 rack: null)], epoch=0}}
 2026-04-18T16:21:59.433+03:00  INFO 10164 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notify-group: partitions assigned: [notifyUser-0]
+2026-04-27T20:23:14.624+03:00  INFO 6280 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : Starting TulaApplication using Java 21.0.9 with PID 6280 (F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes started by dratu in F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026)
+2026-04-27T20:23:14.625+03:00  INFO 6280 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-04-27T20:23:14.654+03:00  INFO 6280 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-27T20:23:14.654+03:00  INFO 6280 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-27T20:23:15.275+03:00  INFO 6280 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-27T20:23:15.404+03:00  INFO 6280 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 122 ms. Found 10 JPA repository interfaces.
+2026-04-27T20:23:15.882+03:00  INFO 6280 --- [Tula] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-27T20:23:15.890+03:00  INFO 6280 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-27T20:23:15.890+03:00  INFO 6280 --- [Tula] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-27T20:23:15.931+03:00  INFO 6280 --- [Tula] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-27T20:23:15.931+03:00  INFO 6280 --- [Tula] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1276 ms
+2026-04-27T20:23:16.016+03:00  INFO 6280 --- [Tula] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-27T20:23:16.063+03:00  INFO 6280 --- [Tula] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-27T20:23:16.087+03:00  INFO 6280 --- [Tula] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-27T20:23:16.237+03:00  INFO 6280 --- [Tula] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-27T20:23:16.256+03:00  INFO 6280 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-27T20:23:16.365+03:00  INFO 6280 --- [Tula] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@521edda1
+2026-04-27T20:23:16.366+03:00  INFO 6280 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-27T20:23:16.397+03:00  WARN 6280 --- [Tula] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-27T20:23:17.098+03:00  INFO 6280 --- [Tula] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-27T20:23:17.278+03:00  INFO 6280 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-27T20:23:17.524+03:00  INFO 6280 --- [Tula] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-27T20:23:17.937+03:00  INFO 6280 --- [Tula] [restartedMain] o.e.tula.payments.domain.PaymentService  : YooKassa инициализирована
+2026-04-27T20:23:18.078+03:00  WARN 6280 --- [Tula] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'animalController' defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\animals\api\AnimalController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'animalService' defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\animals\domain\AnimalService.class]: Unsatisfied dependency expressed through constructor parameter 5: Error creating bean with name 'likeService' defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\likes\domain\LikeService.class]: Unsatisfied dependency expressed through constructor parameter 2: Error creating bean with name 'animalService': Requested bean is currently in creation: Is there an unresolvable circular reference?
+2026-04-27T20:23:18.078+03:00  INFO 6280 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-27T20:23:18.080+03:00  INFO 6280 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-27T20:23:18.082+03:00  INFO 6280 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-27T20:23:18.084+03:00  INFO 6280 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-04-27T20:23:18.090+03:00  INFO 6280 --- [Tula] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-04-27T20:23:18.102+03:00 ERROR 6280 --- [Tula] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+   animalController defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\animals\api\AnimalController.class]
+┌─────┐
+|  animalService defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\animals\domain\AnimalService.class]
+↑     ↓
+|  likeService defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\likes\domain\LikeService.class]
+└─────┘
+
+
+Action:
+
+Relying upon circular references is discouraged and they are prohibited by default. Update your application to remove the dependency cycle between beans. As a last resort, it may be possible to break the cycle automatically by setting spring.main.allow-circular-references to true.
+
+2026-04-27T20:23:50.263+03:00  INFO 4636 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : Starting TulaApplication using Java 21.0.9 with PID 4636 (F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes started by dratu in F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026)
+2026-04-27T20:23:50.264+03:00  INFO 4636 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-04-27T20:23:50.290+03:00  INFO 4636 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-27T20:23:50.290+03:00  INFO 4636 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-27T20:23:50.788+03:00  INFO 4636 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-27T20:23:50.874+03:00  INFO 4636 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 82 ms. Found 10 JPA repository interfaces.
+2026-04-27T20:23:51.265+03:00  INFO 4636 --- [Tula] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-27T20:23:51.270+03:00  INFO 4636 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-27T20:23:51.272+03:00  INFO 4636 --- [Tula] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-27T20:23:51.306+03:00  INFO 4636 --- [Tula] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-27T20:23:51.306+03:00  INFO 4636 --- [Tula] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1015 ms
+2026-04-27T20:23:51.370+03:00  INFO 4636 --- [Tula] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-27T20:23:51.395+03:00  INFO 4636 --- [Tula] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-27T20:23:51.410+03:00  INFO 4636 --- [Tula] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-27T20:23:51.513+03:00  INFO 4636 --- [Tula] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-27T20:23:51.525+03:00  INFO 4636 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-27T20:23:51.619+03:00  INFO 4636 --- [Tula] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@15cb553
+2026-04-27T20:23:51.620+03:00  INFO 4636 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-27T20:23:51.638+03:00  WARN 4636 --- [Tula] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-27T20:23:52.215+03:00  INFO 4636 --- [Tula] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-27T20:23:52.320+03:00  INFO 4636 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-27T20:23:52.521+03:00  INFO 4636 --- [Tula] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-27T20:23:52.830+03:00  INFO 4636 --- [Tula] [restartedMain] o.e.tula.payments.domain.PaymentService  : YooKassa инициализирована
+2026-04-27T20:23:52.934+03:00  WARN 4636 --- [Tula] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'animalController' defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\animals\api\AnimalController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'animalService' defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\animals\domain\AnimalService.class]: Unsatisfied dependency expressed through constructor parameter 5: Error creating bean with name 'likeService' defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\likes\domain\LikeService.class]: Unsatisfied dependency expressed through constructor parameter 2: Error creating bean with name 'animalService': Requested bean is currently in creation: Is there an unresolvable circular reference?
+2026-04-27T20:23:52.935+03:00  INFO 4636 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-27T20:23:52.936+03:00  INFO 4636 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-27T20:23:52.938+03:00  INFO 4636 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-27T20:23:52.940+03:00  INFO 4636 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-04-27T20:23:52.947+03:00  INFO 4636 --- [Tula] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-04-27T20:23:52.957+03:00 ERROR 4636 --- [Tula] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+   animalController defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\animals\api\AnimalController.class]
+┌─────┐
+|  animalService defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\animals\domain\AnimalService.class]
+↑     ↓
+|  likeService defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\likes\domain\LikeService.class]
+└─────┘
+
+
+Action:
+
+Relying upon circular references is discouraged and they are prohibited by default. Update your application to remove the dependency cycle between beans. As a last resort, it may be possible to break the cycle automatically by setting spring.main.allow-circular-references to true.
+
+2026-04-27T20:46:48.510+03:00  INFO 34040 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : Starting TulaApplication using Java 21.0.9 with PID 34040 (F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes started by dratu in F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026)
+2026-04-27T20:46:48.511+03:00  INFO 34040 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-04-27T20:46:48.535+03:00  INFO 34040 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-27T20:46:48.535+03:00  INFO 34040 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-27T20:46:49.041+03:00  INFO 34040 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-27T20:46:49.140+03:00  INFO 34040 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 94 ms. Found 10 JPA repository interfaces.
+2026-04-27T20:46:49.544+03:00  INFO 34040 --- [Tula] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-27T20:46:49.552+03:00  INFO 34040 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-27T20:46:49.552+03:00  INFO 34040 --- [Tula] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-27T20:46:49.590+03:00  INFO 34040 --- [Tula] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-27T20:46:49.590+03:00  INFO 34040 --- [Tula] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1054 ms
+2026-04-27T20:46:49.656+03:00  INFO 34040 --- [Tula] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-27T20:46:49.683+03:00  INFO 34040 --- [Tula] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-27T20:46:49.698+03:00  INFO 34040 --- [Tula] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-27T20:46:49.803+03:00  INFO 34040 --- [Tula] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-27T20:46:49.816+03:00  INFO 34040 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-27T20:46:49.906+03:00  INFO 34040 --- [Tula] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4587ef4
+2026-04-27T20:46:49.906+03:00  INFO 34040 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-27T20:46:49.926+03:00  WARN 34040 --- [Tula] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-27T20:46:50.506+03:00  INFO 34040 --- [Tula] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-27T20:46:50.620+03:00  INFO 34040 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-27T20:46:50.828+03:00  INFO 34040 --- [Tula] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-27T20:46:51.136+03:00  INFO 34040 --- [Tula] [restartedMain] o.e.tula.payments.domain.PaymentService  : YooKassa инициализирована
+2026-04-27T20:46:51.245+03:00  WARN 34040 --- [Tula] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'animalController' defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\animals\api\AnimalController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'animalService' defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\animals\domain\AnimalService.class]: Unsatisfied dependency expressed through constructor parameter 5: Error creating bean with name 'likeService' defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\likes\domain\LikeService.class]: Unsatisfied dependency expressed through constructor parameter 2: Error creating bean with name 'animalService': Requested bean is currently in creation: Is there an unresolvable circular reference?
+2026-04-27T20:46:51.247+03:00  INFO 34040 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-27T20:46:51.248+03:00  INFO 34040 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-27T20:46:51.250+03:00  INFO 34040 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-27T20:46:51.252+03:00  INFO 34040 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-04-27T20:46:51.259+03:00  INFO 34040 --- [Tula] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-04-27T20:46:51.271+03:00 ERROR 34040 --- [Tula] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+   animalController defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\animals\api\AnimalController.class]
+┌─────┐
+|  animalService defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\animals\domain\AnimalService.class]
+↑     ↓
+|  likeService defined in file [F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes\org\example\tula\likes\domain\LikeService.class]
+└─────┘
+
+
+Action:
+
+Relying upon circular references is discouraged and they are prohibited by default. Update your application to remove the dependency cycle between beans. As a last resort, it may be possible to break the cycle automatically by setting spring.main.allow-circular-references to true.
+
+2026-04-27T20:47:56.814+03:00  INFO 3128 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : Starting TulaApplication using Java 21.0.9 with PID 3128 (F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes started by dratu in F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026)
+2026-04-27T20:47:56.815+03:00  INFO 3128 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-04-27T20:47:56.838+03:00  INFO 3128 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-27T20:47:56.839+03:00  INFO 3128 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-27T20:47:57.309+03:00  INFO 3128 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-27T20:47:57.398+03:00  INFO 3128 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 85 ms. Found 10 JPA repository interfaces.
+2026-04-27T20:47:57.803+03:00  INFO 3128 --- [Tula] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-27T20:47:57.809+03:00  INFO 3128 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-27T20:47:57.809+03:00  INFO 3128 --- [Tula] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-27T20:47:57.844+03:00  INFO 3128 --- [Tula] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-27T20:47:57.844+03:00  INFO 3128 --- [Tula] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1005 ms
+2026-04-27T20:47:57.921+03:00  INFO 3128 --- [Tula] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-27T20:47:57.949+03:00  INFO 3128 --- [Tula] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-27T20:47:57.963+03:00  INFO 3128 --- [Tula] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-27T20:47:58.069+03:00  INFO 3128 --- [Tula] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-27T20:47:58.081+03:00  INFO 3128 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-27T20:47:58.171+03:00  INFO 3128 --- [Tula] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@304043d1
+2026-04-27T20:47:58.173+03:00  INFO 3128 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-27T20:47:58.191+03:00  WARN 3128 --- [Tula] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-27T20:47:58.775+03:00  INFO 3128 --- [Tula] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-27T20:47:58.886+03:00  INFO 3128 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-27T20:47:59.087+03:00  INFO 3128 --- [Tula] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-27T20:47:59.406+03:00  INFO 3128 --- [Tula] [restartedMain] o.e.tula.payments.domain.PaymentService  : YooKassa инициализирована
+2026-04-27T20:47:59.566+03:00  WARN 3128 --- [Tula] [restartedMain] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.OncePerRequestFilter.doFilter(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,jakarta.servlet.FilterChain) throws jakarta.servlet.ServletException,java.io.IOException] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-04-27T20:47:59.566+03:00  WARN 3128 --- [Tula] [restartedMain] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.GenericFilterBean.init(jakarta.servlet.FilterConfig) throws jakarta.servlet.ServletException] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-04-27T20:47:59.713+03:00 ERROR 3128 --- [Tula] [restartedMain] o.e.tula.minio.util.BucketInitializer    : Could not initialize bucket 'pets-images'
+
+java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:9000
+	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517) ~[okhttp-4.12.0.jar:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+	Suppressed: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:9000
+		... 19 common frames omitted
+	Caused by: java.net.ConnectException: Connection refused: getsockopt
+		at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+		at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:690)
+		at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)
+		at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)
+		at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+		at java.base/java.net.Socket.connect(Socket.java:751)
+		at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128)
+		at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295)
+		... 18 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:690) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:751) ~[na:na]
+	at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295) ~[okhttp-4.12.0.jar:na]
+	... 18 common frames omitted
+
+2026-04-27T20:47:59.716+03:00  WARN 3128 --- [Tula] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'bucketInitializer': Invocation of init method failed
+2026-04-27T20:47:59.717+03:00  INFO 3128 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-27T20:47:59.718+03:00  INFO 3128 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-27T20:47:59.720+03:00  INFO 3128 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-27T20:47:59.723+03:00  INFO 3128 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-04-27T20:47:59.730+03:00  INFO 3128 --- [Tula] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-04-27T20:47:59.741+03:00 ERROR 3128 --- [Tula] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'bucketInitializer': Invocation of init method failed
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:222) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:422) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1778) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962) ~[spring-context-6.1.5.jar:6.1.5]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.5.jar:6.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.example.tula.TulaApplication.main(TulaApplication.java:10) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.4.jar:3.2.4]
+Caused by: org.example.tula.minio.exceptions.MinioServiceException: Bucket initialization failed
+	at org.example.tula.minio.util.BucketInitializer.lambda$initBuckets$0(BucketInitializer.java:32) ~[classes/:na]
+	at java.base/java.util.HashMap$Values.forEach(HashMap.java:1073) ~[na:na]
+	at org.example.tula.minio.util.BucketInitializer.initBuckets(BucketInitializer.java:23) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:401) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:219) ~[spring-beans-6.1.5.jar:6.1.5]
+	... 21 common frames omitted
+Caused by: java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:9000
+	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517) ~[okhttp-4.12.0.jar:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+	Suppressed: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:9000
+		... 19 common frames omitted
+	Caused by: java.net.ConnectException: Connection refused: getsockopt
+		at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+		at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:690)
+		at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)
+		at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)
+		at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+		at java.base/java.net.Socket.connect(Socket.java:751)
+		at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128)
+		at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295)
+		... 18 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:690) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:751) ~[na:na]
+	at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128) ~[okhttp-4.12.0.jar:na]
+	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295) ~[okhttp-4.12.0.jar:na]
+	... 18 common frames omitted
+
+2026-04-27T20:49:20.182+03:00  INFO 29956 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : Starting TulaApplication using Java 21.0.9 with PID 29956 (F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes started by dratu in F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026)
+2026-04-27T20:49:20.183+03:00  INFO 29956 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-04-27T20:49:20.208+03:00  INFO 29956 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-27T20:49:20.208+03:00  INFO 29956 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-27T20:49:20.698+03:00  INFO 29956 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-27T20:49:20.786+03:00  INFO 29956 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 83 ms. Found 10 JPA repository interfaces.
+2026-04-27T20:49:21.174+03:00  INFO 29956 --- [Tula] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-27T20:49:21.181+03:00  INFO 29956 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-27T20:49:21.181+03:00  INFO 29956 --- [Tula] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-27T20:49:21.218+03:00  INFO 29956 --- [Tula] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-27T20:49:21.218+03:00  INFO 29956 --- [Tula] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1010 ms
+2026-04-27T20:49:21.284+03:00  INFO 29956 --- [Tula] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-27T20:49:21.311+03:00  INFO 29956 --- [Tula] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-27T20:49:21.327+03:00  INFO 29956 --- [Tula] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-27T20:49:21.436+03:00  INFO 29956 --- [Tula] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-27T20:49:21.448+03:00  INFO 29956 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-27T20:49:21.543+03:00  INFO 29956 --- [Tula] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@67c3eeb6
+2026-04-27T20:49:21.544+03:00  INFO 29956 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-27T20:49:21.563+03:00  WARN 29956 --- [Tula] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-27T20:49:22.144+03:00  INFO 29956 --- [Tula] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-27T20:49:22.255+03:00  INFO 29956 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-27T20:49:22.461+03:00  INFO 29956 --- [Tula] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-27T20:49:22.777+03:00  INFO 29956 --- [Tula] [restartedMain] o.e.tula.payments.domain.PaymentService  : YooKassa инициализирована
+2026-04-27T20:49:22.928+03:00  WARN 29956 --- [Tula] [restartedMain] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.OncePerRequestFilter.doFilter(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,jakarta.servlet.FilterChain) throws jakarta.servlet.ServletException,java.io.IOException] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-04-27T20:49:22.928+03:00  WARN 29956 --- [Tula] [restartedMain] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.GenericFilterBean.init(jakarta.servlet.FilterConfig) throws jakarta.servlet.ServletException] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-04-27T20:49:23.393+03:00  INFO 29956 --- [Tula] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7bc0cb56, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7979eea8, org.springframework.security.web.context.SecurityContextHolderFilter@16516923, org.springframework.security.web.header.HeaderWriterFilter@5555045a, org.springframework.web.filter.CorsFilter@2031bbce, org.springframework.security.web.authentication.logout.LogoutFilter@15eb72a8, org.example.tula.config.JwtFilter@3c3ae7f0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@119b4e0a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5aa0045f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5f6f21ab, org.springframework.security.web.session.SessionManagementFilter@e288e46, org.springframework.security.web.access.ExceptionTranslationFilter@4fe23bf6, org.springframework.security.web.access.intercept.AuthorizationFilter@374ddb82]
+2026-04-27T20:49:23.648+03:00  INFO 29956 --- [Tula] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-04-27T20:49:23.697+03:00  INFO 29956 --- [Tula] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-04-27T20:49:23.728+03:00  INFO 29956 --- [Tula] [restartedMain] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-notify-group-1
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = notify-group
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2026-04-27T20:49:23.793+03:00  INFO 29956 --- [Tula] [restartedMain] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.6.1
+2026-04-27T20:49:23.793+03:00  INFO 29956 --- [Tula] [restartedMain] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 5e3c2b738d253ff5
+2026-04-27T20:49:23.793+03:00  INFO 29956 --- [Tula] [restartedMain] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1777312163792
+2026-04-27T20:49:23.794+03:00  INFO 29956 --- [Tula] [restartedMain] fkaConsumerFactory$ExtendedKafkaConsumer : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Subscribed to topic(s): notifyUser
+2026-04-27T20:49:23.806+03:00  INFO 29956 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : Started TulaApplication in 3.84 seconds (process running for 4.285)
+2026-04-27T20:49:24.002+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:24.003+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:24.003+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:24.105+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:24.105+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:24.105+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:24.213+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:24.213+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:24.214+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:24.385+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:24.385+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:24.386+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:24.869+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:24.869+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:24.869+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:25.790+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:25.790+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:25.790+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:26.836+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:26.836+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:26.836+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:27.883+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:27.883+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:27.883+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:29.119+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:29.119+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:29.119+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:29.980+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:29.980+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:29.980+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:30.951+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:30.951+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:30.951+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:32.183+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:32.183+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:32.183+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:33.234+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:33.234+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:33.234+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:34.374+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:34.374+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:34.374+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:35.293+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:35.293+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:35.293+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:36.340+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:36.340+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:36.340+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:37.263+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:37.263+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:37.263+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:38.252+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:38.278+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:38.278+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:39.200+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:39.200+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:39.201+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:40.316+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:40.316+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:40.316+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:41.177+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:41.177+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:41.177+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:42.230+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:42.230+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:42.230+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:43.213+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:43.213+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:43.213+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:44.088+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:44.088+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:44.088+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:45.258+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:45.258+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:45.258+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:46.121+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:46.121+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:46.121+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:47.042+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:47.043+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:47.043+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:48.212+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:48.212+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:48.212+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:49.398+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:49.398+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:49.398+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:50.508+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:50.508+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:50.508+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:51.367+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:51.367+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:51.367+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:52.601+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:52.601+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:52.601+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:53.647+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:53.647+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:53.647+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:54.849+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:54.849+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:54.849+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:55.769+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:55.769+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:55.769+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:56.752+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:56.752+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:56.752+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:57.741+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:57.742+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:57.742+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:58.848+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:58.848+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:58.848+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:49:59.768+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:49:59.768+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:49:59.768+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:00.628+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:00.628+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:00.628+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:01.546+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:01.546+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:01.546+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:02.472+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:02.472+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:02.472+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:03.332+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:03.332+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:03.332+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:04.180+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:04.180+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:04.180+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:05.225+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:05.225+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:05.225+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:06.278+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:06.278+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:06.278+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:07.200+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:07.200+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:07.200+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:08.059+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:08.059+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:08.059+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:09.058+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:09.058+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:09.058+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:10.228+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:10.228+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:10.228+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:11.151+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:11.151+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:11.151+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:12.012+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:12.012+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:12.012+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:13.055+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:13.055+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:13.055+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:14.071+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:14.071+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:14.071+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:15.242+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:15.242+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:15.242+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:16.163+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:16.163+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:16.163+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:17.335+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:17.335+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:17.335+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:18.571+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:18.571+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:18.571+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:19.517+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:19.517+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:19.517+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:20.689+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:20.689+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:20.689+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:21.743+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:21.743+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:21.743+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:22.849+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:22.849+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:22.849+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:23.971+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:23.971+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:23.971+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:25.018+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:25.018+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:25.018+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:26.004+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:26.004+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:26.004+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:26.991+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:26.991+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:26.991+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:28.104+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:28.104+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:28.104+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:28.978+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:28.978+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:28.978+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:30.023+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:30.023+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:30.023+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:31.194+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:31.194+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:31.194+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:32.054+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:32.054+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:32.054+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:33.223+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:33.223+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:33.223+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:34.426+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:34.427+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:34.427+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:35.659+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:35.659+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:35.659+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:36.704+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:36.705+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:36.705+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:37.819+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:37.819+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:37.819+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:38.680+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:38.680+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:38.680+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:39.679+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:39.679+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:39.679+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:40.536+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:40.536+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:40.536+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:41.395+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:41.395+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:41.395+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:42.572+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:42.572+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:42.572+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:43.492+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:43.492+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:43.492+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:44.568+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:44.584+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Broker may not be available.
+2026-04-27T20:50:44.585+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:45.454+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:45.456+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 1 due to node -1 being disconnected (elapsed time since creation: 28ms, elapsed time since send: 28ms, request timeout: 30000ms)
+2026-04-27T20:50:45.457+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:46.322+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:46.322+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 2 due to node -1 being disconnected (elapsed time since creation: 2ms, elapsed time since send: 2ms, request timeout: 30000ms)
+2026-04-27T20:50:46.322+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:47.378+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:47.379+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 3 due to node -1 being disconnected (elapsed time since creation: 1ms, elapsed time since send: 1ms, request timeout: 30000ms)
+2026-04-27T20:50:47.379+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:48.297+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:48.298+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 4 due to node -1 being disconnected (elapsed time since creation: 0ms, elapsed time since send: 0ms, request timeout: 30000ms)
+2026-04-27T20:50:48.298+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:49.451+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:49.451+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 5 due to node -1 being disconnected (elapsed time since creation: 1ms, elapsed time since send: 1ms, request timeout: 30000ms)
+2026-04-27T20:50:49.451+03:00  WARN 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:49.727+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-04-27T20:50:49.727+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Request joining group due to: consumer pro-actively leaving the group
+2026-04-27T20:50:49.727+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] fkaConsumerFactory$ExtendedKafkaConsumer : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Unsubscribed all topics or patterns and assigned partitions
+2026-04-27T20:50:49.735+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-04-27T20:50:49.735+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Request joining group due to: consumer pro-actively leaving the group
+2026-04-27T20:50:49.737+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
+2026-04-27T20:50:49.737+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-04-27T20:50:49.737+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
+2026-04-27T20:50:49.739+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.kafka.common.utils.AppInfoParser     : App info kafka.consumer for consumer-notify-group-1 unregistered
+2026-04-27T20:50:49.739+03:00  INFO 29956 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notify-group: Consumer stopped
+2026-04-27T20:50:49.757+03:00  INFO 29956 --- [Tula] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-27T20:50:49.759+03:00  INFO 29956 --- [Tula] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-27T20:50:49.760+03:00  INFO 29956 --- [Tula] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-27T20:50:52.212+03:00  INFO 27608 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : Starting TulaApplication using Java 21.0.9 with PID 27608 (F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026\target\classes started by dratu in F:\Programing\Projects\Hackaton Tula 2026\Hackaton Tula 2026)
+2026-04-27T20:50:52.213+03:00  INFO 27608 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-04-27T20:50:52.242+03:00  INFO 27608 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-27T20:50:52.242+03:00  INFO 27608 --- [Tula] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-27T20:50:52.854+03:00  INFO 27608 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-27T20:50:52.971+03:00  INFO 27608 --- [Tula] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 113 ms. Found 10 JPA repository interfaces.
+2026-04-27T20:50:53.459+03:00  INFO 27608 --- [Tula] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-04-27T20:50:53.466+03:00  INFO 27608 --- [Tula] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-27T20:50:53.466+03:00  INFO 27608 --- [Tula] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-27T20:50:53.506+03:00  INFO 27608 --- [Tula] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-27T20:50:53.506+03:00  INFO 27608 --- [Tula] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1264 ms
+2026-04-27T20:50:53.584+03:00  INFO 27608 --- [Tula] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-27T20:50:53.617+03:00  INFO 27608 --- [Tula] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-27T20:50:53.635+03:00  INFO 27608 --- [Tula] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-27T20:50:53.750+03:00  INFO 27608 --- [Tula] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-27T20:50:53.762+03:00  INFO 27608 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-27T20:50:53.874+03:00  INFO 27608 --- [Tula] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@335cd5d4
+2026-04-27T20:50:53.875+03:00  INFO 27608 --- [Tula] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-27T20:50:53.895+03:00  WARN 27608 --- [Tula] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-27T20:50:54.491+03:00  INFO 27608 --- [Tula] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-27T20:50:54.609+03:00  INFO 27608 --- [Tula] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-27T20:50:54.814+03:00  INFO 27608 --- [Tula] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-27T20:50:55.142+03:00  INFO 27608 --- [Tula] [restartedMain] o.e.tula.payments.domain.PaymentService  : YooKassa инициализирована
+2026-04-27T20:50:55.288+03:00  WARN 27608 --- [Tula] [restartedMain] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.OncePerRequestFilter.doFilter(jakarta.servlet.ServletRequest,jakarta.servlet.ServletResponse,jakarta.servlet.FilterChain) throws jakarta.servlet.ServletException,java.io.IOException] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-04-27T20:50:55.288+03:00  WARN 27608 --- [Tula] [restartedMain] o.s.aop.framework.CglibAopProxy          : Unable to proxy interface-implementing method [public final void org.springframework.web.filter.GenericFilterBean.init(jakarta.servlet.FilterConfig) throws jakarta.servlet.ServletException] because it is marked as final, consider using interface-based JDK proxies instead.
+2026-04-27T20:50:55.686+03:00  INFO 27608 --- [Tula] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7bc0cb56, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7979eea8, org.springframework.security.web.context.SecurityContextHolderFilter@16516923, org.springframework.security.web.header.HeaderWriterFilter@5555045a, org.springframework.web.filter.CorsFilter@2031bbce, org.springframework.security.web.authentication.logout.LogoutFilter@15eb72a8, org.example.tula.config.JwtFilter@6f88c664, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@119b4e0a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5aa0045f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5f6f21ab, org.springframework.security.web.session.SessionManagementFilter@e288e46, org.springframework.security.web.access.ExceptionTranslationFilter@4fe23bf6, org.springframework.security.web.access.intercept.AuthorizationFilter@374ddb82]
+2026-04-27T20:50:55.905+03:00  INFO 27608 --- [Tula] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-04-27T20:50:55.945+03:00  INFO 27608 --- [Tula] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-04-27T20:50:55.972+03:00  INFO 27608 --- [Tula] [restartedMain] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.include.jmx.reporter = true
+	auto.offset.reset = latest
+	bootstrap.servers = [localhost:9092]
+	check.crcs = true
+	client.dns.lookup = use_all_dns_ips
+	client.id = consumer-notify-group-1
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = notify-group
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	internal.throw.on.fetch.stable.offset.unsupported = false
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor, class org.apache.kafka.clients.consumer.CooperativeStickyAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.connect.timeout.ms = null
+	sasl.login.read.timeout.ms = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.login.retry.backoff.max.ms = 10000
+	sasl.login.retry.backoff.ms = 100
+	sasl.mechanism = GSSAPI
+	sasl.oauthbearer.clock.skew.seconds = 30
+	sasl.oauthbearer.expected.audience = null
+	sasl.oauthbearer.expected.issuer = null
+	sasl.oauthbearer.jwks.endpoint.refresh.ms = 3600000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.max.ms = 10000
+	sasl.oauthbearer.jwks.endpoint.retry.backoff.ms = 100
+	sasl.oauthbearer.jwks.endpoint.url = null
+	sasl.oauthbearer.scope.claim.name = scope
+	sasl.oauthbearer.sub.claim.name = sub
+	sasl.oauthbearer.token.endpoint.url = null
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 45000
+	socket.connection.setup.timeout.max.ms = 30000
+	socket.connection.setup.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.3]
+	ssl.endpoint.identification.algorithm = https
+	ssl.engine.factory.class = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.certificate.chain = null
+	ssl.keystore.key = null
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.3
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.certificates = null
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2026-04-27T20:50:56.014+03:00  INFO 27608 --- [Tula] [restartedMain] o.a.kafka.common.utils.AppInfoParser     : Kafka version: 3.6.1
+2026-04-27T20:50:56.014+03:00  INFO 27608 --- [Tula] [restartedMain] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId: 5e3c2b738d253ff5
+2026-04-27T20:50:56.014+03:00  INFO 27608 --- [Tula] [restartedMain] o.a.kafka.common.utils.AppInfoParser     : Kafka startTimeMs: 1777312256013
+2026-04-27T20:50:56.016+03:00  INFO 27608 --- [Tula] [restartedMain] fkaConsumerFactory$ExtendedKafkaConsumer : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Subscribed to topic(s): notifyUser
+2026-04-27T20:50:56.025+03:00  INFO 27608 --- [Tula] [restartedMain] org.example.tula.TulaApplication         : Started TulaApplication in 4.059 seconds (process running for 4.504)
+2026-04-27T20:50:56.145+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:56.146+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 1 due to node -1 being disconnected (elapsed time since creation: 13ms, elapsed time since send: 13ms, request timeout: 30000ms)
+2026-04-27T20:50:56.146+03:00  WARN 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:56.260+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:56.260+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 2 due to node -1 being disconnected (elapsed time since creation: 1ms, elapsed time since send: 1ms, request timeout: 30000ms)
+2026-04-27T20:50:56.260+03:00  WARN 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:56.367+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:56.368+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 3 due to node -1 being disconnected (elapsed time since creation: 0ms, elapsed time since send: 0ms, request timeout: 30000ms)
+2026-04-27T20:50:56.368+03:00  WARN 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:56.604+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:56.625+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 4 due to node -1 being disconnected (elapsed time since creation: 0ms, elapsed time since send: 0ms, request timeout: 30000ms)
+2026-04-27T20:50:56.626+03:00  WARN 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:57.026+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:57.026+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 5 due to node -1 being disconnected (elapsed time since creation: 1ms, elapsed time since send: 1ms, request timeout: 30000ms)
+2026-04-27T20:50:57.026+03:00  WARN 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:57.948+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:57.948+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 6 due to node -1 being disconnected (elapsed time since creation: 0ms, elapsed time since send: 0ms, request timeout: 30000ms)
+2026-04-27T20:50:57.948+03:00  WARN 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:50:58.933+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:50:58.934+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 7 due to node -1 being disconnected (elapsed time since creation: 0ms, elapsed time since send: 0ms, request timeout: 30000ms)
+2026-04-27T20:50:58.934+03:00  WARN 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:51:00.041+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:51:00.041+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 8 due to node -1 being disconnected (elapsed time since creation: 0ms, elapsed time since send: 0ms, request timeout: 30000ms)
+2026-04-27T20:51:00.041+03:00  WARN 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:51:01.025+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:51:01.026+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 9 due to node -1 being disconnected (elapsed time since creation: 0ms, elapsed time since send: 0ms, request timeout: 30000ms)
+2026-04-27T20:51:01.026+03:00  WARN 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:51:02.008+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:51:02.009+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 11 due to node -1 being disconnected (elapsed time since creation: 1ms, elapsed time since send: 1ms, request timeout: 30000ms)
+2026-04-27T20:51:02.009+03:00  WARN 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:51:03.056+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Node -1 disconnected.
+2026-04-27T20:51:03.056+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cancelled in-flight API_VERSIONS request with correlation id 12 due to node -1 being disconnected (elapsed time since creation: 1ms, elapsed time since send: 1ms, request timeout: 30000ms)
+2026-04-27T20:51:03.056+03:00  WARN 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.NetworkClient   : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Bootstrap broker localhost:9092 (id: -1 rack: null) disconnected
+2026-04-27T20:51:04.224+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] org.apache.kafka.clients.Metadata        : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Cluster ID: MkU3OEVBNTcwNTJENDM2Qg
+2026-04-27T20:51:04.233+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Discovered group coordinator localhost:9092 (id: 2147483646 rack: null)
+2026-04-27T20:51:04.235+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] (Re-)joining group
+2026-04-27T20:51:04.248+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Request joining group due to: need to re-join with the given member-id: consumer-notify-group-1-ba2878f1-0d49-4d5c-92e3-525865b26e0d
+2026-04-27T20:51:04.248+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Request joining group due to: rebalance failed due to 'The group member needs to have a valid member id before actually entering a consumer group.' (MemberIdRequiredException)
+2026-04-27T20:51:04.248+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] (Re-)joining group
+2026-04-27T20:51:07.259+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Successfully joined group with generation Generation{generationId=43, memberId='consumer-notify-group-1-ba2878f1-0d49-4d5c-92e3-525865b26e0d', protocol='range'}
+2026-04-27T20:51:07.263+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Finished assignment for group at generation 43: {consumer-notify-group-1-ba2878f1-0d49-4d5c-92e3-525865b26e0d=Assignment(partitions=[notifyUser-0])}
+2026-04-27T20:51:07.282+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Successfully synced group in generation Generation{generationId=43, memberId='consumer-notify-group-1-ba2878f1-0d49-4d5c-92e3-525865b26e0d', protocol='range'}
+2026-04-27T20:51:07.282+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Notifying assignor about the new Assignment(partitions=[notifyUser-0])
+2026-04-27T20:51:07.284+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Adding newly assigned partitions: notifyUser-0
+2026-04-27T20:51:07.295+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Setting offset for partition notifyUser-0 to the committed offset FetchPosition{offset=4, offsetEpoch=Optional.empty, currentLeader=LeaderAndEpoch{leader=Optional[localhost:9092 (id: 1 rack: null)], epoch=0}}
+2026-04-27T20:51:07.296+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notify-group: partitions assigned: [notifyUser-0]
+2026-04-27T20:52:59.714+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Revoke previously assigned partitions notifyUser-0
+2026-04-27T20:52:59.714+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notify-group: partitions revoked: [notifyUser-0]
+2026-04-27T20:52:59.715+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Member consumer-notify-group-1-ba2878f1-0d49-4d5c-92e3-525865b26e0d sending LeaveGroup request to coordinator localhost:9092 (id: 2147483646 rack: null) due to the consumer unsubscribed from all topics
+2026-04-27T20:52:59.715+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-04-27T20:52:59.715+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Request joining group due to: consumer pro-actively leaving the group
+2026-04-27T20:52:59.715+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] fkaConsumerFactory$ExtendedKafkaConsumer : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Unsubscribed all topics or patterns and assigned partitions
+2026-04-27T20:52:59.715+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Resetting generation and member id due to: consumer pro-actively leaving the group
+2026-04-27T20:52:59.715+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-notify-group-1, groupId=notify-group] Request joining group due to: consumer pro-actively leaving the group
+2026-04-27T20:52:59.883+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Metrics scheduler closed
+2026-04-27T20:52:59.883+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Closing reporter org.apache.kafka.common.metrics.JmxReporter
+2026-04-27T20:52:59.883+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.apache.kafka.common.metrics.Metrics    : Metrics reporters closed
+2026-04-27T20:52:59.885+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.kafka.common.utils.AppInfoParser     : App info kafka.consumer for consumer-notify-group-1 unregistered
+2026-04-27T20:52:59.885+03:00  INFO 27608 --- [Tula] [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : notify-group: Consumer stopped
+2026-04-27T20:52:59.899+03:00  INFO 27608 --- [Tula] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-27T20:52:59.901+03:00  INFO 27608 --- [Tula] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-27T20:52:59.903+03:00  INFO 27608 --- [Tula] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
