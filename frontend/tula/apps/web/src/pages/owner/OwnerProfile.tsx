@@ -106,8 +106,6 @@ export default function OwnerProfile() {
                 setCurrentFollowId(null);
                 return;
             }
-
-            // Ищем подписку по имени приюта (используем profile?.name)
             const currentOwnerName = profile?.name;
             const foundFollow = follows.find((follow: any) => follow.ownerName === currentOwnerName);
 

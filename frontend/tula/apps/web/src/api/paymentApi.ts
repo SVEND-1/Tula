@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const PAYMENT_API = axios.create({
-    baseURL: "http://localhost:8080/api/payments",
+    baseURL: "/api/payments",
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json'
@@ -83,7 +83,7 @@ export const createPayment = () => {
 };
 
 export const getPayments = (page: number = 0, size: number = 10) => {
-    return PAYMENT_API.get<PaymentPageResponse>(`?page=${page}&size=${size}`);
+    return PAYMENT_API.get<PaymentPageResponse>('', { params: { page, size } });
 };
 
 export const getPaymentById = (paymentId: string) => {
