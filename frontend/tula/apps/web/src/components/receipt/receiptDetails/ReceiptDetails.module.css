@@ -1,0 +1,75 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.loading {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin: auto;
+}
+
+/* Шапка с иконкой магазина */
+.receiptHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(255, 140, 90, 0.08);
+}
+
+.shopIcon {
+  font-size: 36px;
+  line-height: 1;
+}
+
+.shopName {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+}
+
+.receiptDate {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.statusBadge {
+  margin-left: auto;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #e8f5e9;
+  color: #388e3c;
+  white-space: nowrap;
+}
+
+/* Блок с суммой */
+.amountBlock {
+  background: var(--accent);
+  color: white;
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.amountLabel {
+  font-size: 15px;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.amountValue {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
