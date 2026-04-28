@@ -1,13 +1,14 @@
 import axios from "axios";
 
+const API_BASE_URL = window.location.origin;
+
 const PAYMENT_API = axios.create({
-    baseURL: "/api/payments",
+    baseURL: `${API_BASE_URL}/api/payments`,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json'
     }
 });
-
 PAYMENT_API.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
     if (token) {

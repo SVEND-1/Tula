@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllAnimals, getAnimalImageUrl } from '../../api/animalApi';
+import { getAllAnimals, getAnimalImageUrl, getAnimalProfile } from '../../api/animalApi';
 import { sendLike, sendDislike } from '../../api/likeApi';
 import type { Animal } from '../../types/animal/animal.types.ts';
 import '../../style/MainPage.scss';
@@ -17,6 +17,13 @@ export default function MainPage() {
     const [swipeClass, setSwipeClass] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
     const [showHint, setShowHint] = useState(true);
+    const [isTransitioning, setIsTransitioning] = useState(false);
+    const [oldAnimal, setOldAnimal] = useState<Animal | null>(null);
+    const [showModal, setShowModal] = useState(false);
+    const [selectedAnimal, setSelectedAnimal] = useState<Animal | null>(null);
+    const [modalImages, setModalImages] = useState<string[]>([]);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isLoadingOwner, setIsLoadingOwner] = useState(false);
     const { playLikeSound, playDislikeSound } = useSound();
 
     useEffect(() => {
@@ -24,7 +31,7 @@ export default function MainPage() {
 
         const timer = setTimeout(() => {
             setShowHint(false);
-        }, 5000);
+        }, 8000);
 
         return () => clearTimeout(timer);
     }, []);
@@ -38,8 +45,6 @@ export default function MainPage() {
             if (response.data && response.data.content && response.data.content.length > 0) {
                 const animalsList = response.data.content;
                 setAnimals(animalsList);
-
-                // Загружаем картинки для всех животных
                 await loadAnimalImages(animalsList);
             } else {
                 setAnimals([]);
@@ -53,7 +58,6 @@ export default function MainPage() {
         }
     };
 
-    // Загрузка картинок для всех животных
     const loadAnimalImages = async (animalsList: Animal[]) => {
         const imagesMap: Record<number, string> = {};
 
@@ -68,14 +72,67 @@ export default function MainPage() {
     };
 
     const getGenderIcon = (gender: string) => gender === 'MAN' ? '♂️' : '♀️';
+    const getAnimalTypeText = (type: string) => type === 'DOG' ? 'Собака' : 'Кот';
 
     const currentAnimal = animals[currentIndex];
     const nextAnimal = animals[currentIndex + 1];
 
+    const handleOpenModal = async (animal: Animal) => {
+        setSelectedAnimal(animal);
+        setShowModal(true);
+        setCurrentImageIndex(0);
+
+        const imageUrl = await getAnimalImageUrl(animal.id);
+        if (imageUrl) {
+            setModalImages([imageUrl]);
+        } else {
+            setModalImages([]);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setSelectedAnimal(null);
+        setModalImages([]);
+    };
+
+    const handleNextImage = () => {
+        setCurrentImageIndex((prev) =>
+            prev < modalImages.length - 1 ? prev + 1 : 0
+        );
+    };
+
+    const handlePrevImage = () => {
+        setCurrentImageIndex((prev) =>
+            prev > 0 ? prev - 1 : modalImages.length - 1
+        );
+    };
+
+    const handleGoToOwner = async (animal: Animal) => {
+        setIsLoadingOwner(true);
+        try {
+            const profileResponse = await getAnimalProfile(animal.id);
+            const ownerId = profileResponse.data.ownerId;
+
+            if (ownerId) {
+                handleCloseModal();
+                navigate(`/owner/${ownerId}`);
+            } else {
+                alert('Не удалось определить владельца питомца');
+            }
+        } catch (error) {
+            console.error('Ошибка получения профиля животного:', error);
+            alert('Ошибка при получении информации о владельце');
+        } finally {
+            setIsLoadingOwner(false);
+        }
+    };
+
     const handleSwipe = async (direction: 'left' | 'right') => {
-        if (!currentAnimal || isProcessing) return;
+        if (!currentAnimal || isProcessing || isTransitioning) return;
 
         setIsProcessing(true);
+        setIsTransitioning(true);
         setSwipeClass(direction);
 
         if (showHint) {
@@ -97,11 +154,15 @@ export default function MainPage() {
                 setTimeout(() => setShowToast(false), 1500);
             }
 
+            setOldAnimal(currentAnimal);
+
             setTimeout(() => {
                 setCurrentIndex(prev => prev + 1);
                 setSwipeClass('');
+                setOldAnimal(null);
+                setIsTransitioning(false);
                 setIsProcessing(false);
-            }, 900);
+            }, 500);
         } catch (error: any) {
             console.error('Ошибка при отправке реакции:', error);
             const errorMessage = error.response?.data?.message || 'Ошибка при отправке';
@@ -109,6 +170,8 @@ export default function MainPage() {
             setShowToast(true);
             setTimeout(() => setShowToast(false), 2000);
             setSwipeClass('');
+            setOldAnimal(null);
+            setIsTransitioning(false);
             setIsProcessing(false);
         }
     };
@@ -138,7 +201,7 @@ export default function MainPage() {
         );
     }
 
-    if (!currentAnimal) {
+    if (!currentAnimal && !oldAnimal) {
         return (
             <div className="empty-container">
                 <div className="empty-card">
@@ -213,9 +276,25 @@ export default function MainPage() {
             </div>
 
             <main className="home">
+                {showHint && (
+                    <div className="hint">
+                        <div className="hint-text">Выбери своего питомца</div>
+                        <svg className="arrow" viewBox="0 0 300 200">
+                            <defs>
+                                <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+                                    <path d="M0,0 L10,5 L0,10 Z" fill="#333"/>
+                                </marker>
+                            </defs>
+                            <path className="arrow-path"
+                                  d="M 20 120 C 60 20, 160 20, 160 90 C 160 160, 220 160, 260 110"
+                                  marker-end="url(#arrowHead)"/>
+                        </svg>
+                    </div>
+                )}
+
                 <div className="card-wrapper">
                     <div className="card-stack">
-                        {nextAnimal && (
+                        {nextAnimal && !isTransitioning && (
                             <div className="card next">
                                 <div className="card-image">
                                     {(() => {
@@ -239,41 +318,43 @@ export default function MainPage() {
                             </div>
                         )}
 
-                        <div className={`card current ${swipeClass}`}>
-                            <div className="card-image">
-                                {(() => {
-                                    const currentImage = getAnimalImage(currentAnimal);
-                                    return currentImage ? (
-                                        <img src={currentImage} alt={currentAnimal.name} />
-                                    ) : (
-                                        <div className="image-placeholder">
-                                            <span className="animal-emoji large">
-                                                {currentAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
-                                            </span>
-                                        </div>
-                                    );
-                                })()}
-                                <span className={`status-badge ${currentAnimal.status?.toLowerCase() || 'available'}`}>
-                                    {currentAnimal.status === 'AVAILABLE' ? 'Доступен' :
-                                        currentAnimal.status === 'TAKEN' ? 'Забран' :
-                                            currentAnimal.status === 'VERIFICATION' ? 'На проверке' : 'Доступен'}
-                                </span>
+                        {currentAnimal && (
+                            <div className={`card current ${swipeClass}`}>
+                                <div className="card-image">
+                                    {(() => {
+                                        const currentImage = getAnimalImage(currentAnimal);
+                                        return currentImage ? (
+                                            <img src={currentImage} alt={currentAnimal.name} />
+                                        ) : (
+                                            <div className="image-placeholder">
+                                                <span className="animal-emoji large">
+                                                    {currentAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
+                                                </span>
+                                            </div>
+                                        );
+                                    })()}
+                                    <span className={`status-badge ${currentAnimal.status?.toLowerCase() || 'available'}`}>
+                                        {currentAnimal.status === 'AVAILABLE' ? 'Доступен' :
+                                            currentAnimal.status === 'TAKEN' ? 'Забран' :
+                                                currentAnimal.status === 'VERIFICATION' ? 'На проверке' : 'Доступен'}
+                                    </span>
+                                </div>
+                                <div className="card-info">
+                                    <h2>
+                                        {currentAnimal.name}
+                                        <span className="gender-icon">{getGenderIcon(currentAnimal.gender)}</span>
+                                    </h2>
+                                    <span>{currentAnimal.breed} • {getAgeText(currentAnimal.age)}</span>
+                                    <p className="description">{truncateText(currentAnimal.description)}</p>
+                                    <button
+                                        onClick={() => handleOpenModal(currentAnimal)}
+                                        className="details-btn"
+                                    >
+                                        Подробнее
+                                    </button>
+                                </div>
                             </div>
-                            <div className="card-info">
-                                <h2>
-                                    {currentAnimal.name}
-                                    <span className="gender-icon">{getGenderIcon(currentAnimal.gender)}</span>
-                                </h2>
-                                <span>{currentAnimal.breed} • {getAgeText(currentAnimal.age)}</span>
-                                <p className="description">{truncateText(currentAnimal.description)}</p>
-                                <button
-                                    onClick={() => navigate(`/animal/${currentAnimal.id}`)}
-                                    className="details-btn"
-                                >
-                                    Подробнее
-                                </button>
-                            </div>
-                        </div>
+                        )}
                     </div>
 
                     <div className="buttons">
@@ -301,8 +382,114 @@ export default function MainPage() {
                             </svg>
                         </button>
                     </div>
+
+                    <div className="counter">
+                        {currentIndex + 1} / {animals.length}
+                    </div>
                 </div>
             </main>
+
+            {showModal && selectedAnimal && (
+                <div className="modal-overlay" onClick={handleCloseModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <button className="modal-close" onClick={handleCloseModal}>
+                            ✕
+                        </button>
+
+                        <div className="modal-body">
+                            <div className="modal-image-section">
+                                <div className="modal-image-container">
+                                    {modalImages.length > 0 ? (
+                                        <>
+                                            <img
+                                                src={modalImages[currentImageIndex]}
+                                                alt={selectedAnimal.name}
+                                            />
+                                            {modalImages.length > 1 && (
+                                                <>
+                                                    <button
+                                                        className="modal-image-nav prev"
+                                                        onClick={handlePrevImage}
+                                                    >
+                                                        ‹
+                                                    </button>
+                                                    <button
+                                                        className="modal-image-nav next"
+                                                        onClick={handleNextImage}
+                                                    >
+                                                        ›
+                                                    </button>
+                                                    <div className="modal-image-counter">
+                                                        {currentImageIndex + 1} / {modalImages.length}
+                                                    </div>
+                                                </>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <div className="image-placeholder">
+                                            <span className="animal-emoji">
+                                                {selectedAnimal.animalType === 'DOG' ? '🐕' : '🐈'}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="modal-info-section">
+                                <h2>
+                                    {selectedAnimal.name}
+                                    <span className="gender-icon">
+                                        {getGenderIcon(selectedAnimal.gender)}
+                                    </span>
+                                </h2>
+
+                                <div className="modal-details">
+                                    <div className="modal-detail-row">
+                                        <span className="detail-label">Тип:</span>
+                                        <span className="detail-value">
+                                            {getAnimalTypeText(selectedAnimal.animalType)}
+                                        </span>
+                                    </div>
+
+                                    <div className="modal-detail-row">
+                                        <span className="detail-label">Порода:</span>
+                                        <span className="detail-value">
+                                            {selectedAnimal.breed}
+                                        </span>
+                                    </div>
+
+                                    <div className="modal-detail-row">
+                                        <span className="detail-label">Пол:</span>
+                                        <span className="detail-value">
+                                            {selectedAnimal.gender === 'MAN' ? 'Мальчик' : 'Девочка'}
+                                        </span>
+                                    </div>
+
+                                    <div className="modal-detail-row">
+                                        <span className="detail-label">Возраст:</span>
+                                        <span className="detail-value">
+                                            {getAgeText(selectedAnimal.age)}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="modal-description">
+                                    <h3>Описание</h3>
+                                    <p>{selectedAnimal.description || 'Нет описания'}</p>
+                                </div>
+
+                                <button
+                                    className="owner-btn"
+                                    onClick={() => handleGoToOwner(selectedAnimal)}
+                                    disabled={isLoadingOwner}
+                                >
+                                    {isLoadingOwner ? 'Загрузка...' : 'Перейти к владельцу'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

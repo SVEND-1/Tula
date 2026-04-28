@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const API_BASE_URL = window.location.origin;
+
 const REVIEW_API = axios.create({
-    baseURL: "http://localhost:8080/api/reviews",
+    baseURL: `${API_BASE_URL}/api/reviews`,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json'

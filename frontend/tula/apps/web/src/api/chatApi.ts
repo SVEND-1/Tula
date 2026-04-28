@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const API_BASE_URL = window.location.origin;
+
 const CHAT_API = axios.create({
-    baseURL: "http://localhost:8080/api",
+    baseURL: `${API_BASE_URL}/api`,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json'
@@ -16,7 +18,6 @@ CHAT_API.interceptors.request.use((config) => {
     return config;
 });
 
-// Типы данных
 export interface UserDefaultResponse {
     id: number;
     name: string;

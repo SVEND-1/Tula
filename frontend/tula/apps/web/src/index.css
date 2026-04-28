@@ -1,7 +1,8 @@
 :root {
     --text: #6b6375;
     --text-h: #08060d;
-    --bg: #fff;
+    --bg: transparent;
+    /*--bg: #fff;*/
     --border: #e5e4e7;
     --code-bg: #f4f3ec;
     --accent: #aa3bff;
@@ -19,7 +20,7 @@
     letter-spacing: 0.18px;
     color-scheme: light dark;
     color: var(--text);
-    background: var(--bg);
+    /*background: var(--bg);*/
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -60,13 +61,19 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: "Playpen Sans", cursive;
-    background: linear-gradient(to bottom, #ffcdb0, #fff3eb);
+    /*background-image: url('../public/background.jpg');*/
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     min-height: 100vh;
     overflow-x: hidden;
     overflow-y: auto;
 }
 
 #root {
+    position: relative;
     width: 100%;
     max-width: 100%;
     margin: 0;
@@ -75,6 +82,15 @@ html, body {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    z-index: 0;
+}
+
+#root::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url('../public/background.jpg') center / cover no-repeat;
+    z-index: -1;
 }
 
 body {

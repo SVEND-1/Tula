@@ -1,8 +1,10 @@
 import axios from "axios";
 import type {Like} from "../types/likes/like.types.ts";
 
+const API_BASE_URL = window.location.origin;
+
 const LIKE_API = axios.create({
-    baseURL: "http://localhost:8080/api/likes",
+    baseURL: `${API_BASE_URL}/api/likes`,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json'
@@ -16,7 +18,6 @@ LIKE_API.interceptors.request.use(
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
-        console.log('Полный URL:', config.baseURL + config.url);
         return config;
     },
     (error) => {

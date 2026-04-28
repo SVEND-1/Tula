@@ -6,7 +6,7 @@
     justify-content: center;
     gap: 12px;
     color: var(--text-muted);
-    background: var(--bg);
+    background: transparent;/*background: var(--bg);*/
 }
 
 @media (max-width: 768px) {

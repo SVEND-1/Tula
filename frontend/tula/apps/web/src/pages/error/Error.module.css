@@ -1,0 +1,55 @@
+.errorPage {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*background: linear-gradient(135deg, #fff8f0, #ffffff);*/
+    padding: 20px;
+}
+
+.errorCard {
+    background: white;
+    border-radius: 28px;
+    padding: 40px 30px;
+    text-align: center;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.errorCode {
+    font-size: 80px;
+    font-weight: 700;
+    color: #ff8c42;
+    margin-bottom: 10px;
+}
+
+.errorTitle {
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.errorText {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.backBtn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ffcdb0, #ffb88c);
+    color: #333;
+    transition: all 0.2s;
+}
+
+.backBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
