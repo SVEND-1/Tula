@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.tula.follow.api.dto.Follow;
 import org.example.tula.follow.db.FollowEntity;
 import org.example.tula.follow.db.FollowRepository;
+import org.example.tula.follow.domain.exceptions.AlreadySubscribedException;
+import org.example.tula.follow.domain.exceptions.SelfSubscriptionNotAllowedException;
 import org.example.tula.follow.domain.mapper.FollowMapper;
 import org.example.tula.owners.api.dto.Owner;
 import org.example.tula.owners.api.dto.response.OwnerProfileResponse;
@@ -31,9 +33,7 @@ public class FollowService {
     private final OwnerMapper ownerMapper;
     private final FollowMapper followMapper;
 
-    public FollowEntity findByIdEntity(Long id) {
-        return followRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Подписка не найдена"));
-    }
+    //====================================CONTROLLER METHODS=======================================================
 
     public Follow findById(Long id) {
         return followMapper.convertEntityToDTO(findByIdEntity(id));
@@ -109,10 +109,23 @@ public class FollowService {
         }
     }
 
+    //====================================SERVICE METHODS=======================================================
+
+    public FollowEntity findByIdEntity(Long id) {
+        return followRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Подписка не найдена"));
+    }
+
     private void isValid(Long ownerId, Long userId) {
         if(ownerId.equals(userId)){
             log.warn("Нельзя подписываться на себя");
-            throw new RuntimeException("Нельзя подписываться на себя");
+            throw new SelfSubscriptionNotAllowedException("Нельзя подписываться на себя");
+        }
+        List<Owner> owners = findAllOwners();
+        for (Owner owner : owners) {
+            if(owner.id().equals(ownerId)){
+                log.warn("Нельзя подписаться на того на кого вы подписаны уже");
+                throw new AlreadySubscribedException("Нельзя подписаться на того на кого вы подписаны уже");
+            }
         }
     }
 }

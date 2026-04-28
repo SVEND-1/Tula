@@ -33,6 +33,9 @@ public class AnimalEntity {
     @Column(name = "description",length = 1000)
     private String description;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "breed")
     private String breed;
 

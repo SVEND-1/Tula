@@ -8,6 +8,7 @@ import org.example.tula.owners.db.OwnerEntity;
 import org.example.tula.payments.db.PaymentEntity;
 import org.example.tula.reviews.db.ReviewEntity;
 import org.example.tula.subscriptions.db.SubscriptionEntity;
+import org.example.tula.videos.db.video.VideoEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,4 +58,6 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<FollowEntity> follows = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<VideoEntity> videos = new ArrayList<>();
 }

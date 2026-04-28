@@ -1,4 +1,4 @@
-package org.example.tula.payments.api.exception;
+package org.example.tula.payments.domain.exception;
 
 public class PaymentOwnershipException extends RuntimeException {
 

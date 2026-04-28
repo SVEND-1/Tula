@@ -21,6 +21,7 @@ import org.example.tula.users.domain.UserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -34,11 +35,7 @@ public class LikeService {
     private final NotifyKafkaProducer notifyKafkaProducer;
     private final ChatService chatService;
 
-    public Like findById(Long id) {
-        return likeMapper.convertEntityToDTO(
-                likeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Реакция не найдена"))
-        );
-    }
+    //====================================CONTROLLER METHODS=======================================================
 
     @Transactional
     public Like like(Long animalId) {
@@ -79,6 +76,24 @@ public class LikeService {
         );
     }
 
+    public String deleted(Long id) {
+        try {
+            likeRepository.deleteById(id);
+            return "Успешно";
+        }catch (Exception e){
+            log.error("Не получилось удалить лайк ,ex={}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    //====================================SERVICE METHODS=======================================================
+
+    public Like findById(Long id) {
+        return likeMapper.convertEntityToDTO(
+                likeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Реакция не найдена"))
+        );
+    }
+
     @Transactional
     public Like setStatusAnswer(Long likeId, StatusAnswer answer) {
         try {
@@ -98,12 +113,12 @@ public class LikeService {
         }
     }
 
-    public String deleted(Long id) {
+    public String deleteAll(List<LikeEntity> likeEntities){
         try {
-            likeRepository.deleteById(id);
+            likeRepository.deleteAll(likeEntities);
             return "Успешно";
         }catch (Exception e){
-            log.error("Не получилось удалить лайк ,ex={}", e.getMessage());
+            log.error("Не удалось удалить все лайки,ex={}", e.getMessage());
             throw new RuntimeException(e);
         }
     }

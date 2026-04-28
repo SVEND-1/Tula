@@ -7,6 +7,7 @@ import org.example.tula.animals.db.AnimalEntity;
 import org.example.tula.animals.db.AnimalRepository;
 import org.example.tula.chats.api.dto.responses.ChatResponse;
 import org.example.tula.chats.db.entities.ChatEntity;
+import org.example.tula.chats.db.enums.Status;
 import org.example.tula.chats.db.repositories.ChatRepository;
 import org.example.tula.chats.domain.exceptions.ChatException;
 import org.example.tula.chats.domain.mappers.ChatMapper;
@@ -76,6 +77,17 @@ public class ChatService {
         return chatMapper.convertEntityToResponse(chatEntity);
     }
 
+    public void setStatusToInactive(Long id) {
+        log.info("Setting status to inactive for chat with id {}", id);
+        UserEntity currentUser = userService.getCurrentUser();
+
+        ChatEntity chatEntity = getChatByIdWithCheckUser(id, currentUser);
+
+        chatEntity.setStatus(Status.INACTIVE);
+        chatRepository.save(chatEntity);
+        log.debug("Changed status to inactive for chat with id {}", id);
+    }
+
     //====================================SERVICE METHODS=======================================================
     private void checkAnimalIsNotCurrentUser(UserEntity currentUser, UserEntity sellerUser) {
         if (currentUser.getId().equals(sellerUser.getId())) {
@@ -121,5 +133,21 @@ public class ChatService {
         checkForCurrentUser(chatEntity, currentUser);
 
         return chatEntity;
+    }
+
+    public String deletedAll(List<ChatEntity> chatEntities) {
+        try {
+            chatRepository.deleteAll(chatEntities);
+            return "Успешно";
+        } catch (Exception e) {
+            log.error("Не удалось удалить все чаты,ex={}", e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void checkChatStatus(ChatEntity chatEntity) {
+        if (chatEntity.getStatus() == Status.INACTIVE) {
+            throw new ChatException("You can't send messages in inactive chat");
+        }
     }
 }

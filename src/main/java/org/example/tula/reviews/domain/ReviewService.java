@@ -11,6 +11,7 @@ import org.example.tula.reviews.db.ReviewRepository;
 import org.example.tula.reviews.domain.mapper.ReviewMapper;
 import org.example.tula.users.domain.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,15 +25,13 @@ public class ReviewService {
     private final ReviewMapper reviewMapper;
     private final OwnerService ownerService;
 
+
+    //====================================CONTROLLER METHODS=======================================================
+
     public Review findById(Long id) {
         return reviewMapper.convertEntityToDTO(
                 findByIdEntity(id)
         );
-    }
-
-    public ReviewEntity findByIdEntity(Long id) {
-        return reviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Отзыв не найден"));
-
     }
 
     public List<Review> findAllByReviewBy(Long id) {
@@ -41,6 +40,7 @@ public class ReviewService {
         );
     }
 
+    @Transactional
     public Review createReview(CreateReviewRequest request) {
        try {
            return reviewMapper.convertEntityToDTO(reviewRepository.save(
@@ -56,4 +56,13 @@ public class ReviewService {
            throw new RuntimeException(e);
        }
     }
+
+    //====================================SERVICE METHODS=======================================================
+
+
+    public ReviewEntity findByIdEntity(Long id) {
+        return reviewRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Отзыв не найден"));
+    }
 }
+
+
