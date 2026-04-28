@@ -13,6 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -78,6 +81,12 @@ public class VideoController {
             @RequestBody VideoCommentRequest request
     ) {
         return ResponseEntity.ok(videoService.addComment(id, request));
+    }
+
+    @Operation(summary = "Стриминг видео", description = "Возвращает видео файл для просмотра")
+    @GetMapping("/{id}/stream")
+    public ResponseEntity<Resource> streamVideo(@PathVariable Long id) {
+        return videoService.streamVideo(id);
     }
 
     @Operation(summary = "Удалить комментарий", description = "Удаляет комментарий по его ID")

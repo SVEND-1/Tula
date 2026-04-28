@@ -24,6 +24,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -169,7 +176,6 @@ public class VideoService {
         }
     }
 
-    //================================Service Methods================================================
 
     private VideoEntity findVideoById(Long id) {
         return videoRepository.findById(id)
@@ -206,6 +212,30 @@ public class VideoService {
         }
         if (file.getSize() > 100 * 1024 * 1024) {
             throw new IllegalArgumentException("Файл слишком большой, надо до 100 МБ");
+        }
+    }
+    @Transactional(readOnly = true)
+    public ResponseEntity<Resource> streamVideo(Long id) {
+        try {
+            VideoEntity video = findVideoById(id);
+            Path filePath = Paths.get(video.getFilePath());
+
+            if (!Files.exists(filePath)) {
+                throw new RuntimeException("Файл не найден");
+            }
+
+            Resource resource = new UrlResource(filePath.toUri());
+            String contentType = Files.probeContentType(filePath);
+            if (contentType == null) {
+                contentType = "video/mp4";
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(resource);
+        } catch (Exception e) {
+            log.error("Ошибка стриминга видео id={}, ex={}", id, e.getMessage());
+            throw new RuntimeException("Не удалось загрузить видео");
         }
     }
 }

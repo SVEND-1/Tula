@@ -1,0 +1,655 @@
+// ─── VideoFeed.scss ───────────────────────────────────────────────────────────
+// TikTok-inspired dark feed, consistent with project's "Playpen Sans" vibe
+
+@import url('https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@400;600;700&display=swap');
+
+// ─── Variables ────────────────────────────────────────────────────────────────
+$bg:       #0a0a0a;
+$surface:  #161616;
+$accent:   #ff4d6d;
+$accent2:  #ff8c42;
+$text:     #f5f5f5;
+$muted:    #888;
+$radius:   16px;
+$font:     "Playpen Sans", cursive;
+
+// ─── Root ─────────────────────────────────────────────────────────────────────
+.feed-root {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  background: $bg;
+  overflow: hidden;
+  font-family: $font;
+}
+
+// ─── Feed container – snaps each card ─────────────────────────────────────────
+.feed-container {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  // hide scrollbar
+  &::-webkit-scrollbar { display: none; }
+  scrollbar-width: none;
+}
+
+// ─── Single video card ────────────────────────────────────────────────────────
+.video-card {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  overflow: hidden;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-el {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+// gradient bottom overlay
+.video-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+                  to top,
+                  rgba(0,0,0,0.85) 0%,
+                  rgba(0,0,0,0.25) 40%,
+                  transparent 70%
+  );
+  pointer-events: none;
+}
+
+// ─── Bottom info ──────────────────────────────────────────────────────────────
+.video-info {
+  position: absolute;
+  bottom: 90px;
+  left: 0;
+  right: 80px;
+  padding: 0 20px;
+  z-index: 5;
+
+  @media (max-width: 480px) {
+    bottom: 80px;
+    right: 70px;
+    padding: 0 15px;
+  }
+}
+
+.video-title-text {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  color: $text;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  line-height: 1.3;
+
+  @media (max-width: 480px) { font-size: 16px; }
+}
+
+.video-desc {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  @media (max-width: 480px) { font-size: 13px; }
+}
+
+// ─── Side action buttons ──────────────────────────────────────────────────────
+.video-actions {
+  position: absolute;
+  right: 12px;
+  bottom: 90px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  z-index: 10;
+  align-items: center;
+
+  @media (max-width: 480px) {
+    right: 8px;
+    bottom: 80px;
+    gap: 14px;
+  }
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.15s;
+
+  &:active { transform: scale(0.88); }
+
+  .action-icon {
+    font-size: 32px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    transition: transform 0.2s;
+
+    @media (max-width: 480px) { font-size: 26px; }
+  }
+
+  .action-count {
+    font-size: 13px;
+    color: $text;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+
+  &.liked .action-icon {
+    filter: drop-shadow(0 0 6px rgba(255, 77, 109, 0.8));
+    animation: pop 0.3s ease;
+  }
+
+  &.muted .action-icon {
+    opacity: 0.5;
+  }
+}
+
+@keyframes pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+// ─── Heart burst on double tap ────────────────────────────────────────────────
+.heart-burst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 100px;
+  z-index: 20;
+  pointer-events: none;
+  animation: heartBurst 0.6s ease forwards;
+}
+
+@keyframes heartBurst {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  40%  { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+}
+
+// ─── Comments drawer ──────────────────────────────────────────────────────────
+.comments-drawer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65%;
+  background: rgba(15,15,15,0.96);
+  backdrop-filter: blur(20px);
+  border-radius: 20px 20px 0 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease;
+
+  @media (max-width: 480px) { height: 75%; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.comments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-size: 15px;
+  font-weight: 600;
+  color: $text;
+
+  button {
+    background: none;
+    border: none;
+    color: $muted;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s;
+    &:hover { color: $text; }
+  }
+}
+
+.comments-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  &::-webkit-scrollbar { width: 2px; }
+  &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+}
+
+.no-comments {
+  text-align: center;
+  color: $muted;
+  font-size: 14px;
+  margin: auto;
+}
+
+.comment-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: rgba(255,255,255,0.05);
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.comment-author {
+  font-size: 13px;
+  font-weight: 700;
+  color: $accent2;
+}
+
+.delete-comment-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: all 0.2s;
+  color: rgba(255,255,255,0.6);
+
+  &:hover {
+    background: rgba(244, 67, 54, 0.2);
+    color: #ff6b6b;
+    transform: scale(1.05);
+  }
+}
+
+.comment-text {
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.4;
+}
+
+.comment-date {
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 2px;
+}
+
+.comment-input-row {
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.comment-input {
+  flex: 1;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 24px;
+  padding: 10px 16px;
+  color: $text;
+  font-family: $font;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &::placeholder { color: $muted; }
+  &:focus { border-color: rgba($accent, 0.5); }
+}
+
+.comment-send {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $accent, $accent2);
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s, opacity 0.15s;
+  flex-shrink: 0;
+
+  &:hover { transform: scale(1.08); }
+  &:active { transform: scale(0.92); }
+}
+
+// ─── FAB Upload button ────────────────────────────────────────────────────────
+.fab-upload {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  bottom: auto;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $accent 0%, $accent2 100%);
+  border: none;
+  cursor: pointer;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+  &:active { transform: scale(0.94); }
+
+  @media (max-width: 480px) {
+    width: 44px;
+    height: 44px;
+    top: 12px;
+    right: 12px;
+  }
+}
+
+.fab-plus {
+  color: white;
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
+  margin-top: -2px;
+}
+
+// ─── Upload modal ─────────────────────────────────────────────────────────────
+.upload-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fadeIn 0.25s ease;
+
+  @media (min-width: 600px) {
+    align-items: center;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.upload-panel {
+  background: $surface;
+  border-radius: 24px 24px 0 0;
+  padding: 28px 24px 36px;
+  width: 100%;
+  max-width: 520px;
+  position: relative;
+  animation: panelUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  @media (min-width: 600px) {
+    border-radius: 24px;
+    padding: 32px 28px;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px;
+
+    @media (min-width: 600px) { display: none; }
+  }
+}
+
+@keyframes panelUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.upload-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: $muted;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+
+  &:hover { background: rgba(255,255,255,0.14); color: $text; }
+}
+
+.upload-title {
+  margin: 0 0 20px;
+  font-size: 22px;
+  font-weight: 700;
+  color: $text;
+  font-family: $font;
+}
+
+// ─── Drop zone ────────────────────────────────────────────────────────────────
+.drop-zone {
+  border: 2px dashed rgba(255,255,255,0.15);
+  border-radius: $radius;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+
+  p {
+    text-align: center;
+    color: $muted;
+    font-size: 14px;
+    margin: 8px 0 0;
+    font-family: $font;
+    line-height: 1.5;
+
+    span {
+      color: $accent2;
+      text-decoration: underline;
+    }
+  }
+
+  &:hover, &.drag-active {
+    border-color: $accent2;
+    background: rgba($accent2, 0.06);
+  }
+
+  &.has-file {
+    border-style: solid;
+    border-color: rgba($accent2, 0.4);
+  }
+}
+
+.drop-icon {
+  font-size: 44px;
+  line-height: 1;
+}
+
+.drop-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+// ─── Fields ───────────────────────────────────────────────────────────────────
+.upload-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.upload-input {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: $text;
+  font-family: $font;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+
+  &::placeholder { color: $muted; }
+  &:focus { border-color: rgba($accent2, 0.5); }
+}
+
+.upload-textarea {
+  min-height: 80px;
+}
+
+// ─── Submit button ────────────────────────────────────────────────────────────
+.upload-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, $accent 0%, $accent2 100%);
+  border: none;
+  color: white;
+  font-family: $font;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  &:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+  &:active:not(:disabled) { transform: translateY(0); }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  &.loading { pointer-events: none; }
+}
+
+// ─── Spinner ──────────────────────────────────────────────────────────────────
+.spinner {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ─── Feed states ──────────────────────────────────────────────────────────────
+.feed-loader {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: start;
+
+  .loader-ring {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(255,255,255,0.1);
+    border-top-color: $accent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+.feed-end {
+  width: 100%;
+  height: 30dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    color: $muted;
+    font-size: 15px;
+    font-family: $font;
+  }
+}
+
+.feed-empty {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  .empty-icon { font-size: 72px; }
+
+  p {
+    text-align: center;
+    color: $muted;
+    font-size: 18px;
+    font-family: $font;
+    line-height: 1.6;
+    margin: 0;
+  }
+}
