@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Encoding;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +46,7 @@ public class OwnerController {
 
     @Operation(summary = "Создание питомца в приют")
     @PostMapping(value = "/animal", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @RequestBody(content = @Content(
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(
             mediaType = MediaType.MULTIPART_FORM_DATA_VALUE,
             encoding = {
                     @Encoding(name = "animal", contentType = MediaType.APPLICATION_JSON_VALUE),
@@ -67,7 +66,7 @@ public class OwnerController {
     @Operation(summary = "Обновление данных питомца")
     @PutMapping("/animal/{id}")
     public ResponseEntity<Animal> updateAnimal(@PathVariable Long id, @RequestBody AnimalUpdateRequest request) {
-        return ResponseEntity.ok(animalService.update(id,request));
+        return ResponseEntity.ok(animalService.update(id, request));
     }
 
     @Operation(summary = "Создание приюта")
@@ -82,7 +81,7 @@ public class OwnerController {
             @PathVariable Long id,
             @RequestParam String name
     ) {
-        return ResponseEntity.ok(ownerService.setOwnerName(id,name));
+        return ResponseEntity.ok(ownerService.setOwnerName(id, name));
     }
 
     @Operation(summary = "Отклонить заявку на взятие питомца")
