@@ -13,16 +13,23 @@ import java.util.List;
 public interface AnimalRepository extends JpaRepository<AnimalEntity,Long> {
 
     @Query("""
-        SELECT a FROM AnimalEntity a
-        WHERE (:age IS NULL OR a.age <= :age)
-          AND (:breed IS NULL OR a.breed = :breed)
-          AND (:gender IS NULL OR a.gender = :gender)
-          AND (:animalType IS NULL OR a.animalType = :animalType)
-          AND (a.status != org.example.tula.animals.db.StatusAnimal.TAKE)
-        """)
+    SELECT a FROM AnimalEntity a
+    WHERE (:age IS NULL OR a.age <= :age)
+      AND (:breed IS NULL OR a.breed = :breed)
+      AND (:gender IS NULL OR a.gender = :gender)
+      AND (:animalType IS NULL OR a.animalType = :animalType)
+      AND (a.status != org.example.tula.animals.db.StatusAnimal.TAKE)
+      AND (a.id NOT IN (
+            SELECT l.animal.id FROM LikeEntity l
+            WHERE l.user.id = :userId
+      ))
+    """)
     Page<AnimalEntity> findAllByFilter(
-            @Param("age")Integer age,@Param("breed") String breed,
-            @Param("gender")Gender gender,@Param("animalType") AnimalType animalType,
+            @Param("age") Integer age,
+            @Param("breed") String breed,
+            @Param("gender") Gender gender,
+            @Param("animalType") AnimalType animalType,
+            @Param("userId") Long userId,
             Pageable pageable
     );
 }
