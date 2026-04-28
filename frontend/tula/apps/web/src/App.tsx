@@ -15,6 +15,7 @@ import PaymentHistoryPage from "./pages/payment-history/PaymentHistoryPage";
 import SubscriptionPage from "./pages/subscription/succesSubscription/SuccessSubscriptionPage.tsx";
 import { ReceiptsPage } from "./pages/receipt/ReceiptsPage.tsx";
 import VideoFeed from "./pages/video/VideoPage";
+import ErrorPage from "./pages/error/ErrorPage.tsx";
 
 function App() {
     return (
@@ -36,6 +37,12 @@ function App() {
                 <Route path="/subscription" element={<SubscriptionPage />} />
                 <Route path="/receipts" element={<ReceiptsPage />} />
                 <Route path="/video" element={<VideoFeed />} />
+                <Route path="/error" element={<ErrorPage />} />
+
+                <Route
+                    path="*"
+                    element={<ErrorPage />}
+                />
             </Routes>
         </BrowserRouter>
     );
