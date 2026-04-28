@@ -7,7 +7,7 @@ import { useChat } from './useChat';
 import styles from './Chat.module.css';
 
 const Chat: React.FC = () => {
-    const { chats, activeChat, activeChatId, isTyping, isLoading, selectChat, closeChat, sendMessage } = useChat();
+    const { chats, activeChat, activeChatId,  isLoading, selectChat, closeChat, sendMessage } = useChat();
     const [mobileView, setMobileView] = useState<'list' | 'chat'>('list');
 
     const handleSelectChat = (id: number) => {
@@ -48,7 +48,7 @@ const Chat: React.FC = () => {
                     {activeChat ? (
                         <ChatWindow
                             pet={activeChat}
-                            isTyping={isTyping}
+                            isTyping={false}
                             onSend={sendMessage}
                             onBack={handleBack}
                         />

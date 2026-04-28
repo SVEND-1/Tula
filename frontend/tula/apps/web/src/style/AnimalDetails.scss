@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
-  background: linear-gradient(to bottom, #ffcdb0, #fff3eb);
+  background: transparent;
   position: fixed;
   top: 0;
   left: 0;
@@ -82,7 +82,7 @@
 
 .animal-details-container {
   min-height: 100vh;
-  background: linear-gradient(to bottom, #ffcdb0, #fff3eb);
+  background: transparent;
   padding: 100px 40px 40px 40px;
 
   @media (max-width: 768px) {
@@ -361,7 +361,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(to bottom, #ffcdb0, #fff3eb);
+  background: transparent;
 
   @media (max-width: 480px) {
     padding: 20px;

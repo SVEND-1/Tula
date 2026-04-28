@@ -3,7 +3,7 @@ html, body {
   padding: 0;
   font-family: "Playpen Sans", cursive;
   min-height: 100vh;
-  background: linear-gradient(to bottom, #ffcdb0, #fff3eb);
+  background: transparent;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -13,7 +13,7 @@ html, body {
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
-  background: linear-gradient(to bottom, #ffcdb0, #fff3eb);
+  background: transparent;
   position: fixed;
   top: 0;
   left: 0;
@@ -92,7 +92,7 @@ html, body {
 
 .owner-container {
   min-height: 100vh;
-  background: linear-gradient(to bottom, #ffcdb0, #fff3eb);
+  background: transparent;
   padding: 100px 40px 40px 40px;
 
   @media (max-width: 768px) {
@@ -564,7 +564,7 @@ html, body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(to bottom, #ffcdb0, #fff3eb);
+  background: transparent;
 
   .spinner {
     width: 50px;

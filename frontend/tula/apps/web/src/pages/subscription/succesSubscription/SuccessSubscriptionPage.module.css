@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: var(--bg);
+    background: transparent;/*background: var(--bg);*/
     font-family: 'Nunito', sans-serif
 }
 
