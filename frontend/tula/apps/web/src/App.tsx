@@ -14,6 +14,7 @@ import OwnerProfile from "./pages/owner/OwnerProfile";
 import PaymentHistoryPage from "./pages/payment-history/PaymentHistoryPage";
 import SubscriptionPage from "./pages/subscription/succesSubscription/SuccessSubscriptionPage.tsx";
 import {ReceiptsPage} from "./pages/receipt/ReceiptsPage.tsx";
+import ErrorPage from "./pages/error/ErrorPage.tsx";
 
 function App() {
     return (
@@ -34,6 +35,12 @@ function App() {
                 <Route path="/payments" element={<PaymentHistoryPage />} />
                 <Route path="/subscription" element={<SubscriptionPage />} />
                 <Route path="/receipts" element={<ReceiptsPage/>}/>
+                <Route path="/error" element={<ErrorPage />} />
+
+                <Route
+                    path="*"
+                    element={<ErrorPage />}
+                />
             </Routes>
         </BrowserRouter>
     );
