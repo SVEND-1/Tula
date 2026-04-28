@@ -134,7 +134,7 @@ export function usePaymentHistory() {
         }
     };
 
-    const handleClose = () => navigate('/profile');
+    const handleClose = () => navigate('/liked');
 
     return {
         payments,
