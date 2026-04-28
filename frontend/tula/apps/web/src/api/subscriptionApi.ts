@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const API_BASE_URL = window.location.origin;
+
 const SUBSCRIPTION_API = axios.create({
-    baseURL: "/api/subscription",
+    baseURL: `${API_BASE_URL}/api/subscription`,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json'
@@ -13,7 +15,6 @@ SUBSCRIPTION_API.interceptors.request.use((config) => {
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
-    console.log(' Запрос подписки:', config.baseURL + config.url);
     return config;
 });
 

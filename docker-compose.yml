@@ -77,7 +77,7 @@ services:
 
   frontend:
     build:
-      context: ./frontend/apps/web
+      context: ./frontend/tula/apps/web
       dockerfile: Dockerfile.frontend
     container_name: react-frontend
     ports:

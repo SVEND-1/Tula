@@ -1,8 +1,10 @@
 import axios from "axios";
 
 
+const API_BASE_URL = window.location.origin;
+
 const API = axios.create({
-    baseURL: "http://localhost:8080/api/auth",
+    baseURL: `${API_BASE_URL}/api/auth`,
     withCredentials: true,
 });
 

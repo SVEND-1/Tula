@@ -1,8 +1,10 @@
 import axios from "axios";
 import type { CreateAnimalRequest } from '../types/animal/animal.types';
 
+const API_BASE_URL = window.location.origin;
+
 const OWNER_API = axios.create({
-    baseURL: "http://localhost:8080/api",
+    baseURL: `${API_BASE_URL}/api`,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json'

@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const API_BASE_URL = window.location.origin;
+
 const RECEIPT_API = axios.create({
-    baseURL: "/api/receipts",
+    baseURL: `${API_BASE_URL}/api/receipts`,
     withCredentials: true,
     headers: {
         "Content-Type": "application/json",

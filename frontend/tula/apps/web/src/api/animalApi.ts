@@ -1,10 +1,13 @@
 import axios from "axios";
 import type { Animal, CreateAnimalRequest } from "../types/animal/animal.types.ts";
 
+const API_BASE_URL = window.location.origin;
+
 const ANIMAL_API = axios.create({
-    baseURL: "http://localhost:8080/api",
+    baseURL: `${API_BASE_URL}/api`,
     withCredentials: true
 });
+
 
 ANIMAL_API.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
@@ -91,6 +94,37 @@ export const getAnimalImageUrl = async (animalId: number): Promise<string | null
 
 export const deleteAnimal = async (id: number) => {
     return await ANIMAL_API.delete(`/owners/${id}`);
+};
+
+
+export interface UpdateAnimalRequest {
+    name: string;
+    description: string;
+    age: number;
+}
+
+export const updateAnimal = async (id: number, data: UpdateAnimalRequest) => {
+    const token = localStorage.getItem('token');
+    return await ANIMAL_API.put<Animal>(`/owners/animal/${id}`, data, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+};
+
+export const updateAnimalImage = async (animalId: number, imageFile: File) => {
+    const formData = new FormData();
+    formData.append('file', imageFile);  // ВАЖНО: ключ должен быть "file", а не "image"
+
+    const token = localStorage.getItem('token');
+
+    return await ANIMAL_API.patch(`/owners/animal-img/${animalId}`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
+        }
+    });
 };
 
 export default ANIMAL_API;

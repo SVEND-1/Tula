@@ -3,7 +3,7 @@ import { usePaymentHistory } from './usePaymentHistory';
 import PaymentList from '../../components/payment-history/PaymentList';
 import PaymentDetails from '../../components/payment-history/paymentDetails/PaymentDetails.tsx';
 import Pagination from '../../components/payment-history/pagination/Pagination.tsx';
-import CloseButton from '../../components/subscription/CloseButton';
+import CloseButton from  '../../components/subscription/subscription/CloseButton.tsx'
 import '../../style/payment-history/PaymentHistoryPage.scss';
 
 const PaymentHistoryPage: React.FC = () => {
