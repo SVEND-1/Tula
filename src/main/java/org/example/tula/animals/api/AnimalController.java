@@ -33,7 +33,7 @@ public class AnimalController {
     }
 
     @Operation(summary = "Получение информации о питомце")
-    @GetMapping("/{id}")//TODO ВОзмодно удалить
+    @GetMapping("/{id}")
     public ResponseEntity<Animal> getAnimal(@PathVariable Long id) {
         return ResponseEntity.ok(animalService.findAnimalById(id));
     }

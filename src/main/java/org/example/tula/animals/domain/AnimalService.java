@@ -37,19 +37,15 @@ public class AnimalService {
     private final AnimalRepository animalRepository;
     private final AnimalMapper animalMapper;
     private final UserService userService;
-    private final SubscriptionService subscriptionService;
     private final AnimalImageService animalImageService;
-    private final LikeService likeService;
 
     public AnimalService(AnimalRepository animalRepository, AnimalMapper animalMapper,
-                         @Lazy UserService userService, SubscriptionService subscriptionService,
-                         AnimalImageService animalImageService, LikeService likeService) {
+                         @Lazy UserService userService,
+                         AnimalImageService animalImageService) {
         this.animalRepository = animalRepository;
         this.animalMapper = animalMapper;
         this.userService = userService;
-        this.subscriptionService = subscriptionService;
         this.animalImageService = animalImageService;
-        this.likeService = likeService;
     }
 
     //====================================CONTROLLER METHODS=======================================================
@@ -63,11 +59,14 @@ public class AnimalService {
 
             long startTime = System.currentTimeMillis();
 
+            Long userId = userService.getCurrentUser().getId();
+
             Page<AnimalEntity> animalsEntityPage = animalRepository.findAllByFilter(
                     filter.age(),
                     filter.breed(),
                     filter.gender(),
                     filter.animalType(),
+                    userId,
                     pageable
             );
 
@@ -161,7 +160,6 @@ public class AnimalService {
             AnimalEntity animal = findAnimalEntityById(id);
             List<LikeEntity> likeEntities = animal.getLikes();
 
-            likeService.deleteAll(likeEntities);
             animalImageService.deleteAnimalImage(id);
             animalRepository.deleteById(id);
             return "Успешно";
