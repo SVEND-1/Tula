@@ -7,7 +7,7 @@ import org.example.tula.payments.api.dto.response.payment.PaymentCreateResponse;
 import org.example.tula.payments.api.dto.response.payment.PaymentPageResponse;
 import org.example.tula.payments.api.dto.response.payment.PaymentResponse;
 import org.example.tula.payments.api.dto.response.receipt.ReceiptResponse;
-import org.example.tula.payments.api.exception.PaymentOwnershipException;
+import org.example.tula.payments.domain.exception.PaymentOwnershipException;
 import org.example.tula.payments.domain.mapper.PaymentMapper;
 import org.example.tula.payments.domain.mapper.ReceiptMapper;
 import org.example.tula.payments.db.PaymentEntity;

@@ -30,9 +30,7 @@ public class SubscriptionService {
     private final SubscriptionRepository subscriptionRepository;
     private final UserService userService;
 
-    public SubscriptionEntity findByUserEmail(String userEmail) {
-        return subscriptionRepository.findByUserEmail(userEmail).orElse(null);
-    }
+    //====================================CONTROLLER METHODS=======================================================
 
     public SubscriptionDetailResponse getSubscription(Long id) {
         if (id == null) {
@@ -86,6 +84,12 @@ public class SubscriptionService {
             log.error("Не удалось оформить подписку,paymentId={},ex={}",paymentId,e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    //====================================SERVICE METHODS=======================================================
+
+    public SubscriptionEntity findByUserEmail(String userEmail) {
+        return subscriptionRepository.findByUserEmail(userEmail).orElse(null);
     }
 
     //@Scheduled(cron = "0 0 0 * * *") раз в день //TODO в проде это поставить

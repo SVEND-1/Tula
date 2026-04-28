@@ -53,4 +53,17 @@ public class ChatController {
                 .status(HttpStatus.OK)
                 .body(chatService.getChatById(id));
     }
+
+    @Operation(summary = "Установить статус чата на неактивный")
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> setStatusToInactiveById(
+            @Parameter(description = "Id чата")
+            @PathVariable("id") Long id
+    ) {
+        chatService.setStatusToInactive(id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
 }

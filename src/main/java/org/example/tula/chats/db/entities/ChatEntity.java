@@ -3,6 +3,7 @@ package org.example.tula.chats.db.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.tula.animals.db.AnimalEntity;
+import org.example.tula.chats.db.enums.Status;
 import org.example.tula.users.db.UserEntity;
 
 import java.time.LocalDateTime;
@@ -31,6 +32,9 @@ public class ChatEntity {
     @JoinColumn(name = "animal_id")
     private AnimalEntity animal;
 
+    @Enumerated(EnumType.STRING)
+    Status status;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -39,6 +43,7 @@ public class ChatEntity {
 
     @PrePersist
     public void onCreate() {
+        status = Status.ACTIVE;
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
     }
