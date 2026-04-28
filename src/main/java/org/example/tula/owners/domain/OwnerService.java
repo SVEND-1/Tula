@@ -6,6 +6,8 @@ import org.example.tula.animals.api.dto.Animal;
 import org.example.tula.animals.db.AnimalEntity;
 import org.example.tula.animals.db.StatusAnimal;
 import org.example.tula.animals.domain.AnimalService;
+import org.example.tula.owners.domain.exceptions.NotPetOwnerException;
+import org.example.tula.owners.domain.exceptions.OwnerNotCreatedException;
 import org.example.tula.animals.domain.mapper.AnimalMapper;
 import org.example.tula.likes.api.dto.Like;
 import org.example.tula.likes.db.StatusAnswer;
@@ -16,6 +18,8 @@ import org.example.tula.notify.kafka.NotifyKafkaProducer;
 import org.example.tula.owners.api.dto.response.OwnerProfileResponse;
 import org.example.tula.owners.db.OwnerEntity;
 import org.example.tula.owners.db.OwnerRepository;
+import org.example.tula.owners.domain.exceptions.PetAlreadyTakenException;
+import org.example.tula.owners.domain.exceptions.RecipientNotFoundException;
 import org.example.tula.reviews.api.dto.Review;
 import org.example.tula.reviews.domain.mapper.ReviewMapper;
 import org.example.tula.users.db.UserEntity;
@@ -40,10 +44,7 @@ public class OwnerService {
     private final ReviewMapper reviewMapper;
 
 
-    public OwnerEntity findByIdEntity(Long id){
-        return ownerRepository.findByOwnerId(id);
-    }
-
+    //====================================CONTROLLER METHODS=======================================================
 
     @Transactional
     public List<Animal> findAllAnimalByOwner(){
@@ -105,7 +106,6 @@ public class OwnerService {
         }
     }
 
-
     @Transactional
     public String rejectionTakenAnimal(Long id) {
         try {
@@ -155,30 +155,34 @@ public class OwnerService {
             throw new RuntimeException(e);
         }
     }
+    //====================================SERVICE METHODS=======================================================
 
+    public OwnerEntity findByIdEntity(Long id){
+        return ownerRepository.findByOwnerId(id);
+    }
 
     private boolean isValidReject(Long userId,AnimalEntity animal){
         if (userId == null) {
             log.warn("Нельзя отклонить заявку так как нету получателя");
-            throw new IllegalArgumentException("Нельзя отклонить заявку так как нету получателя");
+            throw new RecipientNotFoundException("Нельзя отклонить заявку так как нету получателя");
         }
         return true;
     }
 
     private boolean isValidConfirm(Long userId,AnimalEntity animal){
         if (userId == null) {
-            throw new IllegalArgumentException("Нельзя одобрить заявку так как нету получателя");
+            throw new RecipientNotFoundException("Нельзя одобрить заявку так как нету получателя");
         }
 
         if (animal.getStatus().name().equals("TAKE")) {
-            throw new IllegalArgumentException("Данный питомец был взят");
+            throw new PetAlreadyTakenException("Данный питомец был взят");
         }
         return true;
     }
 
     private boolean isValidOwner(AnimalEntity animal){
         if(animal.getOwner().getOwner().getId() != userService.getCurrentUser().getId()){
-            throw new IllegalArgumentException("Вы не являетессь хозяеном питомца");
+            throw new NotPetOwnerException("Вы не являетессь хозяеном питомца");
         }
         return true;
     }
@@ -186,7 +190,7 @@ public class OwnerService {
     private boolean isValidCreatedOwner(){
         if(userService.getCurrentUser().getOwner() == null) {
             log.warn("Для начало создайте питомник");
-            throw new RuntimeException("Для начало создайте питомник");
+            throw new OwnerNotCreatedException("Для начало создайте питомник");
         }
         return true;
     }
