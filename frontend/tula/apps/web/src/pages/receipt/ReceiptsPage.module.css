@@ -1,6 +1,6 @@
 .page {
     display: flex;
-    height: 100vh;
+    height: 91vh;
     background: transparent; /*background: var(--bg);*/
     font-family: "Playpen Sans", cursive;
 }

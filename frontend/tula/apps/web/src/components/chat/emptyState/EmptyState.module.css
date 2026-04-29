@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
-    color: var(--text-muted);
+    color: black;
 }
 
 @media (max-width: 768px) {
@@ -27,7 +27,7 @@
 .title {
     font-size: 16px;
     font-weight: 700;
-    color: var(--text-secondary);
+    color: black;
 }
 
 @media (max-width: 768px) {

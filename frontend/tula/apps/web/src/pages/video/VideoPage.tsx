@@ -5,6 +5,10 @@ import { UploadForm } from '../../components/video/UploadForm';
 import { VideoCard } from '../../components/video/VideoCard';
 import type { VideoResponse } from '../../types/video/video.types';
 import './../../style/VideoFeed.scss';
+import {useNavigate} from "react-router-dom";
+import styles from "../../components/receipt/emptyReceipt/EmptyReceipt.module.css";
+
+import videoIcon from "../../assets/video.svg"
 
 export default function VideoFeed() {
     const navigate = useNavigate();
@@ -67,6 +71,11 @@ export default function VideoFeed() {
     };
 
     return (
+        <>
+            <header className="adopt-header">
+                <div className="logo">Adoptly</div>
+                <div className="profile" onClick={() => navigate('/liked')}>Профиль</div>
+            </header>
         <div className="feed-root">
             <div className="feed-nav-buttons">
                 <button className="feed-nav-btn" onClick={() => navigate('/main')} title="На главную">
@@ -96,7 +105,7 @@ export default function VideoFeed() {
 
                 {!loading && videos.length === 0 && (
                     <div className="feed-empty">
-                        <div className="empty-icon">🎬</div>
+                        <div className="empty-icon"><img src={videoIcon} alt="video" className={styles.icon}/></div>
                         <p>Видео пока нет.<br />Будь первым!</p>
                     </div>
                 )}
@@ -110,5 +119,6 @@ export default function VideoFeed() {
                 <UploadForm onClose={() => setShowUpload(false)} onUploaded={handleUploaded} />
             )}
         </div>
+        </>
     );
 }
