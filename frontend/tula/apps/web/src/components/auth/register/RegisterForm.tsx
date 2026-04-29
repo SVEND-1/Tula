@@ -1,9 +1,16 @@
 import type { RegisterFormProps } from "../../../types/auth/auth.types";
 import Field from "../global/Field";
 import Button from "../global/Button";
+import PasswordStrengthBar from "../PasswordStrengthBar.tsx";
+import { usePasswordStrength } from "../usePasswordStrength.ts";
 
 export default function RegisterForm({ form, setForm, handleSubmit, navigate }: RegisterFormProps) {
-    const isFormValid = form.email.trim() && form.password.trim() && form.name.trim();
+    const strength = usePasswordStrength(form.password);
+
+    const isFormValid =
+        form.email.trim() &&
+        form.name.trim() &&
+        strength.checks.minLength;
 
     return (
         <form onSubmit={handleSubmit}>
@@ -45,6 +52,8 @@ export default function RegisterForm({ form, setForm, handleSubmit, navigate }: 
                 placeholder="••••••••"
                 required
             />
+
+            <PasswordStrengthBar strength={strength} />
 
             <Button
                 type="submit"

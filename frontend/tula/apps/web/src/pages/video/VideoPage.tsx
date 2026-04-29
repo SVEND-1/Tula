@@ -5,6 +5,9 @@ import { VideoCard } from '../../components/video/VideoCard';
 import type { VideoResponse } from '../../types/video/video.types';
 import './../../style/VideoFeed.scss';
 import {useNavigate} from "react-router-dom";
+import styles from "../../components/receipt/emptyReceipt/EmptyReceipt.module.css";
+
+import videoIcon from "../../assets/video.svg"
 
 export default function VideoFeed() {
     const navigate = useNavigate();
@@ -92,7 +95,7 @@ export default function VideoFeed() {
 
                 {!loading && videos.length === 0 && (
                     <div className="feed-empty">
-                        <div className="empty-icon">🎬</div>
+                        <div className="empty-icon"><img src={videoIcon} alt="video" className={styles.icon}/></div>
                         <p>Видео пока нет.<br />Будь первым!</p>
                     </div>
                 )}

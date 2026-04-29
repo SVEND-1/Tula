@@ -8,6 +8,8 @@ import SwipeButtons from '../../components/main/SwipeButtons';
 import AnimalModal from '../../components/main/AnimalModal';
 import '../../style/MainPage.scss';
 
+import paw from '../../assets/paw.svg';
+
 export default function MainPage() {
     const {
         animals,
@@ -61,7 +63,7 @@ export default function MainPage() {
                 </header>
                 <div className="empty-container">
                     <div className="empty-card">
-                        <span className="empty-emoji">🐾</span>
+                        <img src={paw} alt="paw" className="empty-emoji" />
                         <h2>Животные закончились</h2>
                         <p>Всего животных в базе: {animals.length}</p>
                         <button onClick={handleReload} className="reload-btn">

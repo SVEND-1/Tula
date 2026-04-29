@@ -1,6 +1,11 @@
 import React, { useState, useRef } from 'react';
 import type { Gender, AnimalType, CreateAnimalRequest } from '../../types/animal/animal.types.ts';
 
+import styles from "../receipt/emptyReceipt/EmptyReceipt.module.css";
+
+import folderIcon from "../../assets/folder.svg";
+import createIcon from "../../assets/create.svg"
+
 interface CreateAnimalFormProps {
     onSubmit: (data: CreateAnimalRequest, imageFile?: File) => Promise<void>;
     isLoading: boolean;
@@ -74,7 +79,11 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
                                 className="file-input"
                             />
                             <label htmlFor="file-input" className="file-input-label">
-                                <span>📁</span> Выбрать фото
+                                <img src={folderIcon} alt="folder" className={styles.icon}
+                                     style={{
+                                         width: 25,
+                                         height: 25}}
+                                /> Выбрать фото
                             </label>
                         </div>
                         {fileName && <div className="file-name">📎 {fileName}</div>}
@@ -132,8 +141,12 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
                                 value={form.animalType}
                                 onChange={(e) => setForm({ ...form, animalType: e.target.value as AnimalType })}
                             >
-                                <option value="DOG">🐕 Собака</option>
-                                <option value="CAT">🐈 Кошка</option>
+                                <option value="DOG">
+                                    Собака
+                                </option>
+                                <option value="CAT">
+                                    Кошка
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -152,8 +165,15 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
                         type="submit"
                         className="submit-btn"
                         disabled={!isFormValid || isLoading}
-                    >
-                        {isLoading ? 'Создание...' : '✨ Создать анкету'}
+                    ><img src={createIcon} alt="create" className={styles.icon}
+                          style={{
+                              width: 25,
+                              height: 25,
+                              marginBottom: -5,
+
+                          }}
+                    />
+                        {isLoading ? 'Создание...' : 'Создать анкету'}
                     </button>
                 </div>
 

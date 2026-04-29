@@ -796,14 +796,14 @@ html, body {
     }
 
     .empty-emoji {
-      font-size: 80px;
-      display: block;
+      width: 80px;
       margin-bottom: 20px;
+      animation: float 2s ease-in-out infinite;
+    }
 
-      @media (max-width: 768px) {
-        font-size: 60px;
-        margin-bottom: 15px;
-      }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
     }
 
     h2 {

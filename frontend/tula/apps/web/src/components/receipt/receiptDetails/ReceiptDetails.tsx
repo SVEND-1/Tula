@@ -4,6 +4,8 @@ import ReceiptItems from '../receiptItems/ReceiptItems.tsx';
 import ReceiptFiscal from '../receiptFiscal/ReceiptFiscal.tsx';
 import styles from './ReceiptDetails.module.css';
 
+import receiptIcon from '../../../assets/receipt.svg'
+
 interface Props {
   receipt: Receipt;
   loading: boolean;
@@ -27,7 +29,9 @@ const ReceiptDetails: React.FC<Props> = ({ receipt, loading }) => {
     <div className={styles.wrapper}>
       {/* Шапка чека */}
       <div className={styles.receiptHeader}>
-        <div className={styles.shopIcon}>🧾</div>
+        <div className={styles.shopIcon}>
+            <img src={receiptIcon} alt="receipt" className={styles.icon}/>
+        </div>
         <div>
           <h2 className={styles.shopName}>{receipt.sellerName}</h2>
           <p className={styles.receiptDate}>{formatDateTime(receipt.registeredAt)}</p>
