@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
-    color: black;
+    color: var(--text-muted);
     background: transparent;/*background: var(--bg);*/
 }
 
@@ -16,8 +16,7 @@
 }
 
 .icon {
-    width: 60px;
-    height: 60px;
+    font-size: 52px;
 }
 
 @media (max-width: 768px) {

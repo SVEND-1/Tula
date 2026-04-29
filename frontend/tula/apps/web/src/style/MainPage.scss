@@ -794,14 +794,14 @@ html, body {
     }
 
     .empty-emoji {
-      width: 80px;
+      font-size: 80px;
+      display: block;
       margin-bottom: 20px;
-      animation: float 2s ease-in-out infinite;
-    }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+      @media (max-width: 768px) {
+        font-size: 60px;
+        margin-bottom: 15px;
+      }
     }
 
     h2 {
