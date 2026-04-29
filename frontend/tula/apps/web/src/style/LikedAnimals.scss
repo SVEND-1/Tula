@@ -67,8 +67,7 @@
 .liked-container {
   display: flex;
   min-height: 100vh;
-  background: transparent;//background: #f5f5f5;
-  backdrop-filter: blur(6px);
+  background: #f5f5f5;
   padding-top: 70px;
 
   @media (max-width: 768px) {
@@ -1587,4 +1586,375 @@
   @media (max-width: 480px) {
     height: 160px;
   }
+}
+// ========== ВИДЕО ==========
+.videos-main {
+  h2 { font-size: 22px; font-weight: 700; color: #333; margin: 0 0 20px; }
+}
+
+.videos-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.upload-btn {
+  background: linear-gradient(135deg, #ffcdb0, #ff8c5a);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Playpen Sans", cursive;
+  box-shadow: 0 4px 12px rgba(255,140,90,0.3);
+  transition: all 0.2s;
+  &:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(255,140,90,0.4); }
+}
+
+.upload-form {
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+
+  .form-group {
+    margin-bottom: 14px;
+    label { display: block; font-size: 13px; font-weight: 600; color: #555; margin-bottom: 5px; }
+    input, textarea {
+      width: 100%;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 14px;
+      font-family: "Playpen Sans", cursive;
+      color: #333;
+      background: white;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+      &:focus { border-color: #ffcdb0; }
+    }
+    textarea { resize: vertical; }
+  }
+}
+
+.file-drop-area {
+  border: 2px dashed #ffcdb0;
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(255,205,176,0.05);
+  &:hover { background: rgba(255,205,176,0.15); border-color: #ff8c5a; }
+  .file-name { font-size: 14px; color: #ff8c5a; font-weight: 600; }
+  .file-placeholder { font-size: 13px; color: #aaa; }
+}
+
+.submit-upload-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #ffcdb0, #ff8c5a);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 11px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Playpen Sans", cursive;
+  margin-top: 6px;
+  transition: all 0.2s;
+  &:hover:not(:disabled) { transform: translateY(-1px); }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.videos-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.video-card {
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  &:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.12); }
+}
+
+.video-player-wrap {
+  width: 100%;
+  background: #111;
+}
+
+.video-player {
+  width: 100%;
+  max-height: 380px;
+  display: block;
+  object-fit: contain;
+  @media (max-width: 768px) { max-height: 220px; }
+}
+
+.video-card-info {
+  padding: 18px 20px;
+  @media (max-width: 768px) { padding: 14px; }
+}
+
+.video-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.video-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.video-delete-btn {
+  background: none;
+  border: none;
+  font-size: 17px;
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  transition: background 0.2s;
+  &:hover { background: rgba(244,67,54,0.1); }
+}
+
+.video-description {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+
+.video-meta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  span { font-size: 12px; color: #999; }
+}
+
+.video-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.like-btn {
+  background: rgba(255,205,176,0.3);
+  border: 1.5px solid #ffcdb0;
+  border-radius: 10px;
+  padding: 5px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: "Playpen Sans", cursive;
+  transition: all 0.2s;
+  &:hover { background: rgba(255,205,176,0.6); transform: scale(1.05); }
+}
+
+.comments-toggle-btn {
+  background: rgba(200,220,255,0.3);
+  border: 1.5px solid #c5d8ff;
+  border-radius: 10px;
+  padding: 5px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: "Playpen Sans", cursive;
+  transition: all 0.2s;
+  &:hover { background: rgba(200,220,255,0.6); }
+}
+
+.comments-section {
+  margin-top: 14px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 14px;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.comment-item {
+  background: rgba(245,245,245,0.7);
+  border-radius: 10px;
+  padding: 8px 12px;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 3px;
+  flex-wrap: wrap;
+}
+
+.comment-author { font-size: 12px; font-weight: 700; color: #ff8c5a; }
+.comment-date { font-size: 11px; color: #bbb; flex: 1; }
+
+.comment-delete-btn {
+  background: none;
+  border: none;
+  font-size: 11px;
+  color: #ccc;
+  cursor: pointer;
+  padding: 1px 4px;
+  border-radius: 4px;
+  &:hover { color: #f44336; background: rgba(244,67,54,0.1); }
+}
+
+.comment-text { font-size: 13px; color: #444; margin: 0; line-height: 1.4; }
+.no-comments { font-size: 13px; color: #bbb; text-align: center; margin: 0 0 10px; }
+
+.comment-input-row {
+  display: flex;
+  gap: 8px;
+  input {
+    flex: 1;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 7px 12px;
+    font-size: 13px;
+    font-family: "Playpen Sans", cursive;
+    outline: none;
+    background: white;
+    transition: border-color 0.2s;
+    &:focus { border-color: #ffcdb0; }
+  }
+}
+
+.send-comment-btn {
+  background: linear-gradient(135deg, #ffcdb0, #ff8c5a);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 7px 14px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover { transform: translateX(2px); }
+}
+
+.load-more-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 24px auto 0;
+  background: rgba(255,255,255,0.8);
+  border: 1.5px solid #ffcdb0;
+  border-radius: 12px;
+  padding: 10px 28px;
+  font-size: 14px;
+  font-family: "Playpen Sans", cursive;
+  cursor: pointer;
+  transition: all 0.2s;
+  .btn-icon { width: 16px; height: 16px; }
+  &:hover { background: rgba(255,205,176,0.3); transform: translateY(-2px); }
+}
+
+// Карточки-превью видео во вкладке
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.video-preview-card {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+
+    .video-play-overlay { opacity: 1; }
+  }
+}
+
+.video-preview-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #111;
+  overflow: hidden;
+}
+
+.video-thumb-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.video-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.35);
+  font-size: 36px;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.video-preview-info {
+  padding: 12px 14px;
+
+  h4 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.video-preview-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  span {
+    font-size: 12px;
+    color: #888;
+  }
+}
+
+.videos-main h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 20px;
 }

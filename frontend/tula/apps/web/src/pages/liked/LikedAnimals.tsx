@@ -9,6 +9,8 @@ import QrCode from '../../components/qr/QrCode';
 import { createAnimalWithImage, getAnimalImageUrl, deleteAnimal, updateAnimal } from "../../api/animalApi";
 import { deleteLike, getUserLikes } from "../../api/likeApi";
 import { getFollowersCount } from "../../api/followApi";
+import { videoApi } from "../../api/videoApi";
+import type { VideoResponse } from "../../types/video/video.types";
 
 // Импорт всех SVG иконок
 import dogIcon from '../../assets/dog.svg';
@@ -26,6 +28,7 @@ import femaleIcon from '../../assets/female.svg';
 import calendarIcon from '../../assets/calendar.svg';
 import editDocumentIcon from '../../assets/edit-document.svg';
 import flashUseIcon from '../../assets/flash-use.svg';
+import videoIcon from '../../assets/video.svg';
 
 interface LikedAnimal {
     id: number;
@@ -50,7 +53,7 @@ interface MyAnimal {
     status: string;
 }
 
-type ActiveTab = 'profile' | 'mypets' | 'reviews' | 'liked' | 'createShelter';
+type ActiveTab = 'profile' | 'mypets' | 'reviews' | 'liked' | 'createShelter' | 'videos';
 
 export default function LikedAnimals() {
     const navigate = useNavigate();
@@ -80,6 +83,10 @@ export default function LikedAnimals() {
         age: 0
     });
     const [isUpdating, setIsUpdating] = useState(false);
+
+    // Состояния для вкладки видео
+    const [videos, setVideos] = useState<VideoResponse[]>([]);
+    const [videosLoading, setVideosLoading] = useState(false);
 
     const facts = [
         { text: "Кошки спят около 16 часов в день" },
@@ -457,6 +464,24 @@ export default function LikedAnimals() {
         return `${count} подписчиков`;
     };
 
+    // ========== ВИДЕО ==========
+    const loadVideos = async () => {
+        setVideosLoading(true);
+        try {
+            const response = await videoApi.getAll(0, 50);
+            setVideos(response.data.content);
+        } catch (error) {
+            console.error('Ошибка загрузки видео:', error);
+        } finally {
+            setVideosLoading(false);
+        }
+    };
+
+    const handleVideoTabOpen = () => {
+        setActiveTab('videos');
+        if (videos.length === 0) loadVideos();
+    };
+
     if (isLoading) {
         return (
             <div className="loading-container">
@@ -517,6 +542,9 @@ export default function LikedAnimals() {
                         </button>
                         <button className="nav-item" onClick={() => navigate('/chat')}>
                             <img src={chatIcon} alt="Чат" className="nav-icon-img" /> Чат
+                        </button>
+                        <button className={`nav-item ${activeTab === 'videos' ? 'active' : ''}`} onClick={handleVideoTabOpen}>
+                            <img src={videoIcon} alt="Видео" className="nav-icon-img" /> Мои видео
                         </button>
                     </nav>
                 </aside>
@@ -789,6 +817,50 @@ export default function LikedAnimals() {
                                 <p>Заполните форму чтобы добавить питомца в ленту</p>
                                 <CreateAnimalForm onSubmit={handleCreateAnimal} isLoading={isCreatingAnimal} />
                             </div>
+                        </div>
+                    )}
+
+                    {activeTab === 'videos' && (
+                        <div className="videos-main">
+                            <h2>Мои видео</h2>
+                            {videosLoading ? (
+                                <div className="empty-state">
+                                    <div className="spinner"></div>
+                                    <p>Загрузка видео...</p>
+                                </div>
+                            ) : videos.length === 0 ? (
+                                <div className="empty-state">
+                                    <img src={videoIcon} alt="Видео" className="empty-icon" />
+                                    <p>Видео пока нет</p>
+                                    <button className="add-btn" onClick={() => navigate('/video')}>
+                                        Перейти к видео
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="videos-grid">
+                                    {videos.map(video => (
+                                        <div key={video.id} className="video-preview-card" onClick={() => navigate('/video')}>
+                                            <div className="video-preview-thumb">
+                                                <video
+                                                    src={videoApi.getStreamUrl(video.id)}
+                                                    preload="metadata"
+                                                    className="video-thumb-player"
+                                                    muted
+                                                />
+                                                <div className="video-play-overlay">▶</div>
+                                            </div>
+                                            <div className="video-preview-info">
+                                                <h4>{video.title}</h4>
+                                                <div className="video-preview-meta">
+                                                    <span>❤️ {video.likesCount}</span>
+                                                    <span>💬 {video.comments.length}</span>
+                                                    <span>👤 {video.uploaderName}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>

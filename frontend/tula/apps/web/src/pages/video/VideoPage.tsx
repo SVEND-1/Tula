@@ -4,8 +4,10 @@ import { UploadForm } from '../../components/video/UploadForm';
 import { VideoCard } from '../../components/video/VideoCard';
 import type { VideoResponse } from '../../types/video/video.types';
 import './../../style/VideoFeed.scss';
+import {useNavigate} from "react-router-dom";
 
 export default function VideoFeed() {
+    const navigate = useNavigate();
     const [videos, setVideos] = useState<VideoResponse[]>([]);
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
@@ -65,6 +67,11 @@ export default function VideoFeed() {
     };
 
     return (
+        <>
+            <header className="adopt-header">
+                <div className="logo">Adoptly</div>
+                <div className="profile" onClick={() => navigate('/liked')}>Профиль</div>
+            </header>
         <div className="feed-root">
             <div className="feed-container" ref={containerRef}>
                 {videos.map((v, i) => (
@@ -99,5 +106,6 @@ export default function VideoFeed() {
                 <UploadForm onClose={() => setShowUpload(false)} onUploaded={handleUploaded} />
             )}
         </div>
+        </>
     );
 }

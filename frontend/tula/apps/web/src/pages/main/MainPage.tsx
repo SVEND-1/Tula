@@ -6,6 +6,9 @@ import type { Animal } from '../../types/animal/animal.types.ts';
 import '../../style/MainPage.scss';
 import { useSound } from '../../hooks/useSound';
 
+import paws from '../../assets/paw.svg'
+
+
 export default function MainPage() {
     const navigate = useNavigate();
     const [animals, setAnimals] = useState<Animal[]>([]);
@@ -203,19 +206,25 @@ export default function MainPage() {
 
     if (!currentAnimal && !oldAnimal) {
         return (
-            <div className="empty-container">
-                <div className="empty-card">
-                    <span className="empty-emoji">🐾</span>
-                    <h2>Животные закончились</h2>
-                    <p>Всего животных в базе: {animals.length}</p>
-                    <button onClick={() => {
-                        loadAnimals();
-                        setCurrentIndex(0);
-                    }} className="reload-btn">
-                        Обновить список
-                    </button>
+            <>
+                <header className="adopt-header">
+                    <div className="logo">Adoptly</div>
+                    <div className="profile" onClick={() => navigate('/liked')}>Профиль</div>
+                </header>
+                <div className="empty-container">
+                    <div className="empty-card">
+                        <span className="empty-emoji">{paws}</span>
+                        <h2>Животные закончились</h2>
+                        <p>Всего животных в базе: {animals.length}</p>
+                        <button onClick={() => {
+                            loadAnimals();
+                            setCurrentIndex(0);
+                        }} className="reload-btn">
+                            Обновить список
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </>
         );
     }
 

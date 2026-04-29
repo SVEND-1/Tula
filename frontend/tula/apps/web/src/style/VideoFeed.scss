@@ -17,94 +17,68 @@ $font:     "Playpen Sans", cursive;
 .feed-root {
   position: relative;
   width: 100%;
-  height: 100dvh;
+  min-height: 100dvh;
   background: $bg;
-  overflow: hidden;
   font-family: $font;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 20px 60px;
+  box-sizing: border-box;
 }
 
 // ─── Feed container – snaps each card ─────────────────────────────────────────
 .feed-container {
   width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-
-  // hide scrollbar
-  &::-webkit-scrollbar { display: none; }
-  scrollbar-width: none;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
 // ─── Single video card ────────────────────────────────────────────────────────
 .video-card {
   position: relative;
   width: 100%;
-  height: 100dvh;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+  border-radius: 20px;
   overflow: hidden;
   background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
 }
 
 .video-el {
-  position: absolute;
-  inset: 0;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-height: 60vh;
+  object-fit: contain;
+  display: block;
   cursor: pointer;
+  background: #000;
 }
 
 // gradient bottom overlay
 .video-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-                  to top,
-                  rgba(0,0,0,0.85) 0%,
-                  rgba(0,0,0,0.25) 40%,
-                  transparent 70%
-  );
-  pointer-events: none;
+  display: none;
 }
 
 // ─── Bottom info ──────────────────────────────────────────────────────────────
 .video-info {
-  position: absolute;
-  bottom: 90px;
-  left: 0;
-  right: 80px;
-  padding: 0 20px;
-  z-index: 5;
-
-  @media (max-width: 480px) {
-    bottom: 80px;
-    right: 70px;
-    padding: 0 15px;
-  }
+  padding: 14px 16px 4px;
 }
 
 .video-title-text {
   margin: 0 0 6px;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   color: $text;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
   line-height: 1.3;
 
-  @media (max-width: 480px) { font-size: 16px; }
+  @media (max-width: 480px) { font-size: 15px; }
 }
 
 .video-desc {
   margin: 0;
   font-size: 14px;
-  color: rgba(255,255,255,0.75);
-  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  color: rgba(255,255,255,0.7);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -115,48 +89,38 @@ $font:     "Playpen Sans", cursive;
 
 // ─── Side action buttons ──────────────────────────────────────────────────────
 .video-actions {
-  position: absolute;
-  right: 12px;
-  bottom: 90px;
   display: flex;
-  flex-direction: column;
-  gap: 18px;
-  z-index: 10;
+  flex-direction: row;
+  gap: 16px;
+  padding: 10px 16px 14px;
   align-items: center;
-
-  @media (max-width: 480px) {
-    right: 8px;
-    bottom: 80px;
-    gap: 14px;
-  }
+  border-top: 1px solid rgba(255,255,255,0.06);
 }
 
 .action-btn {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 4px;
-  background: none;
+  gap: 6px;
+  background: rgba(255,255,255,0.06);
   border: none;
   cursor: pointer;
-  padding: 0;
-  transition: transform 0.15s;
+  padding: 7px 14px;
+  border-radius: 20px;
+  transition: transform 0.15s, background 0.2s;
 
-  &:active { transform: scale(0.88); }
+  &:hover { background: rgba(255,255,255,0.12); }
+  &:active { transform: scale(0.93); }
 
   .action-icon {
-    font-size: 32px;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    font-size: 20px;
     transition: transform 0.2s;
-
-    @media (max-width: 480px) { font-size: 26px; }
   }
 
   .action-count {
-    font-size: 13px;
+    font-size: 14px;
     color: $text;
     font-weight: 600;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
   }
 
   &.liked .action-icon {
@@ -353,7 +317,7 @@ $font:     "Playpen Sans", cursive;
 // ─── FAB Upload button ────────────────────────────────────────────────────────
 .fab-upload {
   position: fixed;
-  top: 20px;
+  top: 100px;
   right: 20px;
   bottom: auto;
   width: 48px;
@@ -387,7 +351,7 @@ $font:     "Playpen Sans", cursive;
   font-size: 28px;
   font-weight: 300;
   line-height: 1;
-  margin-top: -2px;
+  margin-top: -5px;
 }
 
 // ─── Upload modal ─────────────────────────────────────────────────────────────
@@ -603,11 +567,10 @@ $font:     "Playpen Sans", cursive;
 // ─── Feed states ──────────────────────────────────────────────────────────────
 .feed-loader {
   width: 100%;
-  height: 100dvh;
+  height: 50vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  scroll-snap-align: start;
 
   .loader-ring {
     width: 48px;
@@ -635,7 +598,7 @@ $font:     "Playpen Sans", cursive;
 
 .feed-empty {
   width: 100%;
-  height: 100dvh;
+  height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
