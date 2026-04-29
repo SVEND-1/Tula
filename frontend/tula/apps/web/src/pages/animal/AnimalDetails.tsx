@@ -130,7 +130,7 @@ export default function AnimalDetails() {
                                 <span className="owner-value">{animal.ownerName || 'Не указан'}</span>
                             </div>
                             <div className="owner-item">
-                                <span className="owner-label">📅 Добавлен</span>
+                                <span className="owner-label"> Добавлен</span>
                                 <span className="owner-value">{formatDate(animal.createAt)}</span>
                             </div>
                         </div>

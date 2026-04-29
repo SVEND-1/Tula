@@ -9,8 +9,9 @@ import QrCode from '../../components/qr/QrCode';
 import { createAnimalWithImage, getAnimalImageUrl, deleteAnimal, updateAnimal } from "../../api/animalApi";
 import { deleteLike, getUserLikes } from "../../api/likeApi";
 import { getFollowersCount } from "../../api/followApi";
+import { videoApi } from '../../api/videoApi';
+import type { VideoResponse } from '../../types/video/video.types';
 
-// Импорт всех SVG иконок
 import dogIcon from '../../assets/dog.svg';
 import catIcon from '../../assets/cat.png';
 import pawIcon from '../../assets/paw.svg';
@@ -50,7 +51,16 @@ interface MyAnimal {
     status: string;
 }
 
-type ActiveTab = 'profile' | 'mypets' | 'reviews' | 'liked' | 'createShelter';
+interface MyVideo {
+    id: number;
+    title: string;
+    description: string;
+    createdAt: string;
+    filePath: string;
+    uploaderName?: string;
+}
+
+type ActiveTab = 'profile' | 'mypets' | 'reviews' | 'liked' | 'createShelter' | 'myvideos';
 
 export default function LikedAnimals() {
     const navigate = useNavigate();
@@ -58,8 +68,10 @@ export default function LikedAnimals() {
     const [profile, setProfile] = useState<UserProfileResponse | null>(null);
     const [likedAnimals, setLikedAnimals] = useState<LikedAnimal[]>([]);
     const [myAnimals, setMyAnimals] = useState<MyAnimal[]>([]);
+    const [myVideos, setMyVideos] = useState<MyVideo[]>([]);
     const [animalImages, setAnimalImages] = useState<Record<number, string>>({});
     const [isLoading, setIsLoading] = useState(true);
+    const [videosLoading, setVideosLoading] = useState(false);
     const [activeTab, setActiveTab] = useState<ActiveTab>('profile');
     const [isCreatingAnimal, setIsCreatingAnimal] = useState(false);
     const [shelterName, setShelterName] = useState('');
@@ -71,8 +83,6 @@ export default function LikedAnimals() {
     const [currentFact, setCurrentFact] = useState(0);
     const [isDeleting, setIsDeleting] = useState<number | null>(null);
     const [progress, setProgress] = useState(0);
-
-    // Состояния для редактирования
     const [editingAnimal, setEditingAnimal] = useState<MyAnimal | null>(null);
     const [editFormData, setEditFormData] = useState({
         name: '',
@@ -130,6 +140,12 @@ export default function LikedAnimals() {
         }
     }, [ownerId]);
 
+    useEffect(() => {
+        if (activeTab === 'myvideos') {
+            loadMyVideos();
+        }
+    }, [activeTab]);
+
     const loadFollowersCount = async () => {
         if (!ownerId) return;
         try {
@@ -139,6 +155,31 @@ export default function LikedAnimals() {
         } catch (error) {
             console.error('Ошибка загрузки подписчиков:', error);
             setFollowersCount(null);
+        }
+    };
+
+    const loadMyVideos = async () => {
+        setVideosLoading(true);
+        try {
+            const response = await videoApi.getAll(0, 100);
+            const allVideos: VideoResponse[] = response.data.content;
+            const currentUserName = localStorage.getItem('userName') || profile?.name;
+            const userVideos: MyVideo[] = allVideos
+                .filter(video => video.uploaderName === currentUserName)
+                .map(video => ({
+                    id: video.id,
+                    title: video.title,
+                    description: video.description,
+                    createdAt: video.createdAt,
+                    filePath: video.filePath,
+                    uploaderName: video.uploaderName
+                }));
+            setMyVideos(userVideos);
+        } catch (error) {
+            console.error('Ошибка загрузки видео:', error);
+            setMyVideos([]);
+        } finally {
+            setVideosLoading(false);
         }
     };
 
@@ -248,7 +289,7 @@ export default function LikedAnimals() {
         try {
             await createOwner(shelterName);
             setOwnerName(shelterName);
-            alert('✅ Приют успешно создан! Теперь вы можете добавлять питомцев');
+            alert(' Приют успешно создан! Теперь вы можете добавлять питомцев');
             setShelterName('');
             setHasOwner(true);
             setActiveTab('mypets');
@@ -256,7 +297,7 @@ export default function LikedAnimals() {
             await loadProfile();
         } catch (error: any) {
             console.error('Ошибка создания приюта:', error);
-            alert('❌ Ошибка создания приюта');
+            alert(' Ошибка создания приюта');
         } finally {
             setIsCreatingShelter(false);
         }
@@ -276,13 +317,13 @@ export default function LikedAnimals() {
                     }
                 }
 
-                alert(`✅ Животное "${newAnimal.name}" успешно создано!`);
+                alert(` Животное "${newAnimal.name}" успешно создано!`);
 
                 await loadMyAnimals();
                 await loadProfile();
                 setActiveTab('mypets');
             } else {
-                alert('❌ Сервер вернул некорректный ответ');
+                alert(' Сервер вернул некорректный ответ');
             }
 
         } catch (error: any) {
@@ -291,7 +332,7 @@ export default function LikedAnimals() {
             if (error.response?.data?.message) {
                 errorMessage = error.response.data.message;
             }
-            alert(`❌ ${errorMessage}`);
+            alert(` ${errorMessage}`);
         } finally {
             setIsCreatingAnimal(false);
         }
@@ -313,7 +354,7 @@ export default function LikedAnimals() {
                 }
 
                 await deleteAnimal(animalId);
-                alert('✅ Животное удалено!');
+                alert(' Животное удалено!');
 
                 setAnimalImages(prev => {
                     const newState = { ...prev };
@@ -326,9 +367,9 @@ export default function LikedAnimals() {
             } catch (error: any) {
                 console.error('Ошибка удаления:', error);
                 if (error.response?.status === 500) {
-                    alert('❌ Невозможно удалить питомца. Возможно, есть связанные данные. Попробуйте позже или обратитесь к администратору.');
+                    alert(' Невозможно удалить питомца. Возможно, есть связанные данные. Попробуйте позже или обратитесь к администратору.');
                 } else {
-                    alert(`❌ Ошибка при удалении: ${error.response?.data?.message || error.message}`);
+                    alert(` Ошибка при удалении: ${error.response?.data?.message || error.message}`);
                 }
             } finally {
                 setIsDeleting(null);
@@ -360,7 +401,7 @@ export default function LikedAnimals() {
 
             await updateAnimal(editingAnimal.id, editFormData);
 
-            alert('✅ Данные животного успешно обновлены!');
+            alert(' Данные животного успешно обновлены!');
             handleCloseModal();
 
             await loadMyAnimals();
@@ -369,7 +410,7 @@ export default function LikedAnimals() {
         } catch (error: any) {
             console.error('Ошибка обновления:', error);
             console.error('Детали ошибки:', error.response?.data);
-            alert(`❌ Ошибка при обновлении: ${error.response?.data?.message || error.message}`);
+            alert(` Ошибка при обновлении: ${error.response?.data?.message || error.message}`);
         } finally {
             setIsUpdating(false);
         }
@@ -379,14 +420,27 @@ export default function LikedAnimals() {
         if (confirm(`Вы уверены, что хотите удалить лайк у "${animalName}"?`)) {
             try {
                 await deleteLike(animalId);
-                alert('✅ Лайк удалён!');
+                alert(' Лайк удалён!');
 
                 setLikedAnimals(prev => prev.filter(animal => animal.id !== animalId));
                 await loadProfile();
 
             } catch (error: any) {
                 console.error('Ошибка удаления лайка:', error);
-                alert('❌ Ошибка при удалении лайка');
+                alert(' Ошибка при удалении лайка');
+            }
+        }
+    };
+
+    const handleDeleteVideo = async (videoId: number, videoTitle: string) => {
+        if (confirm(`Вы уверены, что хотите удалить видео "${videoTitle}"?`)) {
+            try {
+                await videoApi.deleteVideo(videoId);
+                alert(' Видео удалено!');
+                await loadMyVideos();
+            } catch (error: any) {
+                console.error('Ошибка удаления видео:', error);
+                alert(' Ошибка при удалении видео');
             }
         }
     };
@@ -505,6 +559,9 @@ export default function LikedAnimals() {
                         </button>
                         <button className={`nav-item ${activeTab === 'mypets' ? 'active' : ''}`} onClick={() => setActiveTab('mypets')}>
                             <img src={pawIcon} alt="Питомцы" className="nav-icon-img" /> Мои питомцы
+                        </button>
+                        <button className={`nav-item ${activeTab === 'myvideos' ? 'active' : ''}`} onClick={() => setActiveTab('myvideos')}>
+                            <img src={createIcon} alt="Мои видео" className="nav-icon-img" /> Мои видео
                         </button>
                         <button className={`nav-item ${activeTab === 'reviews' ? 'active' : ''}`} onClick={() => setActiveTab('reviews')}>
                             <img src={starIcon} alt="Отзывы" className="nav-icon-img" /> Отзывы
@@ -638,6 +695,46 @@ export default function LikedAnimals() {
                                     <p>У вас пока нет приюта</p>
                                     <button onClick={() => setActiveTab('createShelter')} className="add-btn">
                                         + Создать приют
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {activeTab === 'myvideos' && (
+                        <div className="myvideos-main">
+                            <h2>Мои видео</h2>
+                            {videosLoading ? (
+                                <div className="loading-spinner">Загрузка...</div>
+                            ) : myVideos.length > 0 ? (
+                                <div className="videos-grid">
+                                    {myVideos.map((video) => (
+                                        <div key={video.id} className="video-card-item">
+                                            <div className="video-thumbnail" onClick={() => navigate('/video')}>
+                                                <video src={`/api/videos/${video.id}/stream`} className="video-preview" muted />
+                                                <div className="play-icon">▶️</div>
+                                            </div>
+                                            <div className="video-info-item">
+                                                <h4>{video.title}</h4>
+                                                <p>{video.description}</p>
+                                                <span className="video-date">{formatDate(video.createdAt)}</span>
+                                                <button
+                                                    className="delete-video-btn"
+                                                    onClick={() => handleDeleteVideo(video.id, video.title)}
+                                                    title="Удалить видео"
+                                                >
+                                                    🗑️ Удалить
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="empty-state">
+                                    <img src={createIcon} alt="Видео" className="empty-icon" />
+                                    <p>У вас пока нет загруженных видео</p>
+                                    <button onClick={() => navigate('/video')} className="add-btn">
+                                        Загрузить видео
                                     </button>
                                 </div>
                             )}
@@ -793,8 +890,6 @@ export default function LikedAnimals() {
                     )}
                 </div>
             </main>
-
-            {/* Модальное окно редактирования (только данные, без картинки) */}
             {editingAnimal && (
                 <div className="modal-overlay" onClick={handleCloseModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -805,7 +900,7 @@ export default function LikedAnimals() {
 
                         <div className="modal-body">
                             <div className="form-group">
-                                <label>🐾 Имя питомца</label>
+                                <label> Имя питомца</label>
                                 <input
                                     type="text"
                                     value={editFormData.name}
@@ -815,7 +910,7 @@ export default function LikedAnimals() {
                             </div>
 
                             <div className="form-group">
-                                <label>📅 Возраст (лет)</label>
+                                <label> Возраст (лет)</label>
                                 <input
                                     type="number"
                                     min="0"
@@ -825,7 +920,7 @@ export default function LikedAnimals() {
                             </div>
 
                             <div className="form-group">
-                                <label>📝 Описание</label>
+                                <label> Описание</label>
                                 <textarea
                                     value={editFormData.description || ''}
                                     onChange={(e) => setEditFormData(prev => ({ ...prev, description: e.target.value }))}
@@ -844,7 +939,7 @@ export default function LikedAnimals() {
                                 Отмена
                             </button>
                             <button className="save-btn" onClick={handleSaveEdit} disabled={isUpdating}>
-                                {isUpdating ? '💫 Сохранение...' : '💾 Сохранить'}
+                                {isUpdating ? ' Сохранение...' : ' Сохранить'}
                             </button>
                         </div>
                     </div>

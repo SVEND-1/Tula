@@ -7,9 +7,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  //overflow-y: hidden;
   font-family: "Playpen Sans", cursive;
-  //background-image: url('../../public/background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1191,5 +1189,64 @@ html, body {
   @media (max-width: 768px) {
     font-size: 14px;
     padding: 10px 20px;
+  }
+}
+
+/* Стили для кнопок в пустом состоянии */
+.empty-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+
+  button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: "Playpen Sans", cursive;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    @media (max-width: 768px) {
+      padding: 10px 16px;
+      font-size: 13px;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  .reload-btn {
+    background: linear-gradient(135deg, #ffcdb0, #ffb88c);
+    color: #333;
+
+    &:hover {
+      box-shadow: 0 4px 15px rgba(255, 184, 140, 0.4);
+    }
+  }
+
+  .profile-btn {
+    background: linear-gradient(135deg, #ffcdb0, #ffb88c);
+    color: #333;
+
+    &:hover {
+      box-shadow: 0 4px 15px rgba(255, 184, 140, 0.4);
+    }
+  }
+
+  .video-btn {
+    background: linear-gradient(135deg, #ffcdb0, #ffb88c);
+    color: #333;
+
+    &:hover {
+      box-shadow: 0 4px 15px rgba(255, 184, 140, 0.4);
+    }
   }
 }

@@ -208,12 +208,23 @@ export default function MainPage() {
                     <span className="empty-emoji">🐾</span>
                     <h2>Животные закончились</h2>
                     <p>Всего животных в базе: {animals.length}</p>
-                    <button onClick={() => {
-                        loadAnimals();
-                        setCurrentIndex(0);
-                    }} className="reload-btn">
-                        Обновить список
-                    </button>
+
+                    <div className="empty-actions">
+                        <button onClick={() => {
+                            loadAnimals();
+                            setCurrentIndex(0);
+                        }} className="reload-btn">
+                            🔄 Обновить список
+                        </button>
+
+                        <button onClick={() => navigate('/liked')} className="profile-btn">
+                            👤 Перейти в профиль
+                        </button>
+
+                        <button onClick={() => navigate('/video')} className="video-btn">
+                            🎬 Перейти к видео
+                        </button>
+                    </div>
                 </div>
             </div>
         );
@@ -268,7 +279,12 @@ export default function MainPage() {
 
             <header className="adopt-header">
                 <div className="logo">Adoptly</div>
-                <div className="profile" onClick={() => navigate('/liked')}>Профиль</div>
+                <div className="header-buttons">
+                    <button onClick={() => navigate('/video')} className="video-header-btn" title="Видео лента">
+                        🎬
+                    </button>
+                    <div className="profile" onClick={() => navigate('/liked')}>Профиль</div>
+                </div>
             </header>
 
             <div className={`toast ${showToast ? 'show' : ''}`}>

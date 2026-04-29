@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { videoApi } from '../../api/videoApi';
 import { UploadForm } from '../../components/video/UploadForm';
 import { VideoCard } from '../../components/video/VideoCard';
@@ -6,6 +7,7 @@ import type { VideoResponse } from '../../types/video/video.types';
 import './../../style/VideoFeed.scss';
 
 export default function VideoFeed() {
+    const navigate = useNavigate();
     const [videos, setVideos] = useState<VideoResponse[]>([]);
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
@@ -66,6 +68,15 @@ export default function VideoFeed() {
 
     return (
         <div className="feed-root">
+            <div className="feed-nav-buttons">
+                <button className="feed-nav-btn" onClick={() => navigate('/main')} title="На главную">
+                    <span className="feed-nav-icon">🏠</span>
+                </button>
+                <button className="feed-nav-btn" onClick={() => navigate('/liked')} title="Мой профиль">
+                    <span className="feed-nav-icon">👤</span>
+                </button>
+            </div>
+
             <div className="feed-container" ref={containerRef}>
                 {videos.map((v, i) => (
                     <VideoCard key={v.id} video={v} isActive={i === activeIdx} onLike={() => {}} />
@@ -79,7 +90,7 @@ export default function VideoFeed() {
 
                 {!hasMore && videos.length > 0 && (
                     <div className="feed-end">
-                        <span>Ты досмотрел до конца 🎉</span>
+                        <span>Ты досмотрел до конца </span>
                     </div>
                 )}
 

@@ -1,12 +1,12 @@
-
 export interface VideoResponse {
     id: number;
     title: string;
     description: string;
-    url: string;
+    filePath: string;
+    createdAt: string;
+    uploaderName: string;
     likesCount: number;
     comments: CommentResponse[];
-    createdAt: string;
 }
 
 export interface CommentResponse {

@@ -153,7 +153,7 @@ export default function CreateAnimalForm({ onSubmit, isLoading }: CreateAnimalFo
                         className="submit-btn"
                         disabled={!isFormValid || isLoading}
                     >
-                        {isLoading ? 'Создание...' : '✨ Создать анкету'}
+                        {isLoading ? 'Создание...' : ' Создать анкету'}
                     </button>
                 </div>
 

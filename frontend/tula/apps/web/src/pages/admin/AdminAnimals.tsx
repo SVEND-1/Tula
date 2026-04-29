@@ -30,12 +30,12 @@ export default function AdminAnimals() {
                         localStorage.setItem('animalImages', JSON.stringify(images));
                     }
                 }
-                alert(`✅ Животное "${response.data.name}" успешно создано!`);
+                alert(` Животное "${response.data.name}" успешно создано!`);
             }
         } catch (error: any) {
             console.error('Ошибка:', error);
             const errorMessage = error.response?.data?.message || 'Ошибка создания анкеты';
-            alert(`❌ ${errorMessage}`);
+            alert(` ${errorMessage}`);
         } finally {
             setIsLoading(false);
         }

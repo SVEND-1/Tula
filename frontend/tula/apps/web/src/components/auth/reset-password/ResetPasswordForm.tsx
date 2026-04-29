@@ -1,5 +1,7 @@
 import Field from "../global/Field";
 import Button from "../global/Button";
+import PasswordStrengthBar from "../PasswordStrengthBar";
+import { usePasswordStrength } from "../usePasswordStrength";
 import type {ResetPasswordFormProps} from "../../../types/auth/auth.types";
 
 export default function ResetPasswordForm({
@@ -10,9 +12,14 @@ export default function ResetPasswordForm({
                                               handleSubmit,
                                               navigate
                                           }: ResetPasswordFormProps) {
-    const isFormValid = newPassword.trim().length > 0 &&
+    const strength = usePasswordStrength(newPassword);
+
+    const passwordsMatch = newPassword === confirmPassword;
+
+    const isFormValid =
+        strength.checks.minLength &&
         confirmPassword.trim().length > 0 &&
-        newPassword === confirmPassword;
+        passwordsMatch;
 
     return (
         <form onSubmit={handleSubmit}>
@@ -27,6 +34,8 @@ export default function ResetPasswordForm({
                 required
             />
 
+            <PasswordStrengthBar strength={strength} />
+
             <Field
                 className="input-group"
                 label="confirm password"
@@ -37,6 +46,12 @@ export default function ResetPasswordForm({
                 placeholder="••••••••"
                 required
             />
+
+            {confirmPassword && !passwordsMatch && (
+                <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#f44336' }}>
+                    Пароли не совпадают
+                </p>
+            )}
 
             <Button
                 type="submit"

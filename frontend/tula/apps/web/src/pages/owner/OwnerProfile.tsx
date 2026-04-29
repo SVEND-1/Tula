@@ -132,7 +132,7 @@ export default function OwnerProfile() {
         try {
             console.log('Подписываемся на приют:', id);
             await createFollow(Number(id));
-            alert('✅ Вы подписались на приют!');
+            alert(' Вы подписались на приют!');
 
             await loadFollowersCount();
             setIsFollowing(true);
@@ -140,7 +140,7 @@ export default function OwnerProfile() {
         } catch (error: any) {
             console.error('Ошибка подписки:', error);
             const errorMessage = error.response?.data?.message || 'Ошибка при подписке';
-            alert(`❌ ${errorMessage}`);
+            alert(` ${errorMessage}`);
         } finally {
             setIsFollowLoading(false);
         }
@@ -149,7 +149,7 @@ export default function OwnerProfile() {
     const handleUnfollow = async () => {
         if (!currentFollowId) {
             console.error('Не найден ID подписки');
-            alert('❌ Не удалось определить подписку');
+            alert(' Не удалось определить подписку');
             return;
         }
 
@@ -158,7 +158,7 @@ export default function OwnerProfile() {
             console.log('Отписываемся от приюта с ID:', currentFollowId);
 
             await deleteFollow(currentFollowId);
-            alert('✅ Вы отписались от приюта');
+            alert(' Вы отписались от приюта');
 
             await loadFollowersCount();
             setIsFollowing(false);
@@ -166,7 +166,7 @@ export default function OwnerProfile() {
 
         } catch (error: any) {
             console.error('Ошибка отписки:', error);
-            alert(`❌ Ошибка при отписке: ${error.response?.data?.message || error.message}`);
+            alert(` Ошибка при отписке: ${error.response?.data?.message || error.message}`);
         } finally {
             setIsFollowLoading(false);
         }
@@ -185,12 +185,12 @@ export default function OwnerProfile() {
                 content: reviewText,
                 ownerId: Number(id)
             });
-            alert('✅ Отзыв успешно добавлен!');
+            alert(' Отзыв успешно добавлен!');
             setReviewText('');
             await loadReviews();
         } catch (error: any) {
             console.error('Ошибка добавления отзыва:', error);
-            alert('❌ Ошибка при добавлении отзыва');
+            alert(' Ошибка при добавлении отзыва');
         } finally {
             setIsSubmitting(false);
         }

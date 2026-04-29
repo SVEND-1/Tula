@@ -1,9 +1,6 @@
-// ─── VideoFeed.scss ───────────────────────────────────────────────────────────
-// TikTok-inspired dark feed, consistent with project's "Playpen Sans" vibe
 
 @import url('https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@400;600;700&display=swap');
 
-// ─── Variables ────────────────────────────────────────────────────────────────
 $bg:       #0a0a0a;
 $surface:  #161616;
 $accent:   #ff4d6d;
@@ -13,7 +10,6 @@ $muted:    #888;
 $radius:   16px;
 $font:     "Playpen Sans", cursive;
 
-// ─── Root ─────────────────────────────────────────────────────────────────────
 .feed-root {
   position: relative;
   width: 100%;
@@ -23,7 +19,6 @@ $font:     "Playpen Sans", cursive;
   font-family: $font;
 }
 
-// ─── Feed container – snaps each card ─────────────────────────────────────────
 .feed-container {
   width: 100%;
   height: 100%;
@@ -32,12 +27,10 @@ $font:     "Playpen Sans", cursive;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 
-  // hide scrollbar
   &::-webkit-scrollbar { display: none; }
   scrollbar-width: none;
 }
 
-// ─── Single video card ────────────────────────────────────────────────────────
 .video-card {
   position: relative;
   width: 100%;
@@ -60,7 +53,6 @@ $font:     "Playpen Sans", cursive;
   cursor: pointer;
 }
 
-// gradient bottom overlay
 .video-gradient {
   position: absolute;
   inset: 0;
@@ -73,7 +65,6 @@ $font:     "Playpen Sans", cursive;
   pointer-events: none;
 }
 
-// ─── Bottom info ──────────────────────────────────────────────────────────────
 .video-info {
   position: absolute;
   bottom: 90px;
@@ -113,7 +104,6 @@ $font:     "Playpen Sans", cursive;
   @media (max-width: 480px) { font-size: 13px; }
 }
 
-// ─── Side action buttons ──────────────────────────────────────────────────────
 .video-actions {
   position: absolute;
   right: 12px;
@@ -175,7 +165,6 @@ $font:     "Playpen Sans", cursive;
   100% { transform: scale(1); }
 }
 
-// ─── Heart burst on double tap ────────────────────────────────────────────────
 .heart-burst {
   position: absolute;
   top: 50%;
@@ -193,7 +182,6 @@ $font:     "Playpen Sans", cursive;
   100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
 }
 
-// ─── Comments drawer ──────────────────────────────────────────────────────────
 .comments-drawer {
   position: absolute;
   bottom: 0;
@@ -350,7 +338,53 @@ $font:     "Playpen Sans", cursive;
   &:active { transform: scale(0.92); }
 }
 
-// ─── FAB Upload button ────────────────────────────────────────────────────────
+.feed-nav-buttons {
+  position: fixed;
+  top: 20px;
+  left: 16px;
+  display: flex;
+  gap: 10px;
+  z-index: 100;
+
+  @media (max-width: 480px) {
+    top: 12px;
+    left: 10px;
+    gap: 8px;
+  }
+}
+
+.feed-nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(22, 22, 22, 0.75);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s, background 0.2s;
+
+  &:hover {
+    background: rgba(40, 40, 40, 0.9);
+    transform: scale(1.08);
+  }
+  &:active { transform: scale(0.92); }
+
+  .feed-nav-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  @media (max-width: 480px) {
+    width: 38px;
+    height: 38px;
+    .feed-nav-icon { font-size: 17px; }
+  }
+}
+
 .fab-upload {
   position: fixed;
   top: 20px;
@@ -390,7 +424,6 @@ $font:     "Playpen Sans", cursive;
   margin-top: -2px;
 }
 
-// ─── Upload modal ─────────────────────────────────────────────────────────────
 .upload-overlay {
   position: fixed;
   inset: 0;
@@ -474,7 +507,6 @@ $font:     "Playpen Sans", cursive;
   font-family: $font;
 }
 
-// ─── Drop zone ────────────────────────────────────────────────────────────────
 .drop-zone {
   border: 2px dashed rgba(255,255,255,0.15);
   border-radius: $radius;
@@ -528,7 +560,6 @@ $font:     "Playpen Sans", cursive;
   border-radius: 14px;
 }
 
-// ─── Fields ───────────────────────────────────────────────────────────────────
 .upload-fields {
   display: flex;
   flex-direction: column;
@@ -556,7 +587,6 @@ $font:     "Playpen Sans", cursive;
   min-height: 80px;
 }
 
-// ─── Submit button ────────────────────────────────────────────────────────────
 .upload-btn {
   width: 100%;
   padding: 14px;
@@ -585,7 +615,6 @@ $font:     "Playpen Sans", cursive;
   &.loading { pointer-events: none; }
 }
 
-// ─── Spinner ──────────────────────────────────────────────────────────────────
 .spinner {
   display: inline-block;
   width: 22px;
@@ -600,7 +629,6 @@ $font:     "Playpen Sans", cursive;
   to { transform: rotate(360deg); }
 }
 
-// ─── Feed states ──────────────────────────────────────────────────────────────
 .feed-loader {
   width: 100%;
   height: 100dvh;
